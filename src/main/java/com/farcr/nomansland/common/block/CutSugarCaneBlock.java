@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -20,6 +21,14 @@ public class CutSugarCaneBlock extends SugarCaneBlock {
     public CutSugarCaneBlock(Properties properties) {
         super(properties);
     }
+    public static final MapCodec<SugarCaneBlock> CODEC = simpleCodec(CutSugarCaneBlock::new)
+            .xmap(block -> (SugarCaneBlock) block, block -> (CutSugarCaneBlock) block);
+
+    @Override
+    public MapCodec<SugarCaneBlock> codec() {
+        return CODEC;
+    }
+
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

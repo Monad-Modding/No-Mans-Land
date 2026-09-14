@@ -40,11 +40,6 @@ import java.util.List;
 
 public class MoonlightBasinBlock extends BaseEntityBlock implements SimpleWaterloggedBlock
 {
-	public static final MapCodec<MoonlightBasinBlock> CODEC = simpleCodec(MoonlightBasinBlock::new);
-	@Override
-	protected MapCodec<? extends BaseEntityBlock> codec() {
-		return CODEC;
-	}
 
 	@Nullable @Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
@@ -119,6 +114,11 @@ public class MoonlightBasinBlock extends BaseEntityBlock implements SimpleWaterl
                     .setValue(WATERLOGGED, false)
                     .setValue(MoonlightCandleBlock.CANDLE_LIT, false)
 		);
+	}
+	public static final MapCodec<MoonlightBasinBlock> CODEC = simpleCodec(MoonlightBasinBlock::new);
+	@Override
+	protected MapCodec<? extends BaseEntityBlock> codec() {
+		return CODEC;
 	}
 
 	@Nullable

@@ -1,0 +1,64 @@
+{
+  "type": "nomansland:boulder",
+  "config": {
+    "decorators": [
+      {
+        "type": "nomansland:multiface_on_stone",
+        "probability": 0.55,
+        "block": "nomansland:rose_vines"
+      },
+      {
+        "type": "nomansland:double_plant_around",
+        "count": {
+          "type": "minecraft:uniform",
+          "min_inclusive": 1,
+          "max_inclusive": 3
+        },
+        "block_provider": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:rose_bush",
+            "Properties": {
+              "half": "lower"
+            }
+          }
+        }
+      }
+    ],
+    "block_provider": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:mossy_cobblestone"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:cobblestone"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:stone"
+          },
+          "weight": 2
+        }
+      ]
+    },
+    "num_cubes": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 3,
+      "max_inclusive": 4
+    },
+    "cube_height": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 2,
+      "max_inclusive": 4
+    },
+    "cube_height_decrease": 1,
+    "num_eroded_blocks": 1
+  }
+}

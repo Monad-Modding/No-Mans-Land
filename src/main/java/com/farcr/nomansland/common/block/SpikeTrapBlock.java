@@ -42,8 +42,8 @@ public class SpikeTrapBlock extends DirectionalBlock implements SimpleWaterlogge
     protected static final VoxelShape UP_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
     protected static final VoxelShape DOWN_AABB = Block.box(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
-    public SpikeTrapBlock(Properties pProperties) {
-        super(pProperties);
+    public SpikeTrapBlock(Properties properties) {
+        super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE)
                 .setValue(FACING, Direction.UP).setValue(POWERED, Boolean.TRUE));
     }

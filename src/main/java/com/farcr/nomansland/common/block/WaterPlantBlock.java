@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -29,6 +30,14 @@ public class WaterPlantBlock extends TallFlowerBlock implements SimpleWaterlogge
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(WATERLOGGED, Boolean.valueOf(false)));
     }
+    public static final MapCodec<TallFlowerBlock> CODEC = simpleCodec(WaterPlantBlock::new)
+            .xmap(block -> (TallFlowerBlock) block, block -> (WaterPlantBlock) block);
+
+    @Override
+    public MapCodec<TallFlowerBlock> codec() {
+        return CODEC;
+    }
+
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

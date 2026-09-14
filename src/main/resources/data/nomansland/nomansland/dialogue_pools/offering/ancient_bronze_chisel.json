@@ -1,0 +1,8 @@
+{
+    "condition": {
+        "type": "nomansland:item_conditional",
+        "items": "nomansland:ancient_bronze_chisel"
+    },
+    "weight": 1,
+    "text": "A conundrum among the artistic minds //was the truth //behind the act of 'creation'. \n What we make is from earthly matter,/ we do not generate it. \nAnd yet, our art is created,/ for it did not exist before. \n Then came sculpting. To create not through addition,/ but through subtraction/// \n So we understood that 'art'/ was such because it was made through our hands. \nNothing more, nothing less."
+}

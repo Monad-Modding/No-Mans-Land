@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.integration.FDIntegration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -14,6 +15,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import vectorwing.farmersdelight.common.block.FeastBlock;
 
 public class StallionStripsBlock extends FeastBlock {
+
     public static final IntegerProperty STRIP_SERVINGS = IntegerProperty.create("servings", 0, 5);
 
     protected static final VoxelShape PLATE_SHAPE_Z = Block.box(0, 0, 1, 16, 2, 15);
@@ -29,6 +31,11 @@ public class StallionStripsBlock extends FeastBlock {
 
     public StallionStripsBlock(BlockBehaviour.Properties properties) {
         super(properties, FDIntegration.STALLION_STRIP::item, true);
+    }
+
+    @Override
+    public MapCodec<StallionStripsBlock> codec() {
+        return simpleCodec(StallionStripsBlock::new);
     }
 
     public IntegerProperty getServingsProperty() {

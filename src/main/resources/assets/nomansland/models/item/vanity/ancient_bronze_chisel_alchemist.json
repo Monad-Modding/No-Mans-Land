@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nomansland:item/ancient_bronze_chisel_alchemist"
+  }
+}

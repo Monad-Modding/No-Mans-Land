@@ -1,9 +1,6 @@
 {
   "angry_texture": "minecraft:entity/wolf/wolf_snowy_angry",
-  "biomes": [
-    "minecraft:grove",
-    "nomansland:frozen_woods"
-],
+  "biomes": "#nomansland:entity/spawns_snowy_wolves",
   "tame_texture": "minecraft:entity/wolf/wolf_snowy_tame",
   "wild_texture": "minecraft:entity/wolf/wolf_snowy"
 }

@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "nomansland:block/building/stellar_tiles/stellar_tiles",
+        "weight": 5
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/stellar_tiles_1"
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/stellar_tiles_2"
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/stellar_tiles_3"
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/stellar_tiles_4"
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/stellar_tiles_5"
+      }
+    ]
+  }
+}

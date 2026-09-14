@@ -4,11 +4,7 @@
   "conditions": {
     "entity_predicate": {
       "location": {
-        "biomes": [
-          "minecraft:plains",
-          "minecraft:jungle",
-          "minecraft:sparse_jungle"
-        ]
+        "biomes": "#nomansland:entity/spawns_brown_tortoises"
       }
     }
   },

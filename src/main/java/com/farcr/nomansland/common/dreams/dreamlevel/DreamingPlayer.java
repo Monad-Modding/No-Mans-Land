@@ -74,12 +74,17 @@ public class DreamingPlayer extends Mob {
     }
 
     public Optional<Player> discardTether() {
+        return discardTether(true);
+    }
+
+    public Optional<Player> discardTether(boolean returnPlayerToBody) {
         if (this.level() instanceof ServerLevel level) {
             if (getTetheredPlayer() == null)
                 return Optional.empty();
             Player player = getTetheredPlayer();
             this.remove(RemovalReason.DISCARDED);
-            player.teleportTo(level, this.getX(), this.getY(), this.getZ(), Set.of(), player.getXRot(), player.getYRot());
+            if (returnPlayerToBody)
+                player.teleportTo(level, this.getX(), this.getY(), this.getZ(), Set.of(), player.getXRot(), player.getYRot());
             this.getSleepingPos().ifPresent(player::setSleepingPos);
             player.stopSleeping();
             // Recalculate player since old player doesn't exist anymore

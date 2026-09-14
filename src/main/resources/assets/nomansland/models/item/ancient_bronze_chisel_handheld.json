@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "nomansland:item/ancient_bronze_chisel_handheld"
+  }
+}

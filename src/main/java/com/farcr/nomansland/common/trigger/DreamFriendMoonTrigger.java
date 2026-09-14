@@ -23,8 +23,8 @@ public class DreamFriendMoonTrigger extends SimpleCriterionTrigger<DreamFriendMo
             Codec.unit(new DreamFriendMoonInstance());
 
         @Override
-        public void validate(CriterionValidator p_312329_) {
-            SimpleInstance.super.validate(p_312329_);
+        public void validate(CriterionValidator validator) {
+            SimpleInstance.super.validate(validator);
         }
 
         @Override

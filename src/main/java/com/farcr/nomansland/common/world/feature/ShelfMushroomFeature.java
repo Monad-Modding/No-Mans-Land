@@ -12,8 +12,8 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 public class ShelfMushroomFeature extends Feature<NoneFeatureConfiguration> {
-    public ShelfMushroomFeature(Codec<NoneFeatureConfiguration> p_67337_) {
-        super(p_67337_);
+    public ShelfMushroomFeature(Codec<NoneFeatureConfiguration> codec) {
+        super(codec);
     }
 
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {

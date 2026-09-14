@@ -1,4 +1,6 @@
 package com.farcr.nomansland.common.block.torches;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.MapCodec;
 
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import com.google.common.collect.ImmutableMap;
@@ -32,6 +34,16 @@ public class SconceWallTorchBlock extends WallTorchBlock {
 
     public SconceWallTorchBlock(SimpleParticleType flameParticle, Properties properties) {
         super(flameParticle, properties);
+    }
+
+    public static final MapCodec<WallTorchBlock> CODEC = RecordCodecBuilder.<SconceWallTorchBlock>mapCodec(instance -> instance.group(
+            PARTICLE_OPTIONS_FIELD.forGetter(block -> block.flameParticle),
+            propertiesCodec()
+    ).apply(instance, SconceWallTorchBlock::new)).xmap(block -> (WallTorchBlock) block, block -> (SconceWallTorchBlock) block);
+
+    @Override
+    public MapCodec<WallTorchBlock> codec() {
+        return CODEC;
     }
 
     public static VoxelShape getShape(BlockState state) {

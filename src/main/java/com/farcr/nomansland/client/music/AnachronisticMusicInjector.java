@@ -10,8 +10,8 @@ import net.minecraft.sounds.Music;
 import net.minecraft.util.RandomSource;
 
 public class AnachronisticMusicInjector {
-    public static final int ANACHRONISTIC_WEIGHT = 2;
-    public static final int OTHER_MUSIC_WEIGHT = 1;
+    public static final int ANACHRONISTIC_WEIGHT = 1;
+    public static final int OTHER_MUSIC_WEIGHT = 9;
 
     public static final double MINIMUM_Y = 100.0;
 

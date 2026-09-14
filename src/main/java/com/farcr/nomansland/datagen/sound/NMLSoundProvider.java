@@ -78,9 +78,14 @@ public class NMLSoundProvider extends LodestoneBlockSoundEventSystem {
         add(NMLSounds.CRUDE_TRAPDOOR_CLOSE, s -> s.subtitle("subtitles.block.trapdoor.toggle").with(allSounds("block/crude_door/close")));
 
         add(NMLSounds.ICICLE_SHATTER, s -> s.subtitle("nomansland.subtitle.block.icicle.shatter").with(sound("block.glass.break", EVENT)));
+        add(NMLSounds.TAP_TURNS, s -> s.subtitle("nomansland.subtitle.block.tap.turns").with(sound("block/tap/turns")));
 
         //Items
         add(NMLSounds.BANDAGE_WRAP, s -> s.with(sound("item/bandage/wrap")));
+        add(NMLSounds.OATH_BLOCK, s -> s.with(allSounds("item/ancestral_oath_sword/block")));
+        add(NMLSounds.OATH_PARRY, s -> s.with(allSounds("item/ancestral_oath_sword/parry")));
+        add(NMLSounds.RITUAL_PICK_LOCATE, s -> s.with(sound("item/ritual_pick/ritual_pick_locate")));
+        add(NMLSounds.RITUAL_PICK_GLINT, s -> s.with(sound("item/ritual_pick/glint")));
         add(NMLSounds.BOMB_PRIMED, s -> s.with(sound("minecraft:item/crossbow/loading_end"), sound("minecraft:item/crossbow/loading_end").pitch(1.3f)));
 
         //Cauldron Interactions

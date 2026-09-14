@@ -68,16 +68,12 @@ import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
 public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, Fallable {
-    public static final MapCodec<PotBlock> CODEC = RecordCodecBuilder.mapCodec(
-            (instance) -> instance.group(
-                    PotSize.CODEC.fieldOf("size").forGetter(p -> p.size),
-                    propertiesCodec()
-            ).apply(instance, PotBlock::new)
-    );
 
     private static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -91,12 +87,19 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
         registerDefaultState(stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(WATERLOGGED, false).setValue(BRITTLE, false).setValue(POWERED, false));
     }
 
-    public PotSize getSize() {
-        return size;
+    public static final MapCodec<PotBlock> CODEC = RecordCodecBuilder.mapCodec(
+            (instance) -> instance.group(
+                    PotSize.CODEC.fieldOf("size").forGetter(p -> p.size),
+                    propertiesCodec()
+            ).apply(instance, PotBlock::new)
+    );
+
+    public MapCodec<? extends PotBlock> codec() {
+        return CODEC;
     }
 
-    public MapCodec<PotBlock> codec() {
-        return CODEC;
+    public PotSize getSize() {
+        return size;
     }
 
     protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
@@ -300,7 +303,6 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
         return InteractionResult.SUCCESS;
     }
 
-
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
     }
@@ -311,20 +313,39 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
     }
 
     private static final VoxelShape SMALL_FALLBACK = Shapes.box(2.0 / 16, 0, 2.0 / 16, 14.0 / 16, 1, 14.0 / 16);
+    private static final double COLLISION_INSET = 0.02;
+    private static final Map<VoxelShape, VoxelShape> COLLISION_SHAPE_CACHE = new ConcurrentHashMap<>();
+
+    public static VoxelShape variantShapeOf(@Nullable PotBlockEntity pot, VoxelShape fallback) {
+        if (pot == null || pot.variant == null) return fallback;
+        VoxelShape variantShape = pot.variant.shape();
+        return variantShape != null && !variantShape.isEmpty() ? variantShape : fallback;
+    }
 
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (level.getBlockEntity(pos) instanceof PotBlockEntity pot && pot.variant != null) {
-            VoxelShape variantShape = pot.variant.shape();
-            if (variantShape != null && !variantShape.isEmpty()) return variantShape;
-        }
-        return SMALL_FALLBACK;
+        return variantShapeOf(level.getBlockEntity(pos) instanceof PotBlockEntity pot ? pot : null, SMALL_FALLBACK);
+    }
+
+    public static VoxelShape collisionShapeOf(VoxelShape shape) {
+        if (shape.isEmpty()) return shape;
+        return COLLISION_SHAPE_CACHE.computeIfAbsent(shape, PotBlock::insetFromBlockBounds);
+    }
+
+    private static VoxelShape insetFromBlockBounds(VoxelShape shape) {
+        VoxelShape[] holder = { Shapes.empty() };
+        shape.forAllBoxes((minX, minY, minZ, maxX, maxY, maxZ) -> holder[0] = Shapes.or(holder[0], Shapes.box(
+                minX <= 0 ? minX + COLLISION_INSET : minX,
+                minY <= 0 ? minY + COLLISION_INSET : minY,
+                minZ <= 0 ? minZ + COLLISION_INSET : minZ,
+                maxX >= 1 ? maxX - COLLISION_INSET : maxX,
+                maxY >= 1 ? maxY - COLLISION_INSET : maxY,
+                maxZ >= 1 ? maxZ - COLLISION_INSET : maxZ)));
+        return holder[0].isEmpty() ? shape : holder[0];
     }
 
     @Override
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        VoxelShape shape = getShape(state, level, pos, context);
-        if (!(level.getBlockEntity(pos) instanceof PotBlockEntity pot) || !pot.isLiving()) return shape;
-        return shape.isEmpty() ? shape : Shapes.create(shape.bounds().deflate(0.05));
+        return collisionShapeOf(getShape(state, level, pos, context));
     }
 
     @Override

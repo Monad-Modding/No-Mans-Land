@@ -36,7 +36,7 @@ public class MapleFoodItem extends Item {
         }
         return stack;
     }
-    public UseAnim getUseAnimation(ItemStack pStack) {
+    public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.EAT;
     }
 

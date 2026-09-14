@@ -6,7 +6,9 @@ import com.farcr.nomansland.client.GraphicsCompat;
 import com.farcr.nomansland.client.NMLArmorModels;
 import com.farcr.nomansland.client.NMLModelLayers;
 import com.farcr.nomansland.client.ambience.AmbienceHandler;
+import com.farcr.nomansland.client.extensions.AncestralOathSwordClientExtensions;
 import com.farcr.nomansland.client.extensions.NMLClientExtensions;
+import com.farcr.nomansland.client.handler.CarvingClientHandler;
 import com.farcr.nomansland.client.handler.InvertedBellClientHandler;
 import com.farcr.nomansland.client.music.ContextualMusicHandler;
 import com.farcr.nomansland.client.particle.*;
@@ -14,7 +16,10 @@ import com.farcr.nomansland.client.renderer.SunDogRenderer;
 import com.farcr.nomansland.client.renderer.UpperAtmosphericRenderer;
 import com.farcr.nomansland.client.renderer.dreams.MoonlightDreamRenderer;
 import com.farcr.nomansland.client.renderer.effect.AccumulateZoomRenderer;
+import com.farcr.nomansland.client.renderer.effect.GreyscaleEffectRenderer;
 import com.farcr.nomansland.client.renderer.entity.*;
+import com.farcr.nomansland.client.renderer.rendertype.AncestralGlintRenderLayer;
+import com.farcr.nomansland.client.renderer.rendertype.AncestralGlintRenderType;
 import com.farcr.nomansland.client.renderer.rendertype.MoonlightGlowRenderType;
 import com.farcr.nomansland.common.integration.Mods;
 import com.farcr.nomansland.common.integration.nirvana.NirvanaIntegration;
@@ -31,6 +36,8 @@ import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -56,6 +63,19 @@ public class ClientSetupEvents {
                             return 1.0F;
                         }
                         return 0.0F;
+                    });
+
+            ItemProperties.register(NMLItems.ANCIENT_BRONZE_CHISEL.get(), NoMansLand.location("using_chisel"),
+                    (stack, level, entity, seed) -> {
+                        if(entity != null && CarvingClientHandler.instance.isChiseling()){
+                            InteractionHand hand = CarvingClientHandler.instance.getHand();
+                            ItemStack itemInHand = entity.getItemInHand(hand);
+                            if(itemInHand == stack) {
+                                return 1.0f;
+                            }
+                        }
+
+                        return 0.0f;
                     });
         });
     }
@@ -149,6 +169,7 @@ public class ClientSetupEvents {
     @SubscribeEvent
     public static void addLayers(final EntityRenderersEvent.AddLayers event) {
         NMLArmorModels.addLayers(event);
+        AncestralGlintRenderLayer.addLayers(event);
     }
 
     @SubscribeEvent
@@ -226,6 +247,24 @@ public class ClientSetupEvents {
         event.registerSpriteSet(NMLParticleTypes.DEEP_SLEEP.get(), sprites
                 -> (simpleParticleType, clientLevel, d, e, f, g, h, i)
                 -> new DeepSleepParticle(clientLevel, d, e, f, g, h, i, sprites));
+
+        event.registerSpriteSet(NMLParticleTypes.STASIS_HIT.get(), StasisHitProvider::new);
+        event.registerSpriteSet(NMLParticleTypes.STASIS_HIT_PARRY.get(), StasisHitProvider::new);
+        event.registerSpriteSet(NMLParticleTypes.STASIS_BREAK.get(), StasisHitProvider::new);
+
+        event.registerSpriteSet(NMLParticleTypes.RITUAL_PICK_SMOKE.get(), sprites
+                -> (simpleParticleType, clientLevel, d, e, f, g, h, i)
+                -> new RitualPickSmokeParticle(clientLevel, d, e, f, g, h, i, sprites));
+
+        event.registerSpriteSet(NMLParticleTypes.RITUAL_PICK_RESONANCE.get(), sprites
+                -> (simpleParticleType, clientLevel, d, e, f, g, h, i)
+                -> new RitualPickResonanceParticle(clientLevel, d, e, f, g, h, i, sprites));
+
+        event.registerSpriteSet(NMLParticleTypes.RITUAL_PICK_DUST.get(), sprites
+                -> (simpleParticleType, clientLevel, d, e, f, g, h, i)
+                -> new RitualPickDustParticle(clientLevel, d, e, f, sprites));
+
+
         event.registerSpecial(NMLParticleTypes.POT_SHATTER.get(), new PotShatterParticle.Provider());
         event.registerSpriteSet(NMLParticleTypes.LIVING_URN_SHARD_FACE.get(), LivingUrnShardFaceParticle.Provider::new);
     }
@@ -233,10 +272,12 @@ public class ClientSetupEvents {
     @SubscribeEvent
     public static void registerShaders(final RegisterShadersEvent event) throws IOException {
         if (GraphicsCompat.customShadersSupported()) {
-            GraphicsCompat.tryRegister(event, "rendertype_moonlight", DefaultVertexFormat.NEW_ENTITY,
-                    shader -> MoonlightRayParticle.MOONLIGHT_RENDER_SHADER = shader);
+//            GraphicsCompat.tryRegister(event, "rendertype_moonlight", DefaultVertexFormat.NEW_ENTITY,
+//                    shader -> MoonlightRayParticle.MOONLIGHT_RENDER_SHADER = shader);
             GraphicsCompat.tryRegister(event, "rendertype_moonlight_glow", DefaultVertexFormat.POSITION_TEX,
                     shader -> MoonlightGlowRenderType.MOONLIGHT_GLOW_SHADER = shader);
+            GraphicsCompat.tryRegister(event, "rendertype_ancestral_glint", DefaultVertexFormat.POSITION_TEX_COLOR,
+                    shader -> AncestralGlintRenderType.ANCESTRAL_GLINT_SHADER = shader);
             GraphicsCompat.tryRegister(event, "sun_dog", DefaultVertexFormat.POSITION_TEX_COLOR,
                     shader -> SunDogRenderer.SUN_DOG_SHADER = shader);
             GraphicsCompat.tryRegister(event, "upper_atmosphere", DefaultVertexFormat.POSITION_COLOR,
@@ -245,6 +286,8 @@ public class ClientSetupEvents {
                     shader -> MoonlightDreamRenderer.DREAM_SKY_SHADER = shader);
             GraphicsCompat.tryRegister(event, "dream_horizon_gradient", DefaultVertexFormat.POSITION_COLOR,
                     shader -> MoonlightDreamRenderer.GRADIENT_SHADER = shader);
+            GraphicsCompat.tryRegister(event, "more_translucent_particle", DefaultVertexFormat.PARTICLE,
+                    shader -> RitualPickSmokeParticle.SHADER = shader);
         }
         try {
             InvertedBellClientHandler.instance.postChain = new PostChain(
@@ -260,11 +303,26 @@ public class ClientSetupEvents {
         }
         // Accumulate Zoom Shader
         try {
-            AccumulateZoomRenderer.getInstance().setupPostChain();
+            AccumulateZoomRenderer.getInstance().setupPostChain(
+                Minecraft.getInstance().getMainRenderTarget(),
+                "nomansland:accumulate_zoom"
+            );
+            AncestralOathSwordClientExtensions.TRAIL_INSTANCE.setupPostChain(
+                AncestralOathSwordClientExtensions.getRenderTarget(),
+                "nomansland:accumulate_zoom_alpha"
+            );
         } catch (final IOException e) {
             NoMansLand.LOGGER.warn("Failed to load shader: {}", AccumulateZoomRenderer.ACCUMULATE_ZOOM_SHADER, e);
         } catch (final JsonSyntaxException e) {
             NoMansLand.LOGGER.warn("Failed to parse shader: {}", AccumulateZoomRenderer.ACCUMULATE_ZOOM_SHADER, e);
+        }
+        // Greyscale post effect for stasis
+        try {
+            GreyscaleEffectRenderer.getInstance().setupPostChain();
+        } catch (final IOException e) {
+            NoMansLand.LOGGER.warn("Failed to load shader: {}", GreyscaleEffectRenderer.GREYSCALE_SHADER, e);
+        } catch (final JsonSyntaxException e) {
+            NoMansLand.LOGGER.warn("Failed to parse shader: {}", GreyscaleEffectRenderer.GREYSCALE_SHADER, e);
         }
     }
 

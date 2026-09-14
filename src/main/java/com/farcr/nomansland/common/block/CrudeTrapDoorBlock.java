@@ -14,10 +14,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CrudeTrapDoorBlock extends TrapDoorBlock {
-    public static final MapCodec<CrudeTrapDoorBlock> CODEC = RecordCodecBuilder.mapCodec(
-            instance -> instance.group(BlockSetType.CODEC.fieldOf("block_set_type").forGetter(CrudeTrapDoorBlock::getType), propertiesCodec())
-                    .apply(instance, CrudeTrapDoorBlock::new)
-    );
 
     private static final VoxelShape BOTTOM_NORTH = Block.box(0, 0, 2, 16, 3, 16);
     private static final VoxelShape BOTTOM_EAST = Block.box(0, 0, 0, 14, 3, 16);
@@ -42,6 +38,11 @@ public class CrudeTrapDoorBlock extends TrapDoorBlock {
     public CrudeTrapDoorBlock(BlockSetType type, Properties properties) {
         super(type, properties);
     }
+
+    public static final MapCodec<CrudeTrapDoorBlock> CODEC = RecordCodecBuilder.mapCodec(
+            instance -> instance.group(BlockSetType.CODEC.fieldOf("block_set_type").forGetter(CrudeTrapDoorBlock::getType), propertiesCodec())
+                    .apply(instance, CrudeTrapDoorBlock::new)
+    );
 
     @Override
     public MapCodec<? extends TrapDoorBlock> codec() {

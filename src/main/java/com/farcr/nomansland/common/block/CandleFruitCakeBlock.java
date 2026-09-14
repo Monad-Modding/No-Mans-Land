@@ -41,11 +41,6 @@ import vectorwing.farmersdelight.common.utility.ItemUtils;
 import java.util.Map;
 
 public class CandleFruitCakeBlock extends AbstractCandleBlock {
-    public static final MapCodec<CandleFruitCakeBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
-            instance.group(
-                    BuiltInRegistries.BLOCK.byNameCodec().fieldOf("candle").forGetter(block -> block.candleBlock),
-                    propertiesCodec()
-            ).apply(instance, CandleFruitCakeBlock::new));
 
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
 
@@ -69,6 +64,12 @@ public class CandleFruitCakeBlock extends AbstractCandleBlock {
             throw new IllegalArgumentException("Expected block to be of " + candleClass + " was " + candleBlock.getClass());
         }
     }
+
+    public static final MapCodec<CandleFruitCakeBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(
+                    BuiltInRegistries.BLOCK.byNameCodec().fieldOf("candle").forGetter(block -> block.candleBlock),
+                    propertiesCodec()
+            ).apply(instance, CandleFruitCakeBlock::new));
 
     public MapCodec<CandleFruitCakeBlock> codec() {
         return CODEC;

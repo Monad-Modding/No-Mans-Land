@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block.moonlight;
 
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.client.renderer.FriendMoonRenderer;
 import com.farcr.nomansland.common.friend.FriendMoon;
 import com.farcr.nomansland.common.networking.ClientboundCandleLightPacket;
@@ -58,6 +59,11 @@ public class MoonlightCandleBlock extends Block implements SimpleWaterloggedBloc
             this.stateDefinition.any().setValue(CANDLE_LIT, false)
                 .setValue(WATERLOGGED, false)
         );
+    }
+
+    @Override
+    public MapCodec<MoonlightCandleBlock> codec() {
+        return simpleCodec(MoonlightCandleBlock::new);
     }
 
     public void lightSpark(BlockState state, Level level, BlockPos pos, RandomSource random) {

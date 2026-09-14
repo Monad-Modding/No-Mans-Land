@@ -1,18 +1,34 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,closed=false": {
       "model": "nomansland:block/tapping/tap"
     },
-    "facing=west": {
+    "facing=west,closed=false": {
       "model": "nomansland:block/tapping/tap",
       "y": 270
     },
-    "facing=east": {
+    "facing=east,closed=false": {
       "model": "nomansland:block/tapping/tap",
       "y": 90
     },
-    "facing=south": {
+    "facing=south,closed=false": {
       "model": "nomansland:block/tapping/tap",
+      "y": 180
+    },
+
+    "facing=north,closed=true": {
+      "model": "nomansland:block/tapping/tap_closed"
+    },
+    "facing=west,closed=true": {
+      "model": "nomansland:block/tapping/tap_closed",
+      "y": 270
+    },
+    "facing=east,closed=true": {
+      "model": "nomansland:block/tapping/tap_closed",
+      "y": 90
+    },
+    "facing=south,closed=true": {
+      "model": "nomansland:block/tapping/tap_closed",
       "y": 180
     }
   }

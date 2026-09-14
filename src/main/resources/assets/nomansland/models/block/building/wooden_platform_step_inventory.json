@@ -1,0 +1,37 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made by Farcr",
+	"parent": "block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"texture": "nomansland:block/building/wooden_platform",
+		"particle": "nomansland:block/building/wooden_platform_particle"
+	},
+	"elements": [
+		{
+			"from": [0, 4, 4],
+			"to": [16, 8, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 4]},
+			"faces": {
+				"north": {"uv": [8, 12, 16, 14], "texture": "#texture"},
+				"east": {"uv": [4, 12, 8, 14], "texture": "#texture", "cullface": "east"},
+				"south": {"uv": [16, 12, 8, 14], "texture": "#texture"},
+				"west": {"uv": [4, 12, 8, 14], "texture": "#texture", "cullface": "west"},
+				"up": {"uv": [0, 0, 8, 4], "texture": "#texture"},
+				"down": {"uv": [16, 4, 8, 8], "texture": "#texture"}
+			}
+		},
+		{
+			"from": [0, 2, 7],
+			"to": [16, 4, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 4]},
+			"faces": {
+				"north": {"uv": [8, 14, 16, 15], "texture": "#texture"},
+				"east": {"uv": [9.5, 10, 10.5, 11], "texture": "#texture"},
+				"south": {"uv": [8, 14, 16, 15], "texture": "#texture"},
+				"west": {"uv": [13.5, 10, 14.5, 11], "texture": "#texture"},
+				"down": {"uv": [8, 14, 16, 15], "texture": "#texture"}
+			}
+		}
+	]
+}

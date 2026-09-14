@@ -15,10 +15,10 @@ public class MoonlightSparkParticle extends TextureSheetParticle {
     private Vec3 targetPosition;
 
     public MoonlightSparkParticle(
-        ClientLevel level, double pX, double pY, double pZ,
-        double pXSpeed, double pYSpeed, double pZSpeed, SpriteSet spriteSet
+        ClientLevel level, double x, double y, double z,
+        double xSpeed, double ySpeed, double zSpeed, SpriteSet spriteSet
     ) {
-        super(level, pX, pY, pZ, 0f, 0f, 0f);
+        super(level, x, y, z, 0f, 0f, 0f);
         this.spriteSet = spriteSet;
         this.lifetime = 45;
 

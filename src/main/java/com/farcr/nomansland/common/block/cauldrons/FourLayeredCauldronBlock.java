@@ -39,9 +39,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class FourLayeredCauldronBlock extends AbstractCauldronBlock {
-    public static final MapCodec<FourLayeredCauldronBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            BuiltInRegistries.PARTICLE_TYPE.holderByNameCodec().fieldOf("particle_type").forGetter(f -> f.particleType)
-    ).apply(instance, FourLayeredCauldronBlock::new));
 
     public static final IntegerProperty LEVEL = IntegerProperty.create("level", 1, 4);
     public final @Nullable Holder<ParticleType<?>> particleType;
@@ -52,14 +49,18 @@ public class FourLayeredCauldronBlock extends AbstractCauldronBlock {
         this.particleType = particleType;
     }
 
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(LEVEL);
-    }
+    public static final MapCodec<FourLayeredCauldronBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            BuiltInRegistries.PARTICLE_TYPE.holderByNameCodec().fieldOf("particle_type").forGetter(f -> f.particleType)
+    ).apply(instance, FourLayeredCauldronBlock::new));
 
     @Override
     protected MapCodec<? extends FourLayeredCauldronBlock> codec() {
         return CODEC;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(LEVEL);
     }
 
     @Override
@@ -92,21 +93,22 @@ public class FourLayeredCauldronBlock extends AbstractCauldronBlock {
                 .orElse(1);
 
         if (!result.isEmpty()) {
-//                    level.playSound(null, pos, NMLSounds.HONEYCOMB_CONSUMED.get(), SoundSource.BLOCKS);
-            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS);
-            int i = state.getValue(LEVEL) - cost;
-            newState = i == 0 ? Blocks.CAULDRON.defaultBlockState() : state.setValue(LEVEL, i);
-            level.setBlockAndUpdate(pos, newState);
-
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, result));
-
             interacted = true;
+            if (!level.isClientSide) {
+                level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS);
+                int i = state.getValue(LEVEL) - cost;
+                newState = i == 0 ? Blocks.CAULDRON.defaultBlockState() : state.setValue(LEVEL, i);
+                level.setBlockAndUpdate(pos, newState);
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, result));
+            }
         }
 
         if (interacted) {
-            player.awardStat(Stats.USE_CAULDRON);
-            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
+            if (!level.isClientSide) {
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
+            }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         } else return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
@@ -152,13 +154,13 @@ public class FourLayeredCauldronBlock extends AbstractCauldronBlock {
                     .map(CauldronInteractionRecipe::levelCost)
                     .orElse(1);
 
-            if (!result.isEmpty()) {
+            if (!result.isEmpty() && !level.isClientSide()) {
                 itemEntity.discard();
                 int i = state.getValue(LEVEL) - cost;
                 BlockState blockstate = i == 0 ? Blocks.CAULDRON.defaultBlockState() : state.setValue(LEVEL, i);
                 level.setBlockAndUpdate(pos, blockstate);
 
-                if (!level.isClientSide()) {
+                {
                     ItemEntity newItemEntity = new ItemEntity(level,
                             pos.getX() + .5,
                             pos.getY() + .5,

@@ -77,32 +77,47 @@ public class DreamLevelHandler implements AutoCloseable {
         ).findFirst();
     }
 
-    public static void playerTeleportFallback(ServerPlayer serverPlayer, boolean load) {
+    private static void logFallback(ServerPlayer serverPlayer) {
         NoMansLand.LOGGER.info(
             "Teleporting " + serverPlayer.getGameProfile().getName() +
             " from a Dream to last valid point as a last resort! Did the server crash previously?"
         );
+    }
 
+    public static BlockPos fallbackPosition(ServerPlayer serverPlayer) {
         MinecraftServer server = serverPlayer.getServer();
         PlayerExtension playerExtension = (PlayerExtension) serverPlayer;
         BlockPos respawnPosition = playerExtension.nml$getLastSleepPosition();
         if (respawnPosition == null) respawnPosition = serverPlayer.getRespawnPosition();
         if (respawnPosition == null) respawnPosition = server.overworld().getSharedSpawnPos();
+        return respawnPosition;
+    }
+
+    public static ServerLevel fallbackDimension(ServerPlayer serverPlayer) {
+        MinecraftServer server = serverPlayer.getServer();
+        PlayerExtension playerExtension = (PlayerExtension) serverPlayer;
 
         ServerLevel respawnDimension = server.getLevel(serverPlayer.getRespawnDimension());
         if (playerExtension.nml$getLastSleepDimension() != null) {
             ServerLevel storedRespawnDimension = server.getLevel(playerExtension.nml$getLastSleepDimension());
             if (storedRespawnDimension != null) respawnDimension = storedRespawnDimension;
         }
-        if (respawnDimension == null) respawnDimension = server.overworld();
+        if (respawnDimension == null || keyToDream(respawnDimension.dimension()).isPresent())
+            respawnDimension = server.overworld();
+        return respawnDimension;
+    }
 
-        if (load) {
-            serverPlayer.setPos(respawnPosition.getCenter());
-            return;
-        }
+    public static ServerLevel playerLoadFallback(ServerPlayer serverPlayer) {
+        logFallback(serverPlayer);
+        serverPlayer.setPos(fallbackPosition(serverPlayer).getCenter());
+        return fallbackDimension(serverPlayer);
+    }
 
+    public static void playerTeleportFallback(ServerPlayer serverPlayer) {
+        logFallback(serverPlayer);
+        BlockPos respawnPosition = fallbackPosition(serverPlayer);
         serverPlayer.changeDimension(new DimensionTransition(
-            respawnDimension,
+            fallbackDimension(serverPlayer),
             respawnPosition.getCenter(),
             respawnPosition.getCenter(),
             0, 0,

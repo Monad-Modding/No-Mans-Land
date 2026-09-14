@@ -13,18 +13,18 @@ public class DeepSleepParticle extends TextureSheetParticle {
     private final Vec3 startingPosition;
 
     public DeepSleepParticle(
-        ClientLevel level, double pX, double pY, double pZ,
-        double pXSpeed, double pYSpeed, double pZSpeed, SpriteSet spriteSet
+        ClientLevel level, double x, double y, double z,
+        double xSpeed, double ySpeed, double zSpeed, SpriteSet spriteSet
     ) {
-        super(level, pX, pY + 0.25f, pZ, 0, pYSpeed, 0);
-        startingPosition = new Vec3(pX, pY, pZ);
+        super(level, x, y + 0.25f, z, 0, ySpeed, 0);
+        startingPosition = new Vec3(x, y, z);
         this.setSprite(spriteSet.get(1, 1));
         this.setSize(1f, 1f);
         this.spriteSet = spriteSet;
         this.lifetime = 80;
     }
 
-    @Override public float getQuadSize(float pScaleFactor) {
+    @Override public float getQuadSize(float scaleFactor) {
         float scale = (float) this.age / (float) this.lifetime;
         return this.quadSize * scale;
     }

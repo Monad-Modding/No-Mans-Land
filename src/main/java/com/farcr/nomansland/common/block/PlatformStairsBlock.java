@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.registry.NMLSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -42,6 +43,11 @@ public class PlatformStairsBlock extends Block implements SimpleWaterloggedBlock
     public PlatformStairsBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false).setValue(UNSTABLE, false));
+    }
+
+    @Override
+    public MapCodec<PlatformStairsBlock> codec() {
+        return simpleCodec(PlatformStairsBlock::new);
     }
 
     @Override

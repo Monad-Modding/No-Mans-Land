@@ -17,6 +17,13 @@
       ],
       "conditions": [
         {
+          "condition": "minecraft:block_state_property",
+          "block": "nomansland:large_ancient_pot",
+          "properties": {
+            "half": "lower"
+          }
+        },
+        {
           "condition": "minecraft:any_of",
           "terms": [
             {

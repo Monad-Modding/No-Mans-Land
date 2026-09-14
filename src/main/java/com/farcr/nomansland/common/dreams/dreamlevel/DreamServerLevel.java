@@ -76,7 +76,7 @@ public class DreamServerLevel extends ServerLevel {
                 dreamingPlayer.debug = false;
                 dreamingPlayer.discardTether();
             }
-            else DreamLevelHandler.playerTeleportFallback(player, false);
+            else DreamLevelHandler.playerTeleportFallback(player);
 
             if (success) manager.setDreamExperienced(dreamType, player);
             dreamType.onDreamEnd(player, success);

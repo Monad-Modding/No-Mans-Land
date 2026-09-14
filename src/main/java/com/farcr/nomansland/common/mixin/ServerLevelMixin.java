@@ -1,6 +1,7 @@
 package com.farcr.nomansland.common.mixin;
 
 import com.farcr.nomansland.common.entity.buddy.BuddyChunkAnchor;
+import com.farcr.nomansland.common.extension.LevelChunkExtension;
 import com.farcr.nomansland.common.mixin.plugin.annotation.IfModAbsent;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import com.farcr.nomansland.common.worldevent.SunDog;
@@ -31,6 +32,9 @@ public abstract class ServerLevelMixin {
 
     @Inject(method = "tickChunk", at = @At(value = "TAIL"))
     private void nml$tickChunk(LevelChunk chunk, int randomTickSpeed, CallbackInfo ci) {
+        LevelChunkExtension extensionChunk = (LevelChunkExtension) chunk;
+        if (extensionChunk.nml$shouldIgnoreBuddyAnchor()) return;
+
         BuddyChunkAnchor.getOrDefault(this.getLevel()).tickChunk(chunk);
     }
 

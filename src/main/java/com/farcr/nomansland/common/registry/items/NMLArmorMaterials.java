@@ -34,7 +34,7 @@ public class NMLArmorMaterials {
     public static final Holder<ArmorMaterial> ANCIENT_BRONZE_MASK = register(
             "ancient_bronze_mask",
             ArmorItem.Type.HELMET,
-            () -> 2,
+            () -> 3,
             20,
             NMLSounds.ANCIENT_BRONZE_MASK_EQUIP,
             () -> Ingredient.EMPTY,

@@ -1,0 +1,8 @@
+{
+    "condition": {
+        "type": "nomansland:item_conditional",
+        "items": "nomansland:ancestral_oath_sword"
+    },
+    "weight": 1,
+    "text": "&PlayerName, what do you believe 'Evil' is? \n Rather, do you believe /'Evil' to be a thing /of our world? \nA concept born in nature, inherent to it? \nWe believed otherwise. \nWe saw what comes of Man's folly. Where Virtue/ turns to Madness. \nEvil was a creation of our descendants. Our failure to guide them. A seed that cannot be uprooted. \n And so, we swore an oath. \n Never again. \n...///// \nAnd yet,/ this notion too, was failed/ to be passed on."
+}

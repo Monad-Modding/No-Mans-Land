@@ -1,4 +1,7 @@
 package com.farcr.nomansland.common.block;
+import net.minecraft.world.item.component.SuspiciousStewEffects;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -15,6 +18,20 @@ public class FlowerbedBlock extends FlowerBlock {
 
     public FlowerbedBlock(Holder<MobEffect> effect, float seconds, Properties properties) {
         super(effect, seconds, properties);
+    }
+
+    public static final MapCodec<FlowerbedBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            EFFECTS_FIELD.forGetter(FlowerBlock::getSuspiciousEffects),
+            propertiesCodec()
+    ).apply(instance, FlowerbedBlock::new));
+
+    @Override
+    public MapCodec<FlowerbedBlock> codec() {
+        return CODEC;
+    }
+
+    public FlowerbedBlock(SuspiciousStewEffects suspiciousStewEffects, Properties properties) {
+        super(suspiciousStewEffects, properties);
     }
 
     @Override

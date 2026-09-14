@@ -56,6 +56,11 @@ public class InvertedBellBlock extends BaseEntityBlock {
         );
     }
 
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return simpleCodec(InvertedBellBlock::new);
+    }
+
     public static final VoxelShape[] BELL_NS = new VoxelShape[3 * 3 * 3];
     public static final VoxelShape[] BELL_EW = new VoxelShape[3 * 3 * 3];
 
@@ -249,11 +254,6 @@ public class InvertedBellBlock extends BaseEntityBlock {
             return createTickerHelper(blockEntityType, NMLBlockEntities.INVERTED_BELL.get(), InvertedBellControllerBlockEntity::tick);
         }
         return null;
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(InvertedBellBlock::new);
     }
 
     @Override

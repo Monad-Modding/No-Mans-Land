@@ -28,10 +28,10 @@ public record BiomeTagConditionSource(List<TagKey<Biome>> biomeTags) implements 
         return CODEC;
     }
 
-    public SurfaceRules.Condition apply(final SurfaceRules.Context p_context) {
+    public SurfaceRules.Condition apply(final SurfaceRules.Context surfaceContext) {
         class BiomeCondition extends SurfaceRules.LazyYCondition {
             BiomeCondition() {
-                super(p_context);
+                super(surfaceContext);
             }
 
             @Override

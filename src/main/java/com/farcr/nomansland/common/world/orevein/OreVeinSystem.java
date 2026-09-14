@@ -11,7 +11,6 @@ import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
@@ -57,9 +56,6 @@ public class OreVeinSystem {
     }
 
     public void buildVeins(WorldGenRegion level, ChunkAccess chunk, WorldGenerationContext context, RandomState random, BlockState defaultBlock) {
-        // todo: specify dimension in vein type
-        if (level.getLevel().dimension() != Level.OVERWORLD) return;
-
         ObjectOpenHashSet<OreVeinInstance> oreVeinsInChunk = this.collectVeinsInChunk(level, chunk, context, random);
         if (oreVeinsInChunk.isEmpty()) return;
         // sort by generation order.

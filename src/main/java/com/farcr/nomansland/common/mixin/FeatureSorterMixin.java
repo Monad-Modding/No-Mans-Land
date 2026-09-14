@@ -51,12 +51,12 @@ public class FeatureSorterMixin {
             for (int j = 0; j < featureSet.size(); j++) {
                 for (Holder<PlacedFeature> holder : featureSet.get(j)) {
                     PlacedFeature placedfeature = holder.value();
-                    featureDataList.add(new FeatureData(indexMap.computeIfAbsent(placedfeature, p_220609_ -> mutableint.getAndIncrement()), j, placedfeature));
+                    featureDataList.add(new FeatureData(indexMap.computeIfAbsent(placedfeature, key -> mutableint.getAndIncrement()), j, placedfeature));
                 }
             }
 
             for (int k = 0; k < featureDataList.size(); k++) {
-                Set<FeatureData> featureDataSet = dependencyMap.computeIfAbsent(featureDataList.get(k), p_220602_ -> new TreeSet<>(comparator));
+                Set<FeatureData> featureDataSet = dependencyMap.computeIfAbsent(featureDataList.get(k), key -> new TreeSet<>(comparator));
                 if (k < featureDataList.size() - 1) {
                     featureDataSet.add(featureDataList.get(k + 1));
                 }
@@ -92,7 +92,7 @@ public class FeatureSorterMixin {
 
         for (int l = 0; l < maxBiomeFeatureCount; l++) {
             int i1 = l;
-            List<PlacedFeature> list4 = visitedNodes.stream().filter(p_220599_ -> p_220599_.step() == i1).map(FeatureData::feature).collect(Collectors.toList());
+            List<PlacedFeature> list4 = visitedNodes.stream().filter(featureData -> featureData.step() == i1).map(FeatureData::feature).collect(Collectors.toList());
             // Using this constructor because access transformers are evil and don't work
             builder.add(new FeatureSorter.StepFeatureData(list4, Util.createIndexIdentityLookup(list4)));
         }

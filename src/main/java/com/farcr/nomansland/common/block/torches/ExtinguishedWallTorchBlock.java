@@ -1,4 +1,6 @@
 package com.farcr.nomansland.common.block.torches;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.MapCodec;
 
 import com.farcr.nomansland.common.registry.NMLRegistries;
 import com.farcr.nomansland.common.registry.NMLSounds;
@@ -30,6 +32,16 @@ public class ExtinguishedWallTorchBlock extends WallTorchBlock {
 
     public ExtinguishedWallTorchBlock(SimpleParticleType flameParticle, Properties properties) {
         super(flameParticle, properties);
+    }
+
+    public static final MapCodec<WallTorchBlock> CODEC = RecordCodecBuilder.<ExtinguishedWallTorchBlock>mapCodec(instance -> instance.group(
+            PARTICLE_OPTIONS_FIELD.forGetter(block -> block.flameParticle),
+            propertiesCodec()
+    ).apply(instance, ExtinguishedWallTorchBlock::new)).xmap(block -> (WallTorchBlock) block, block -> (ExtinguishedWallTorchBlock) block);
+
+    @Override
+    public MapCodec<WallTorchBlock> codec() {
+        return CODEC;
     }
 
     @Override

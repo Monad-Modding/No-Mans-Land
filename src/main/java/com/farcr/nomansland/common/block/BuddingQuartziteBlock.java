@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,6 +19,14 @@ public class BuddingQuartziteBlock extends BuddingAmethystBlock {
     public BuddingQuartziteBlock(Properties properties) {
         super(properties);
     }
+    public static final MapCodec<BuddingAmethystBlock> CODEC = simpleCodec(BuddingQuartziteBlock::new)
+            .xmap(block -> (BuddingAmethystBlock) block, block -> (BuddingQuartziteBlock) block);
+
+    @Override
+    public MapCodec<BuddingAmethystBlock> codec() {
+        return CODEC;
+    }
+
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {

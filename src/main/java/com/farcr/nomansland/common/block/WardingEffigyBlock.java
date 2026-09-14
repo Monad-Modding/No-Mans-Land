@@ -37,7 +37,6 @@ public class WardingEffigyBlock extends BaseEntityBlock {
     protected static final VoxelShape X_TWO_AABB = Block.box(5.5, 0, 1.5, 10.5, 10, 14.5);
     protected static final VoxelShape X_FULL_AABB = Block.box(1.5, 0, 1.5, 14.5, 10, 14.5);
 
-
     public WardingEffigyBlock(final Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(EFFIGIES, 1));

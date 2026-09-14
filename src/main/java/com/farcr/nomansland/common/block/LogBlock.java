@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,8 +13,14 @@ import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.Nullable;
 
 public class LogBlock extends RotatedPillarBlock {
+
     public LogBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public MapCodec<LogBlock> codec() {
+        return simpleCodec(LogBlock::new);
     }
 
     @Override

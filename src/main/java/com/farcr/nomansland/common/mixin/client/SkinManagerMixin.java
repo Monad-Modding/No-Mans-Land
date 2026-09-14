@@ -24,8 +24,7 @@ public class SkinManagerMixin {
         List<String> UUIDS = List.of(
                 "961e150b-8c68-430f-8926-1e84f4651599", // taze_r
                 "4378df24-8433-4b5c-b865-bf635b003ebb", // Farcr
-                "1341db98-ab30-430a-b7a5-dd3ba14e6eaa", // Probleyes
-                "519ea930-dac0-468f-ab06-3b530b7a3304" // ex0planetary
+                "1341db98-ab30-430a-b7a5-dd3ba14e6eaa" // Probleyes
         );
 
         ResourceLocation CAPE_TEXTURE = NoMansLand.location("textures/misc/nml_cape.png");

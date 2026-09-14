@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block.pots;
 
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.blockentity.PotBlockEntity;
 import com.farcr.nomansland.common.entity.FallingPotEntity;
 import com.farcr.nomansland.common.registry.NMLRegistries;
@@ -13,6 +14,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -30,6 +32,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -37,6 +40,9 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 
 public class LargePotBlock extends PotBlock {
 
@@ -49,6 +55,11 @@ public class LargePotBlock extends PotBlock {
     public LargePotBlock(Properties properties) {
         super(PotSize.LARGE, properties);
         registerDefaultState(defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER));
+    }
+
+    @Override
+    public MapCodec<LargePotBlock> codec() {
+        return simpleCodec(LargePotBlock::new);
     }
 
     @Override
@@ -106,7 +117,7 @@ public class LargePotBlock extends PotBlock {
                 super.playerWillDestroy(level, lowerPos, lowerState, player);
                 if (!player.isCreative()) {
                     BlockEntity pot = level.getBlockEntity(lowerPos);
-                    dropResources(state, level, lowerPos, pot, player, player.getMainHandItem());
+                    dropResources(lowerState, level, lowerPos, pot, player, player.getMainHandItem());
                 }
                 level.removeBlock(lowerPos, false);
             }
@@ -185,19 +196,19 @@ public class LargePotBlock extends PotBlock {
         return super.newBlockEntity(pos, state);
     }
 
+    private static final Map<VoxelShape, VoxelShape> UPPER_SHAPE_CACHE = new ConcurrentHashMap<>();
+
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (level.getBlockEntity(getLowerPos(state, pos)) instanceof PotBlockEntity pot && pot.variant != null) {
-            VoxelShape variantShape = pot.variant.shape();
-            if (variantShape != null && !variantShape.isEmpty()) return isUpper(state) ? offsetShape(variantShape, -1) : variantShape;
-        }
-        return LARGE_FALLBACK;
+        PotBlockEntity pot = level.getBlockEntity(getLowerPos(state, pos)) instanceof PotBlockEntity p ? p : null;
+        VoxelShape shape = PotBlock.variantShapeOf(pot, LARGE_FALLBACK);
+        if (!isUpper(state)) return shape;
+        return UPPER_SHAPE_CACHE.computeIfAbsent(shape, s -> offsetShape(s, -1));
     }
 
     @Override
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        VoxelShape shape = getShape(state, level, pos, context);
-        return shape.isEmpty() ? shape : Shapes.create(shape.bounds().deflate(0.02));
+        return PotBlock.collisionShapeOf(getShape(state, level, pos, context));
     }
 
     @Override
@@ -233,6 +244,49 @@ public class LargePotBlock extends PotBlock {
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
         return super.getCloneItemStack(level, getLowerPos(state, pos), state);
+    }
+
+    @Override
+    protected void onExplosionHit(BlockState state, Level level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> dropConsumer) {
+        if (isUpper(state)) {
+            BlockPos lowerPos = pos.below();
+            BlockState lowerState = level.getBlockState(lowerPos);
+            if (lowerState.is(this) && !isUpper(lowerState)) {
+                super.onExplosionHit(lowerState, level, lowerPos, explosion, dropConsumer);
+                return;
+            }
+        }
+        super.onExplosionHit(state, level, pos, explosion, dropConsumer);
+    }
+
+    @Override
+    public void onCaughtFire(BlockState state, Level level, BlockPos pos, @Nullable Direction direction, @Nullable LivingEntity igniter) {
+        super.onCaughtFire(state, level, getLowerPos(state, pos), direction, igniter);
+    }
+
+    @Override
+    public int getExpDrop(BlockState state, LevelAccessor level, BlockPos pos, BlockEntity blockEntity, Entity breaker, ItemStack tool) {
+        BlockPos lowerPos = getLowerPos(state, pos);
+        BlockEntity pot = isUpper(state) ? level.getBlockEntity(lowerPos) : blockEntity;
+        return super.getExpDrop(state, level, lowerPos, pot, breaker, tool);
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return super.getAnalogOutputSignal(state, level, getLowerPos(state, pos));
+    }
+
+    @Override
+    protected int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
+        if (isUpper(state)) {
+            BlockPos lowerPos = pos.below();
+            BlockState lowerState = level.getBlockState(lowerPos);
+            if (lowerState.is(this) && !isUpper(lowerState)) {
+                return super.getSignal(lowerState, level, lowerPos, side);
+            }
+            return 0;
+        }
+        return super.getSignal(state, level, pos, side);
     }
 
     @Override

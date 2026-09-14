@@ -4,7 +4,7 @@
   "conditions": {
     "entity_predicate": {
       "location": {
-        "biomes": "minecraft:lush_caves"
+        "biomes": "#nomansland:entity/spawns_green_tortoises"
       }
     }
   },

@@ -28,6 +28,11 @@ public class NMLTags {
     public static final SharedTag BOOKSHELVES = createSharedTag("bookshelves");
     public static final SharedTag TRIMMED_PLANKS = createSharedTag("trimmed_planks");
 
+    public static final TagKey<Block> INCORRECT_FOR_RITUAL_TOOL = createBlockTag("incorrect_for_ritual_tool");
+    public static final TagKey<Block> RESONATES_WITH_RITUAL_PICKAXE = createBlockTag("resonates_with_ritual_pickaxe");
+    public static final TagKey<Block> OCCLUDES_RITUAL_PICKAXE_RESONANCE = createBlockTag("occludes_ritual_pickaxe_resonance");
+    public static final TagKey<EntityType<?>> MALEVOLENT_ENTITIES = createEntityTag("malevolent");
+
     public static final TagKey<Block> ORE_VEIN_REPLACEABLE = createBlockTag("ore_vein_replaceable");
     public static final TagKey<Block> MUSHROOM_BLOCKS = createBlockTag("mushroom_blocks");
     public static final TagKey<Block> BONEMEALABLE_FLOWERS = createBlockTag("bonemealable_flowers");
@@ -49,6 +54,7 @@ public class NMLTags {
     public static final TagKey<Biome> CAVES = createBiomeTag("caves");
     public static final TagKey<DamageType> IGNITES_FLAMMABLE = createDamageTypeTag("ignites_flammable");
     public static final TagKey<Biome> SPAWNS_MUD_FROGS = createBiomeTag("entity/spawns_mud_frogs");
+    public static final TagKey<Biome> SPAWNS_BUDDY = createBiomeTag("entity/spawns_buddy");
 
     public static final TagKey<Block> SUPPORTS_ICICLE = createBlockTag("supports_icicle");
 

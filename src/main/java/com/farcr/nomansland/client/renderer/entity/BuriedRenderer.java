@@ -24,8 +24,8 @@ package com.farcr.nomansland.client.renderer.entity;
 //                        NoMansLand.location("textures/entity/buried/buried_2.png"));
 //            });
 //
-//    public BuriedRenderer(EntityRendererProvider.Context pContext) {
-//        super(pContext, new BuriedModel(pContext.bakeLayer(NMLModelLayers.BURIED_LAYER)), 0.5f);
+//    public BuriedRenderer(EntityRendererProvider.Context context) {
+//        super(context, new BuriedModel(context.bakeLayer(NMLModelLayers.BURIED_LAYER)), 0.5f);
 //    }
 //
 //    @Override

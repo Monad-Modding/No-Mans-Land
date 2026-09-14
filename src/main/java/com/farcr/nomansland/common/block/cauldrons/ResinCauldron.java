@@ -35,12 +35,14 @@ public class ResinCauldron extends FourLayeredCauldronBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        ItemStack containedStack = new ItemStack(NMLItems.RESIN.get(), 2);
-        if (!player.getInventory().add(containedStack))
-            player.drop(containedStack, false);
-        lowerFillLevel(state, level, pos);
-        level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS);
-        player.awardStat(Stats.USE_CAULDRON);
+        if (!level.isClientSide) {
+            ItemStack containedStack = new ItemStack(NMLItems.RESIN.get(), 2);
+            if (!player.getInventory().add(containedStack))
+                player.drop(containedStack, false);
+            lowerFillLevel(state, level, pos);
+            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS);
+            player.awardStat(Stats.USE_CAULDRON);
+        }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
@@ -49,15 +51,19 @@ public class ResinCauldron extends FourLayeredCauldronBlock {
         boolean interacted = false;
 
         if (stack.is(NMLItems.RESIN) && (player.hasInfiniteMaterials() || stack.getCount() >= 2) && !isFull(state)) {
-            stack.consume(2, player);
             interacted = true;
-            raiseFillLevel(state, level, pos);
-            level.playSound(null, pos, NMLSounds.RESIN_CONSUMED.get(), SoundSource.BLOCKS);
+            if (!level.isClientSide) {
+                stack.consume(2, player);
+                raiseFillLevel(state, level, pos);
+                level.playSound(null, pos, NMLSounds.RESIN_CONSUMED.get(), SoundSource.BLOCKS);
+            }
         }
 
         if (interacted) {
-            player.awardStat(Stats.USE_CAULDRON);
-            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            if (!level.isClientSide) {
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         } else return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
@@ -68,11 +74,11 @@ public class ResinCauldron extends FourLayeredCauldronBlock {
 
         if (isEntityInsideContent(state, pos, entity)) {
             if (entity instanceof LivingEntity && state.getValue(LEVEL) > 1) {
-                level.playSound(null, pos, NMLSounds.STICKY_CAULDRON_SLIDE.get(), SoundSource.BLOCKS, 1, 1);
+                if (!level.isClientSide) level.playSound(null, pos, NMLSounds.STICKY_CAULDRON_SLIDE.get(), SoundSource.BLOCKS, 1, 1);
                 entity.makeStuckInBlock(state, new Vec3(.9, .9, .9));
             }
 
-            if (entity instanceof ItemEntity itemEntity) {
+            if (entity instanceof ItemEntity itemEntity && !level.isClientSide) {
                 if (itemEntity.getItem().is(NMLTags.MAKES_RESIN_OIL) && level.getBlockState(pos.below()).is(NMLTags.HEAT_SOURCES)) {
                     entity.remove(Entity.RemovalReason.DISCARDED);
                     level.playSound(null, pos, NMLSounds.HONEYCOMB_CONSUMED.get(), SoundSource.BLOCKS, 1, 0.5F);

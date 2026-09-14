@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.registry.NMLSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,6 +41,11 @@ public class PlatformBlock extends Block implements SimpleWaterloggedBlock {
     public PlatformBlock(Properties properties) {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false).setValue(UP, false).setValue(UNSTABLE, false));
+    }
+
+    @Override
+    public MapCodec<PlatformBlock> codec() {
+        return simpleCodec(PlatformBlock::new);
     }
 
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

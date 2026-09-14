@@ -1,4 +1,6 @@
 package com.farcr.nomansland.common.block.torches;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -16,8 +18,18 @@ public class ExtinguishedSconceTorchBlock extends ExtinguishedTorchBlock {
         super(flameParticle, properties);
     }
 
+    public static final MapCodec<ExtinguishedSconceTorchBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            PARTICLE_OPTIONS_FIELD.forGetter(block -> block.flameParticle),
+            propertiesCodec()
+    ).apply(instance, ExtinguishedSconceTorchBlock::new));
+
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    public MapCodec<ExtinguishedSconceTorchBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return AABB;
     }
 }

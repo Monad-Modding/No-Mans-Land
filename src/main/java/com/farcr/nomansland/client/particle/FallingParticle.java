@@ -5,7 +5,7 @@ import net.minecraft.client.particle.CherryParticle;
 import net.minecraft.client.particle.SpriteSet;
 
 public class FallingParticle extends CherryParticle {
-    public FallingParticle(ClientLevel pLevel, double pX, double pY, double pZ, SpriteSet pSpriteSet) {
-        super(pLevel, pX, pY, pZ, pSpriteSet);
+    public FallingParticle(ClientLevel level, double x, double y, double z, SpriteSet spriteSet) {
+        super(level, x, y, z, spriteSet);
     }
 }

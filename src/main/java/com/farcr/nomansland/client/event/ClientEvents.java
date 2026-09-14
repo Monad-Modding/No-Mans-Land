@@ -1,6 +1,7 @@
 package com.farcr.nomansland.client.event;
 
 import com.farcr.nomansland.NoMansLand;
+import com.farcr.nomansland.client.handler.CarvingClientHandler;
 import com.farcr.nomansland.client.handler.InvertedBellClientHandler;
 import com.farcr.nomansland.client.renderer.DialogueRenderer;
 import com.farcr.nomansland.client.renderer.FriendMoonRenderer;
@@ -29,6 +30,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -102,6 +104,7 @@ public class ClientEvents {
         if (mc.level != null) FriendMoonRenderer.getInstance().tickClientState();
         if (mc.player == null) return;
         InvertedBellClientHandler.instance.tick();
+        CarvingClientHandler.instance.tick();
     }
 
     @SubscribeEvent
@@ -120,4 +123,26 @@ public class ClientEvents {
         && moonlightDreamType.moonPresenceTime > 0)
             event.setCinematicCameraEnabled(true);
     }
+
+    @SubscribeEvent
+    public static void renderLevelStage(RenderLevelStageEvent event) {
+        if(event.getStage() == RenderLevelStageEvent.Stage.AFTER_ENTITIES && CarvingClientHandler.instance.isChiseling()) {
+            CarvingClientHandler.instance.render(event.getPoseStack(), event.getLevelRenderer(), event.getCamera(), event.getPartialTick());
+        }
+    }
+
+    @SubscribeEvent
+    public static void playerAttack(PlayerInteractEvent.LeftClickBlock event) {
+        if(event.getLevel().isClientSide() && CarvingClientHandler.instance.isChiseling()) {
+            CarvingClientHandler.instance.clear();
+        }
+    }
+
+    @SubscribeEvent
+    public static void playerAttack(PlayerInteractEvent.LeftClickEmpty event) {
+        if(CarvingClientHandler.instance.isChiseling()) {
+            CarvingClientHandler.instance.clear();
+        }
+    }
+
 }

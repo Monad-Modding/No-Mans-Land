@@ -19,8 +19,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class DesertFoliageBlock extends BushBlock implements BonemealableBlock {
     protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 10.0D, 14.0D);
 
-    public DesertFoliageBlock(Properties pProperties) {
-        super(pProperties);
+    public DesertFoliageBlock(Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -35,8 +35,8 @@ public class DesertFoliageBlock extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
-        return pState.is(BlockTags.DEAD_BUSH_MAY_PLACE_ON);
+    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.is(BlockTags.DEAD_BUSH_MAY_PLACE_ON);
     }
 
     @Override

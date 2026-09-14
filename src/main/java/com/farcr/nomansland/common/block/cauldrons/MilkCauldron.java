@@ -53,15 +53,17 @@ public class MilkCauldron extends FourLayeredCauldronBlock {
             }
         }
 
-        if (!compatibleEffects.isEmpty()) {
-            selectedEffect = player.getEffect(compatibleEffects.get(level.random.nextInt(compatibleEffects.size())));
-            if (selectedEffect != null && !EventHooks.onEffectRemoved(player, selectedEffect, EffectCures.MILK)) {
-                player.removeEffect(selectedEffect.getEffect());
+        if (!level.isClientSide) {
+            if (!compatibleEffects.isEmpty()) {
+                selectedEffect = player.getEffect(compatibleEffects.get(level.random.nextInt(compatibleEffects.size())));
+                if (selectedEffect != null && !EventHooks.onEffectRemoved(player, selectedEffect, EffectCures.MILK)) {
+                    player.removeEffect(selectedEffect.getEffect());
+                }
             }
-        }
 
-        level.playSound(player, pos, NMLSounds.PLAYER_DRINK_MILK.get(), SoundSource.PLAYERS, 0.5F, 1);
-        lowerFillLevel(state, level, pos);
+            level.playSound(player, pos, NMLSounds.PLAYER_DRINK_MILK.get(), SoundSource.PLAYERS, 0.5F, 1);
+            lowerFillLevel(state, level, pos);
+        }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
@@ -70,42 +72,46 @@ public class MilkCauldron extends FourLayeredCauldronBlock {
         boolean interacted = false;
 
         if (player.isHolding(Items.BUCKET) && isFull(state)) {
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.MILK_BUCKET.getDefaultInstance()));
             interacted = true;
-            BlockState newState = Blocks.CAULDRON.defaultBlockState();
-            level.setBlockAndUpdate(pos, newState);
-            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
-            level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS);
-        }
-
-        if (player.isHolding(Items.MILK_BUCKET) && !isFull(state)) {
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.BUCKET.getDefaultInstance()));
-            interacted = true;
-            BlockState newState = state.setValue(LEVEL, 3);
-            level.setBlockAndUpdate(pos, newState);
-            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
-            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS);
-        }
-
-        if (Mods.FARMERSDELIGHT.isLoaded()) {
-            if (stack.is(Items.GLASS_BOTTLE)) {
-                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Mods.FARMERSDELIGHT.getItem("milk_bottle").getDefaultInstance()));
-                interacted = true;
-                lowerFillLevel(state, level, pos);
-                level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+            if (!level.isClientSide) {
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.MILK_BUCKET.getDefaultInstance()));
+                BlockState newState = Blocks.CAULDRON.defaultBlockState();
+                level.setBlockAndUpdate(pos, newState);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
+                level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS);
             }
-
-            if (stack.is(Mods.FARMERSDELIGHT.getItem("milk_bottle")) && !isFull(state)) {
-                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.GLASS_BOTTLE.getDefaultInstance()));
+        } else if (player.isHolding(Items.MILK_BUCKET) && !isFull(state)) {
+            interacted = true;
+            if (!level.isClientSide) {
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.BUCKET.getDefaultInstance()));
+                BlockState newState = state.setValue(LEVEL, 3);
+                level.setBlockAndUpdate(pos, newState);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
+                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS);
+            }
+        } else if (Mods.FARMERSDELIGHT.isLoaded()) {
+            if (stack.is(Items.GLASS_BOTTLE)) {
                 interacted = true;
-                raiseFillLevel(state, level, pos);
-                level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+                if (!level.isClientSide) {
+                    player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Mods.FARMERSDELIGHT.getItem("milk_bottle").getDefaultInstance()));
+                    lowerFillLevel(state, level, pos);
+                    level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+                }
+            } else if (stack.is(Mods.FARMERSDELIGHT.getItem("milk_bottle")) && !isFull(state)) {
+                interacted = true;
+                if (!level.isClientSide) {
+                    player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.GLASS_BOTTLE.getDefaultInstance()));
+                    raiseFillLevel(state, level, pos);
+                    level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+                }
             }
         }
 
         if (interacted) {
-            player.awardStat(Stats.USE_CAULDRON);
-            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            if (!level.isClientSide) {
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         } else return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }

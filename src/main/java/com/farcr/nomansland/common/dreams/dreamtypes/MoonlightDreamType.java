@@ -7,6 +7,7 @@ import com.farcr.nomansland.common.dreams.dreamlevel.DreamServerLevel;
 import com.farcr.nomansland.common.friend.FriendMoon;
 import com.farcr.nomansland.common.friend.FriendMoonUpdate;
 import com.farcr.nomansland.common.networking.friend.FriendMoonUpdatePacket;
+import com.farcr.nomansland.common.registry.NMLAttachmentTypes;
 import com.farcr.nomansland.common.registry.NMLCriteriaTriggers;
 import com.mojang.math.Axis;
 import net.minecraft.core.BlockPos;
@@ -33,6 +34,7 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.attachment.AttachmentType;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -61,6 +63,11 @@ public class MoonlightDreamType extends DreamType {
 
             FriendMoon.getOrDefault(player.getServer().overworld())
                 .updatePlayerFriendShadow(player);
+
+            AttachmentType<Long> type = NMLAttachmentTypes.LAST_MOON_CARVING_INTERACTION.get();
+            if(player.hasData(type) && player.getData(type) != -1L) {
+                player.setData(type, -1L);
+            }
         }
     }
 

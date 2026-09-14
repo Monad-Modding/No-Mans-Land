@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "nomansland:block/building/stellar_tiles/large_solar_tile"
+    }
+  }
+}

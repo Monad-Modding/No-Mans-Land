@@ -1,4 +1,6 @@
 package com.farcr.nomansland.common.block.torches;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.MapCodec;
 
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import net.minecraft.core.BlockPos;
@@ -23,6 +25,16 @@ public class SconceTorchBlock extends TorchBlock {
     public SconceTorchBlock(SimpleParticleType flameParticle, Properties properties) {
         super(flameParticle, properties);
 
+    }
+
+    public static final MapCodec<SconceTorchBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            PARTICLE_OPTIONS_FIELD.forGetter(block -> block.flameParticle),
+            propertiesCodec()
+    ).apply(instance, SconceTorchBlock::new));
+
+    @Override
+    public MapCodec<SconceTorchBlock> codec() {
+        return CODEC;
     }
 
     @Override

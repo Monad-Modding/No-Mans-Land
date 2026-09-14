@@ -24,11 +24,16 @@ public class DialogueRenderer {
 
     private static DialogueState currentState;
     private static FriendMoonSpeechAmbientSound activeAmbient;
+    private static List<String> lastWrapSource;
+    private static float lastWrapWidth = -1;
+    private static List<String> cachedWrappedLines;
     public static DialogueState getCurrentState() {
         return currentState;
     }
 
     public static void setCurrentState(DialogueState newState) {
+        lastWrapSource = null;
+        cachedWrappedLines = null;
         currentState = newState;
     }
     public static boolean isStateActive(DialogueState state) {
@@ -125,24 +130,7 @@ public class DialogueRenderer {
             float percentageUsable = .9f;
             float center = (gameWidth / 2f);
 
-            ArrayList<String> totalStringSplits = new ArrayList<>();
-            for (int i = 0; i < constructedText.size(); i++) {
-                String text = constructedText.get(i);
-                if (!text.isEmpty()) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String[] splitText = text.split(" ");
-                    for (int j = 0; j < splitText.length; j++) {
-                        stringBuilder.append(splitText[j]);
-                        if (j < splitText.length - 1)
-                            stringBuilder.append(" ");
-                        float rightPos = center + font.width(stringBuilder.toString()) / 2f;
-                        if (rightPos > (gameWidth * percentageUsable) || (j >= splitText.length - 1)) {
-                            totalStringSplits.add(stringBuilder.toString());
-                            stringBuilder = new StringBuilder();
-                        }
-                    }
-                }
-            }
+            List<String> totalStringSplits = wrapLines(constructedText, font, gameWidth, center, percentageUsable);
             for (int i = (totalStringSplits.size() - 1); i >= Math.max(0, totalStringSplits.size() - 3); i--) {
                 String text = totalStringSplits.get(i);
                 int leftPos = (int) (center - (font.width(text) / 2f));
@@ -162,5 +150,34 @@ public class DialogueRenderer {
             guiGraphics.pose().popPose();
             RenderSystem.setShaderColor(shaderColor[0], shaderColor[1], shaderColor[2], lastOpacity);
         }
+    }
+
+    private static List<String> wrapLines(List<String> constructedText, Font font, float gameWidth, float center, float percentageUsable) {
+        if (cachedWrappedLines != null && lastWrapWidth == gameWidth && constructedText.equals(lastWrapSource))
+            return cachedWrappedLines;
+
+        ArrayList<String> totalStringSplits = new ArrayList<>();
+        for (int i = 0; i < constructedText.size(); i++) {
+            String text = constructedText.get(i);
+            if (!text.isEmpty()) {
+                StringBuilder stringBuilder = new StringBuilder();
+                String[] splitText = text.split(" ");
+                for (int j = 0; j < splitText.length; j++) {
+                    stringBuilder.append(splitText[j]);
+                    if (j < splitText.length - 1)
+                        stringBuilder.append(" ");
+                    float rightPos = center + font.width(stringBuilder.toString()) / 2f;
+                    if (rightPos > (gameWidth * percentageUsable) || (j >= splitText.length - 1)) {
+                        totalStringSplits.add(stringBuilder.toString());
+                        stringBuilder = new StringBuilder();
+                    }
+                }
+            }
+        }
+
+        lastWrapSource = new ArrayList<>(constructedText);
+        lastWrapWidth = gameWidth;
+        cachedWrappedLines = totalStringSplits;
+        return totalStringSplits;
     }
 }

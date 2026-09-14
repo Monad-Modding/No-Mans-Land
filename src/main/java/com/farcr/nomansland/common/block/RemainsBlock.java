@@ -1,4 +1,7 @@
 package com.farcr.nomansland.common.block;
+import net.minecraft.core.registries.BuiltInRegistries;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.MapCodec;
 
 import com.farcr.nomansland.NMLConfig;
 import com.farcr.nomansland.common.blockentity.RemainsBlockEntity;
@@ -19,6 +22,18 @@ import org.jetbrains.annotations.Nullable;
 public class RemainsBlock extends BrushableBlock {
     public RemainsBlock(Block turnsInto, SoundEvent brushSound, SoundEvent brushCompletedSound, Properties properties) {
         super(turnsInto, brushSound, brushCompletedSound, properties);
+    }
+
+    public static final MapCodec<BrushableBlock> CODEC = RecordCodecBuilder.<RemainsBlock>mapCodec(instance -> instance.group(
+            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("turns_into").forGetter(BrushableBlock::getTurnsInto),
+            BuiltInRegistries.SOUND_EVENT.byNameCodec().fieldOf("brush_sound").forGetter(BrushableBlock::getBrushSound),
+            BuiltInRegistries.SOUND_EVENT.byNameCodec().fieldOf("brush_completed_sound").forGetter(BrushableBlock::getBrushCompletedSound),
+            propertiesCodec()
+    ).apply(instance, RemainsBlock::new)).xmap(block -> (BrushableBlock) block, block -> (RemainsBlock) block);
+
+    @Override
+    public MapCodec<BrushableBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -54,5 +69,4 @@ public class RemainsBlock extends BrushableBlock {
         return new RemainsBlockEntity(pos, state);
     }
 }
-
 

@@ -5,6 +5,7 @@ import com.farcr.nomansland.NMLEnumParams;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.definitions.ItemDefinition;
 import com.farcr.nomansland.common.item.*;
+import com.farcr.nomansland.common.registry.NMLTags;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import com.farcr.nomansland.common.registry.entities.NMLEffects;
 import com.farcr.nomansland.common.registry.entities.NMLEntities;
@@ -19,6 +20,7 @@ import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.Unbreakable;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -134,6 +136,36 @@ public class NMLItems {
                     ).component(NMLDataComponents.PUNCH_COOLDOWN, 0)
                     .component(NMLDataComponents.PUNCH_COUNT, 0))
     );
+
+    public static final Tier TIER_RITUAL = new ToolTier(
+            NMLTags.INCORRECT_FOR_RITUAL_TOOL,
+            Integer.MAX_VALUE,
+            Tiers.STONE.getSpeed(),
+            0, 25,
+            () -> Ingredient.EMPTY
+    );
+
+    public static final ItemDefinition<Item> ANCESTRAL_OATH_SWORD = register("ancestral_oath_sword",
+        () -> new AncestralOathSwordItem(TIER_RITUAL, new Properties()
+            .attributes(SwordItem.createAttributes(TIER_RITUAL, 5.0F, -2.4F))
+            .rarity(Rarity.RARE)
+            .component(DataComponents.UNBREAKABLE, new Unbreakable(false))
+        )
+    );
+
+    public static final ItemDefinition<Item> RITUAL_PICK = register("ritual_pick",
+            () -> new RitualPickItem(TIER_RITUAL, new Properties()
+                    .attributes(PickaxeItem.createAttributes(TIER_RITUAL, 4.0F, -2.8F))
+                    .rarity(Rarity.RARE)
+                    .component(DataComponents.UNBREAKABLE, new Unbreakable(false))
+            )
+    );
+
+    public static final ItemDefinition<ChiselItem> ANCIENT_BRONZE_CHISEL = register("ancient_bronze_chisel",
+            () -> new ChiselItem(new Properties()
+                    .stacksTo(1)
+                    .rarity(Rarity.RARE)
+    ));
 
     public static final ItemDefinition<Item> MUSIC_DISC_GUIDANCE = register("music_disc_guidance",
             () -> new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(NMLDiscs.GUIDANCE)), true);

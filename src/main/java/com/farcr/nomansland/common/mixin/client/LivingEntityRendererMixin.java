@@ -2,10 +2,12 @@ package com.farcr.nomansland.common.mixin.client;
 
 import com.farcr.nomansland.common.entity.buddy.Buddy;
 import com.farcr.nomansland.common.extension.EntityExtension;
+import com.farcr.nomansland.common.extension.LivingEntityExtension;
 import com.farcr.nomansland.common.registry.entities.NMLEffects;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,6 +29,9 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity> {
         at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;setupAnim(Lnet/minecraft/world/entity/Entity;FFFFF)V")
     )
     private void nml$buddyJump(T entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
+        ((LivingEntityExtension) entity).nml$setShakeAnimationTime(
+            ((LivingEntityExtension) entity).nml$getShakeAnimationTime() - partialTicks
+        );
         if (entity.hasEffect(NMLEffects.HAPPINESS)) {
             float time = (getBob(entity, partialTicks) / Buddy.DIVIDE_TIME_CONSTANT);
             poseStack.translate(0, Buddy.getHappinessYDisplacement(time), 0);

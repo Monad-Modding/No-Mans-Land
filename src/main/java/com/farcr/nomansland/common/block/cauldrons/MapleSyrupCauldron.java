@@ -37,23 +37,26 @@ public class MapleSyrupCauldron extends FourLayeredCauldronBlock {
 
         ItemStack bottleStack = new ItemStack(NMLItems.MAPLE_SYRUP_BOTTLE.get());
         if (stack.is(Items.GLASS_BOTTLE)) {
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, bottleStack));
             interacted = true;
-            lowerFillLevel(state, level, pos);
-            level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
-        }
-
-        if (stack.is(bottleStack.getItem()) && !isFull(state)) {
-            player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.GLASS_BOTTLE.getDefaultInstance()));
+            if (!level.isClientSide) {
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, bottleStack));
+                lowerFillLevel(state, level, pos);
+                level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+            }
+        } else if (stack.is(bottleStack.getItem()) && !isFull(state)) {
             interacted = true;
-            raiseFillLevel(state, level, pos);
-            level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
-
+            if (!level.isClientSide) {
+                player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.GLASS_BOTTLE.getDefaultInstance()));
+                raiseFillLevel(state, level, pos);
+                level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+            }
         }
 
         if (interacted) {
-            player.awardStat(Stats.USE_CAULDRON);
-            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            if (!level.isClientSide) {
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            }
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         } else return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
@@ -64,7 +67,7 @@ public class MapleSyrupCauldron extends FourLayeredCauldronBlock {
 
         if (isEntityInsideContent(state, pos, entity)) {
             if (entity instanceof LivingEntity && state.getValue(LEVEL) > 1) {
-                level.playSound(null, pos, NMLSounds.STICKY_CAULDRON_SLIDE.get(), SoundSource.BLOCKS, 1, 1);
+                if (!level.isClientSide) level.playSound(null, pos, NMLSounds.STICKY_CAULDRON_SLIDE.get(), SoundSource.BLOCKS, 1, 1);
                 entity.makeStuckInBlock(state, new Vec3(.9, .9, .9));
             }
 

@@ -10,6 +10,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerPlayer;
+import com.farcr.nomansland.common.registry.entities.NMLEffects;
+import com.farcr.nomansland.common.registry.NMLCriteriaTriggers;
+import com.farcr.nomansland.common.effect.FlammableEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -44,6 +48,12 @@ public class IncendiaryArrow extends AbstractArrow {
 
         Entity entity = result.getEntity();
         entity.igniteForSeconds(30);
+
+        if (!level().isClientSide() && entity instanceof LivingEntity living && living.hasEffect(NMLEffects.FLAMMABLE)) {
+            if (getOwner() instanceof ServerPlayer serverPlayer)
+                NMLCriteriaTriggers.IGNITE_FLAMMABLE_ENTITY.get().trigger(serverPlayer, living, damageSources().onFire());
+            FlammableEffect.igniteFlammable(living);
+        }
     }
 
     @Override

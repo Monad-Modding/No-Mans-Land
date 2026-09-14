@@ -1,9 +1,6 @@
 {
   "angry_texture": "minecraft:entity/wolf/wolf_black_angry",
-  "biomes": [
-    "minecraft:dark_forest",
-    "nomansland:dark_swamp"
-],
+  "biomes": "#nomansland:entity/spawns_black_wolves",
   "tame_texture": "minecraft:entity/wolf/wolf_black_tame",
   "wild_texture": "minecraft:entity/wolf/wolf_black"
 }

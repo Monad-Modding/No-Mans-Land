@@ -60,25 +60,27 @@ public class WitchStewCauldron extends FourLayeredCauldronBlock {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (stack.is(Items.BOWL)) {
-            stack.consume(1, player);
+            if (!level.isClientSide) {
+                stack.consume(1, player);
 
-            if (!(player.isCreative() && player.getInventory().hasAnyMatching(s -> s.getItem() == FDIntegration.WITCH_STEW_ITEM.item()))) {
-                ItemStack item = new ItemStack(FDIntegration.WITCH_STEW_ITEM.item());
-                if (!player.addItem(item) ) {
-                    player.drop(item, false);
+                if (!(player.isCreative() && player.getInventory().hasAnyMatching(s -> s.getItem() == FDIntegration.WITCH_STEW_ITEM.item()))) {
+                    ItemStack item = new ItemStack(FDIntegration.WITCH_STEW_ITEM.item());
+                    if (!player.addItem(item) ) {
+                        player.drop(item, false);
+                    }
                 }
+
+                level.playSound(null, pos, NMLSounds.WITCH_STEW_CAULDRON_EMPTY.value(), SoundSource.BLOCKS);
+
+                if (state.getValue(LEVEL) > 1) {
+                    lowerFillLevel(state, level, pos);
+                } else {
+                    level.setBlockAndUpdate(pos, FDIntegration.EMPTY_WITCH_STEW.block().defaultBlockState());
+                }
+
+                player.awardStat(Stats.USE_CAULDRON);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
             }
-
-            level.playSound(null, pos, NMLSounds.WITCH_STEW_CAULDRON_EMPTY.value(), SoundSource.BLOCKS);
-
-            if (state.getValue(LEVEL) > 1) {
-                lowerFillLevel(state, level, pos);
-            } else {
-                level.setBlockAndUpdate(pos, FDIntegration.EMPTY_WITCH_STEW.block().defaultBlockState());
-            }
-
-            player.awardStat(Stats.USE_CAULDRON);
-            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
@@ -90,7 +92,7 @@ public class WitchStewCauldron extends FourLayeredCauldronBlock {
         super.entityInside(state, level, pos, entity);
 
         if (isEntityInsideContent(state, pos, entity)) {
-            if (entity instanceof LivingEntity living && state.getValue(LEVEL) > 3) {
+            if (entity instanceof LivingEntity living && state.getValue(LEVEL) > 3 && !level.isClientSide) {
                 living.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100));
             }
 

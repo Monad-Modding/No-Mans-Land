@@ -63,6 +63,12 @@
     "nomansland:cobbled_deepslate_brick_wall",
     "nomansland:ancestral_effigy",
     "nomansland:ancestral_carving",
-    "nomansland:moon_carving"
+    "nomansland:moon_carving",
+    "nomansland:large_stellar_tile",
+    "nomansland:stellar_tiles",
+    "nomansland:large_lunar_tile",
+    "nomansland:lunar_tiles",
+    "nomansland:large_solar_tile",
+    "nomansland:solar_tiles"
   ]
 }

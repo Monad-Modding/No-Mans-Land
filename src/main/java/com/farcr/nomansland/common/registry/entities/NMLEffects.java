@@ -4,6 +4,7 @@ import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.effect.FlammableEffect;
 import com.farcr.nomansland.common.effect.HappinessEffect;
 import com.farcr.nomansland.common.effect.PacifiedEffect;
+import com.farcr.nomansland.common.effect.StasisEffect;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -22,4 +23,7 @@ public class NMLEffects {
 
     public static final DeferredHolder<MobEffect, MobEffect> HAPPINESS = MOB_EFFECTS.register("happiness",
         () -> new HappinessEffect(MobEffectCategory.BENEFICIAL, 16746142));
+
+    public static final DeferredHolder<MobEffect, MobEffect> STASIS = MOB_EFFECTS.register("stasis",
+        () -> new StasisEffect(MobEffectCategory.HARMFUL, 16766041));
 }

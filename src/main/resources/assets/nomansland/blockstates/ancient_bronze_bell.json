@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "attachment=floor,facing=north": {
+      "model": "nomansland:block/ancient_bronze_bell_floor"
+    },
+    "attachment=floor,facing=east": {
+      "model": "nomansland:block/ancient_bronze_bell_floor",
+      "y": 90
+    },
+    "attachment=floor,facing=south": {
+      "model": "nomansland:block/ancient_bronze_bell_floor",
+      "y": 180
+    },
+    "attachment=floor,facing=west": {
+      "model": "nomansland:block/ancient_bronze_bell_floor",
+      "y": 270
+    },
+    "attachment=ceiling,facing=north": {
+      "model": "nomansland:block/ancient_bronze_bell_floor"
+    },
+    "attachment=ceiling,facing=east": {
+      "model": "nomansland:block/ancient_bronze_bell_floor",
+      "y": 90
+    },
+    "attachment=ceiling,facing=south": {
+      "model": "nomansland:block/ancient_bronze_bell_floor",
+      "y": 180
+    },
+    "attachment=ceiling,facing=west": {
+      "model": "nomansland:block/ancient_bronze_bell_floor",
+      "y": 270
+    },
+    "attachment=single_wall,facing=north": {
+      "model": "nomansland:block/ancient_bronze_bell_wall",
+      "y": 90
+    },
+    "attachment=single_wall,facing=east": {
+      "model": "nomansland:block/ancient_bronze_bell_wall",
+      "y": 180
+    },
+    "attachment=single_wall,facing=south": {
+      "model": "nomansland:block/ancient_bronze_bell_wall",
+      "y": 270
+    },
+    "attachment=single_wall,facing=west": {
+      "model": "nomansland:block/ancient_bronze_bell_wall"
+    },
+    "attachment=double_wall,facing=north": {
+      "model": "nomansland:block/ancient_bronze_bell_wall",
+      "y": 90
+    },
+    "attachment=double_wall,facing=east": {
+      "model": "nomansland:block/ancient_bronze_bell_wall",
+      "y": 180
+    },
+    "attachment=double_wall,facing=south": {
+      "model": "nomansland:block/ancient_bronze_bell_wall",
+      "y": 270
+    },
+    "attachment=double_wall,facing=west": {
+      "model": "nomansland:block/ancient_bronze_bell_wall"
+    }
+  }
+}

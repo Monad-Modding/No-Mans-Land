@@ -4,6 +4,7 @@ import com.farcr.nomansland.common.block.cauldrons.FourLayeredCauldronBlock;
 import com.farcr.nomansland.common.blockentity.TapBlockEntity;
 import com.farcr.nomansland.common.registry.NMLBlockEntities;
 import com.farcr.nomansland.common.registry.NMLRegistries;
+import com.farcr.nomansland.common.registry.NMLSounds;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
@@ -14,22 +15,25 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
@@ -38,6 +42,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import static net.minecraft.world.level.block.LayeredCauldronBlock.LEVEL;
 
@@ -50,6 +55,8 @@ public class TapBlock extends BaseEntityBlock {
             Direction.WEST, Block.box(10.0D, 3.0D, 6.0D, 16.0D, 8.0D, 10.0D),
             Direction.EAST, Block.box(0.0D, 3.0D, 6.0D, 6.0D, 8.0D, 10.0D)
     ));
+
+    public static final BooleanProperty CLOSED = BooleanProperty.create("closed");
 
     public TapBlock(Properties properties) {
         super(properties);
@@ -132,6 +139,8 @@ public class TapBlock extends BaseEntityBlock {
         BlockPos blockpos = context.getClickedPos();
         Direction[] adirection = context.getNearestLookingDirections();
 
+        blockstate = blockstate.setValue(CLOSED, false);
+
         for (Direction direction : adirection) {
             if (direction.getAxis().isHorizontal()) {
                 Direction direction1 = direction.getOpposite();
@@ -147,6 +156,7 @@ public class TapBlock extends BaseEntityBlock {
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
+        builder.add(CLOSED);
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
@@ -177,6 +187,8 @@ public class TapBlock extends BaseEntityBlock {
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if(state.getValue(CLOSED)) return;
+
         BlockPos cauldronPos = getCauldronPos(level, pos);
         if (cauldronPos == null) return;
         BlockState cauldronState = level.getBlockState(cauldronPos);
@@ -224,6 +236,8 @@ public class TapBlock extends BaseEntityBlock {
     @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if(state.getValue(CLOSED)) return;
+
         List<Holder.Reference<TapInteraction>> allTapInteractions = level.registryAccess().registryOrThrow(NMLRegistries.TAP_INTERACTION_KEY).holders().filter(tapInteractionReference -> tapInteractionReference.value().particleType().isPresent()).toList();
         BlockState stateBehind = getBlockStateBehind(level, pos, state);
 
@@ -256,5 +270,36 @@ public class TapBlock extends BaseEntityBlock {
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntity) {
         return level.isClientSide ? null : createTickerHelper(blockEntity, NMLBlockEntities.TAP.get(), TapBlockEntity::tick);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        } else {
+            this.toggle(state, level, pos, null);
+            return InteractionResult.CONSUME;
+        }
+    }
+
+    @Override
+    protected void onExplosionHit(BlockState state, Level level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> dropConsumer) {
+        if (explosion.canTriggerBlocks()) {
+            this.toggle(state, level, pos, null);
+        }
+
+        super.onExplosionHit(state, level, pos, explosion, dropConsumer);
+    }
+
+    public void toggle(BlockState state, Level level, BlockPos pos, @Nullable Player player) {
+        state = state.cycle(CLOSED);
+        level.setBlock(pos, state, 3);
+        playSound(player, level, pos, state);
+        level.gameEvent(player, state.getValue(CLOSED) ? GameEvent.BLOCK_DEACTIVATE : GameEvent.BLOCK_ACTIVATE, pos);
+    }
+
+    protected static void playSound(@Nullable Player player, LevelAccessor level, BlockPos pos, BlockState state) {
+        float f = state.getValue(CLOSED) ? 0.6F : 0.5F;
+        level.playSound(player, pos, NMLSounds.TAP_TURNS.get(), SoundSource.BLOCKS, 0.3F, f);
     }
 }

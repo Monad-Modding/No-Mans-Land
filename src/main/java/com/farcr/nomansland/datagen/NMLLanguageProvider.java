@@ -3,8 +3,10 @@ package com.farcr.nomansland.datagen;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.definitions.BlockDefinition;
 import com.farcr.nomansland.common.definitions.ItemDefinition;
+import com.farcr.nomansland.common.definitions.PotionDefinition;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import com.farcr.nomansland.common.registry.items.NMLItems;
+import com.farcr.nomansland.common.registry.items.NMLPotions;
 import com.farcr.nomansland.common.registry.worldgen.NMLBiomes;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -28,6 +30,21 @@ public class NMLLanguageProvider extends LanguageProvider {
         for (ItemDefinition<?> definition : NMLItems.ITEM_DEFINITIONS) {
             if (!definition.hasCustomLang() && !definition.isBlockItem()) {
                 add(definition.langKey(), definition.langName());
+            }
+        }
+
+        for (PotionDefinition definition : NMLPotions.POTION_DEFINITIONS) {
+            if (!definition.hasCustomLang()) {
+                add("item.nomansland.bandage.effect." + definition.trimmedLangKey(),
+                    definition.effectLanguageValue() + " Bandage");
+                add("item.minecraft.potion.effect." + definition.trimmedLangKey(),
+                    "Potion of " + definition.effectLanguageValue());
+                add("item.minecraft.lingering_potion.effect." + definition.trimmedLangKey(),
+                    "Lingering Potion of " + definition.effectLanguageValue());
+                add("item.minecraft.splash_potion.effect." + definition.trimmedLangKey(),
+                    "Splash Potion of " + definition.effectLanguageValue());
+                add("item.minecraft.tipped_arrow.effect." + definition.trimmedLangKey(),
+                    "Arrow of " + definition.effectLanguageValue());
             }
         }
 
@@ -55,6 +72,10 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("nomansland.subtitle.entity.generic.sticky_cauldron_slide", "Sliding in a sticky cauldron");
         add("nomansland.subtitle.item.generic.consumed", "Item consumed");
         add("nomansland.subtitle.item.bomb.primed", "Bomb primed");
+        add("nomansland.subtitle.item.ancestral_oath_sword.block", "Sword blocks");
+        add("nomansland.subtitle.item.ancestral_oath_sword.parry", "Sword parries");
+        add("nomansland.subtitle.item.ritual_pick.locate", "Ritual Pick resonates");
+        add("nomansland.subtitle.item.ritual_pick.glint", "Block resonates");
         add("nomansland.subtitle.entity.billhook_bass.death", "Billhook Bass dies");
         add("nomansland.subtitle.entity.billhook_bass.flop", "Billhook Bass flops");
         add("nomansland.subtitle.entity.billhook_bass.hurt", "Billhook Bass hurts");
@@ -102,6 +123,7 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("nomansland.subtitle.entity.friend_moon.speak", "Friend Moon speaks");
         add("nomansland.subtitle.entity.friend_moon.speak_sad", "Friend Moon speaks sadly");
         add("nomansland.subtitle.block.icicle.shatter", "Icicle shatters");
+        add("nomansland.subtitle.block.tap.turns", "Tap turns");
         add("nomansland.subtitle.entity.living_pot.charge", "Living Pot charges");
 
         add("item.nomansland.billhook_bass_bucket", "Bucket of Billhook Bass");
@@ -160,6 +182,7 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("effect.nomansland.flammable", "Flammable");
         add("effect.nomansland.friendship", "Friendship");
         add("effect.nomansland.happiness", "Happiness");
+        add("effect.nomansland.stasis", "Stasis");
         add("item.nomansland.bandage.with_effect", "%s Bandage");
         add("item.nomansland.bandage.effect.harming", "Harming Bandage");
         add("item.nomansland.bandage.effect.healing", "Healing Bandage");
@@ -184,8 +207,8 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("nomansland.advancements.find_mineshaft.description", "Find a Mineshaft");
         add("nomansland.advancements.find_alchemist_ruins.title", "Old Stories");
         add("nomansland.advancements.find_alchemist_ruins.description", "Discover an ancestral ruin lost to time");
-        add("nomansland.advancements.collect_ancestral_tools.title", "Sticks and Rope");
-        add("nomansland.advancements.collect_ancestral_tools.description", "Collect every piece of ancient bronze equipment");
+        add("nomansland.advancements.collect_ancient_tools.title", "Sticks and Rope");
+        add("nomansland.advancements.collect_ancient_tools.description", "Collect every piece of ancient bronze equipment");
         add("nomansland.advancements.dream_friend_moon.title", "First Contact");
         add("nomansland.advancements.dream_friend_moon.description", "Dream of a cosmic presence");
         add("nomansland.advancements.meet_friend_moon.title", "Friendship");
@@ -208,6 +231,10 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("design.nomansland.tortoise.gray", "Gray");
         add("design.nomansland.ancient_bronze_mask.alchemist", "Alchemist");
         add("design.nomansland.warp_worn.warp_worn", "Warp-worn");
+        add("screen.nomansland.carving", "Scroll to select carving");
+
+        add("item.nomansland.ancestral_oath_sword.refuse", "The sword refuses to violate its oath of pacifism...");
+        add("nomansland.carving.hint", "Right Click to carve, Left Click to cancel");
 
         add("commands.nomansland.dream.start.pass", "Successfully started dream %s for %s.");
         add("commands.nomansland.dream.start.pass_count", "Successfully started dream %s for %s players.");

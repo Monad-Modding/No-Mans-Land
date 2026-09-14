@@ -139,7 +139,7 @@ public abstract class ChunkGeneratorStructureStateMixin implements ChunkGenerato
     }
 
     @Override
-    public ChunkPos meetingPointPosition() {
+    public synchronized ChunkPos meetingPointPosition() {
         if (nomansland$meetingPointOverride != null) {
             return nomansland$meetingPointOverride;
         }

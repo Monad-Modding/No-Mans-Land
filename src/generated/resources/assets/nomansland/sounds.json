@@ -800,6 +800,12 @@
     ],
     "subtitle": "nomansland.subtitle.block.spike_trap.retract"
   },
+  "block.tap.turns": {
+    "sounds": [
+      "nomansland:block/tap/turns"
+    ],
+    "subtitle": "nomansland.subtitle.block.tap.turns"
+  },
   "block.thatch.break": {
     "sounds": [
       "nomansland:block/thatch/break1",
@@ -1869,6 +1875,24 @@
     ],
     "subtitle": "nomansland.subtitle.entity.tortoise.swim"
   },
+  "item.ancestral_oath_sword.block": {
+    "sounds": [
+      "nomansland:item/ancestral_oath_sword/block1",
+      "nomansland:item/ancestral_oath_sword/block2",
+      "nomansland:item/ancestral_oath_sword/block3",
+      "nomansland:item/ancestral_oath_sword/block4"
+    ],
+    "subtitle": "nomansland.subtitle.item.ancestral_oath_sword.block"
+  },
+  "item.ancestral_oath_sword.parry": {
+    "sounds": [
+      "nomansland:item/ancestral_oath_sword/parry1",
+      "nomansland:item/ancestral_oath_sword/parry2",
+      "nomansland:item/ancestral_oath_sword/parry3",
+      "nomansland:item/ancestral_oath_sword/parry4"
+    ],
+    "subtitle": "nomansland.subtitle.item.ancestral_oath_sword.parry"
+  },
   "item.armor.equip_ancient_bronze_mask": {
     "sounds": [
       {
@@ -1920,6 +1944,18 @@
       "block/honeyblock/break5"
     ],
     "subtitle": "nomansland.subtitle.item.generic.consumed"
+  },
+  "item.ritual_pick.glint": {
+    "sounds": [
+      "nomansland:item/ritual_pick/glint"
+    ],
+    "subtitle": "nomansland.subtitle.item.ritual_pick.glint"
+  },
+  "item.ritual_pick.locate": {
+    "sounds": [
+      "nomansland:item/ritual_pick/ritual_pick_locate"
+    ],
+    "subtitle": "nomansland.subtitle.item.ritual_pick.locate"
   },
   "music.overworld.alchemist_ruins": {
     "sounds": [

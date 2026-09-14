@@ -16,10 +16,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import static com.farcr.nomansland.common.block.fruit_trees.FruitBlock.AGE;
 
 public class FruitLeavesBlock extends LeavesBlock {
-    public static final MapCodec<FruitLeavesBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            propertiesCodec(),
-            FruitType.CODEC.fieldOf("fruit_type").forGetter(f -> f.fruitType)
-    ).apply(instance, FruitLeavesBlock::new));
 
     private final FruitType fruitType;
     public Holder<Block> fruit;
@@ -33,6 +29,11 @@ public class FruitLeavesBlock extends LeavesBlock {
         leaves = fruitType.getLeaves();
         growthSpeed = fruitType.getGrowthSpeed();
     }
+
+    public static final MapCodec<FruitLeavesBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            propertiesCodec(),
+            FruitType.CODEC.fieldOf("fruit_type").forGetter(f -> f.fruitType)
+    ).apply(instance, FruitLeavesBlock::new));
 
     @Override
     public MapCodec<FruitLeavesBlock> codec() {

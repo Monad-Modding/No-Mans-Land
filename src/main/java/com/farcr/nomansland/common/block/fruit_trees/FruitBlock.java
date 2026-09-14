@@ -78,32 +78,22 @@ public class FruitBlock extends BushBlock implements BonemealableBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (state.getValue(AGE) != getMaxAge()) return InteractionResult.PASS;
 
-        if (!(player.isCreative() && player.getInventory().hasAnyMatching(stack -> stack.getItem() == fruitDrops.value()))) {
-            ItemStack fruitStack = new ItemStack(fruitDrops.value());
-            if (!player.addItem(fruitStack)) {
-                player.drop(fruitStack, false);
-            } else {
-                level.playSound(player,
-                        player.getX(),
-                        player.getY(),
-                        player.getZ(),
-                        SoundEvents.ITEM_PICKUP,
-                        SoundSource.PLAYERS,
-                        0.2F,
-                        (level.random.nextFloat() - level.random.nextFloat()) * 1.4F + 2.0F);
+        if (!level.isClientSide) {
+            if (!(player.isCreative() && player.getInventory().hasAnyMatching(stack -> stack.getItem() == fruitDrops.value()))) {
+                ItemStack fruitStack = new ItemStack(fruitDrops.value());
+                if (!player.addItem(fruitStack)) player.drop(fruitStack, false);
             }
-        } else {
-            level.playSound(player,
-                    player.getX(),
-                    player.getY(),
-                    player.getZ(),
-                    SoundEvents.ITEM_PICKUP,
-                    SoundSource.PLAYERS,
-                    0.2F,
-                    (level.random.nextFloat() - level.random.nextFloat()) * 1.4F + 2.0F);
+            level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         }
 
-        level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+        level.playSound(player,
+                player.getX(),
+                player.getY(),
+                player.getZ(),
+                SoundEvents.ITEM_PICKUP,
+                SoundSource.PLAYERS,
+                0.2F,
+                (level.random.nextFloat() - level.random.nextFloat()) * 1.4F + 2.0F);
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 

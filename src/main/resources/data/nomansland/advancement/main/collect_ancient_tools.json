@@ -1,0 +1,39 @@
+{
+  "display": {
+    "icon": {
+      "id": "nomansland:ritual_pick",
+      "components": {}
+    },
+    "title": {
+      "translate": "nomansland.advancements.collect_ancient_tools.title"
+    },
+    "description": {
+      "translate": "nomansland.advancements.collect_ancient_tools.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "nomansland:main/find_alchemist_ruins",
+  "criteria": {
+    "netherite_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "nomansland:ancient_bronze_mask"
+          },
+          {
+            "items": "nomansland:ancient_bronze_sword"
+          },
+          {
+            "items": "nomansland:ancient_bronze_chisel"
+          },
+          {
+            "items": "nomansland:ritual_pick"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  }
+}

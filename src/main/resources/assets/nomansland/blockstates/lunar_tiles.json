@@ -1,0 +1,36 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "nomansland:block/building/stellar_tiles/lunar_tiles",
+        "weight": 12
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/lunar_tiles_1",
+        "weight": 2
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/lunar_tiles_2",
+        "weight": 2
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/lunar_tiles_3",
+        "weight": 2
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/lunar_tiles_4",
+        "weight": 2
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/lunar_tiles_5",
+        "weight": 2
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/lunar_tiles_6"
+      },
+      {
+        "model": "nomansland:block/building/stellar_tiles/lunar_tiles_7"
+      }
+    ]
+  }
+}

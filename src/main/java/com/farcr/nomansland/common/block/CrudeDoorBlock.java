@@ -21,10 +21,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 public class CrudeDoorBlock extends DoorBlock {
-    public static final MapCodec<CrudeDoorBlock> CODEC = RecordCodecBuilder.mapCodec(
-            instance -> instance.group(BlockSetType.CODEC.fieldOf("block_set_type").forGetter(CrudeDoorBlock::type), propertiesCodec())
-                    .apply(instance, CrudeDoorBlock::new)
-    );
 
     private static final VoxelShape LOWER_PANEL_NORTH = Block.box(0, 3, 0, 16, 29, 3.0);
     private static final VoxelShape LOWER_PANEL_SOUTH = Block.box(0, 3, 13, 16, 29, 16.0);
@@ -39,6 +35,11 @@ public class CrudeDoorBlock extends DoorBlock {
     public CrudeDoorBlock(BlockSetType blockSetType, Properties properties) {
         super(blockSetType, properties);
     }
+
+    public static final MapCodec<CrudeDoorBlock> CODEC = RecordCodecBuilder.mapCodec(
+            instance -> instance.group(BlockSetType.CODEC.fieldOf("block_set_type").forGetter(CrudeDoorBlock::type), propertiesCodec())
+                    .apply(instance, CrudeDoorBlock::new)
+    );
 
     @Override
     public MapCodec<? extends DoorBlock> codec() {
