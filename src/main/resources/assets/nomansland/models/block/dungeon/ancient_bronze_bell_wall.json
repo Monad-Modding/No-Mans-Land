@@ -1,10 +1,166 @@
 {
-  "credit": "keyberries",
+  "credit": "Made with Blockbench",
   "textures": {
-    "0": "nomansland:block/ancient_bronze_bell",
-    "particle": "nomansland:block/ancient_bronze_bell"
+    "0": "nomansland:block/dungeon/ancient_bronze_bell",
+    "particle": "nomansland:block/dungeon/ancient_bronze_particle"
   },
   "elements": [
+    {
+      "name": "mount",
+      "from": [
+        0,
+        12,
+        6
+      ],
+      "to": [
+        2.005,
+        16,
+        10
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          15,
+          14,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            15,
+            10,
+            16,
+            12
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            14.5,
+            10,
+            15.5,
+            12
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            14,
+            10,
+            15,
+            12
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            14,
+            14,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            14,
+            8,
+            15,
+            10
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            14,
+            12,
+            15,
+            14
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "mount",
+      "from": [
+        13.995,
+        12,
+        6
+      ],
+      "to": [
+        16,
+        16,
+        10
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          29,
+          14,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            14,
+            10,
+            15,
+            12
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            14,
+            14,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            15,
+            10,
+            16,
+            12
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            14.5,
+            10,
+            15.5,
+            12
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            15,
+            8,
+            16,
+            10
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            15,
+            12,
+            16,
+            14
+          ],
+          "texture": "#0"
+        }
+      }
+    },
     {
       "name": "hull",
       "from": [
@@ -77,7 +233,7 @@
     {
       "name": "hull",
       "from": [
-        2,
+        1.995,
         12,
         7
       ],
@@ -425,12 +581,13 @@
           ],
           "texture": "#0"
         }
-      }
+      },
+      "name": "bell"
     }
   ],
   "groups": [
     {
-      "name": "ancient_bronze_bell",
+      "name": "block_wall",
       "origin": [
         0,
         16,
@@ -439,22 +596,7 @@
       "color": 0,
       "children": [
         0,
-        1,
-        2,
-        3,
-        4,
-        {
-          "name": "clapper2",
-          "origin": [
-            0,
-            13,
-            0
-          ],
-          "color": 0,
-          "children": [
-            5
-          ]
-        }
+        1
       ]
     }
   ],
