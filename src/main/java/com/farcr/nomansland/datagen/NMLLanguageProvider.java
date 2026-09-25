@@ -165,6 +165,8 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("painting.nomansland.sun.author", "Farcr");
         add("painting.nomansland.white_eyes.title", "White Eyes");
         add("painting.nomansland.white_eyes.author", "Probleyes");
+        add("painting.nomansland.driftwood.title", "Driftwood");
+        add("painting.nomansland.driftwood.author", "call13");
         add("death.attack.nomansland.icicle_pierce", "%1$s was pierced by an icicle");
         add("death.attack.nomansland.icicle_pierce.player", "%1$s was pierced by an icicle while fighting %2$s");
         add("death.attack.nomansland.spike_fall", "%1$s fell for a spike trap");
