@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "cobblestone_bricks",
+  "key": {
+    "#": {
+      "item": "nomansland:large_lunar_tile"
+    }
+  },
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "result": {
+    "count": 4,
+    "id": "nomansland:lunar_tiles"
+  },
+  "show_notification": true
+}
