@@ -61,64 +61,64 @@
       "y": 270
     },
     "attached=true,facing=north,powered=false,waterlogged=false": {
-      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 90
+      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall"
     },
     "attached=true,facing=north,powered=true,waterlogged=false": {
-      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 90
+      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall"
     },
     "attached=true,facing=north,powered=false,waterlogged=true": {
-      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 90
+      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall"
     },
     "attached=true,facing=north,powered=true,waterlogged=true": {
-      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 90
+      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall"
     },
     "attached=true,facing=east,powered=false,waterlogged=false": {
       "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 180
+      "y": 90
     },
     "attached=true,facing=east,powered=true,waterlogged=false": {
       "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 180
+      "y": 90
     },
     "attached=true,facing=east,powered=false,waterlogged=true": {
       "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 180
+      "y": 90
     },
     "attached=true,facing=east,powered=true,waterlogged=true": {
       "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 180
+      "y": 90
     },
     "attached=true,facing=south,powered=false,waterlogged=false": {
       "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 270
+      "y": 180
     },
     "attached=true,facing=south,powered=true,waterlogged=false": {
       "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 270
+      "y": 180
     },
     "attached=true,facing=south,powered=false,waterlogged=true": {
       "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 270
+      "y": 180
     },
     "attached=true,facing=south,powered=true,waterlogged=true": {
       "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
-      "y": 270
+      "y": 180
     },
     "attached=true,facing=west,powered=false,waterlogged=false": {
-      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall"
+      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
+      "y": 270
     },
     "attached=true,facing=west,powered=true,waterlogged=false": {
-      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall"
+      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
+      "y": 270
     },
     "attached=true,facing=west,powered=false,waterlogged=true": {
-      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall"
+      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
+      "y": 270
     },
     "attached=true,facing=west,powered=true,waterlogged=true": {
-      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall"
+      "model": "nomansland:block/dungeon/ancient_bronze_bell_wall",
+      "y": 270
     }
   }
 }

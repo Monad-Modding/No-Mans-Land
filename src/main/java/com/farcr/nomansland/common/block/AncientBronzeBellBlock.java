@@ -3,6 +3,7 @@ package com.farcr.nomansland.common.block;
 import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.block.torches.ExtinguishableBlockPairing;
 import com.farcr.nomansland.common.blockentity.AncientBronzeBellBlockEntity;
+import com.farcr.nomansland.common.blockentity.PotBlockEntity;
 import com.farcr.nomansland.common.registry.NMLBlockEntities;
 import com.farcr.nomansland.common.registry.NMLRegistries;
 import com.farcr.nomansland.common.registry.NMLSounds;
@@ -68,7 +69,7 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
     private static final Map<Direction, VoxelShape> FLOOR_SHAPES =
             byFacing(Shapes.or(BODY, BAR, POSTS));
     private static final Map<Direction, VoxelShape> WALL_SHAPES =
-            byFacing(Shapes.or(BODY, rotate(BAR, Direction.EAST)));
+            byFacing(Shapes.or(BODY, BAR));
 
     public AncientBronzeBellBlock(final Properties properties) {
         super(properties);
@@ -118,7 +119,7 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
         final BlockState wall = defaultBlockState()
                 .setValue(ATTACHED, true)
                 .setValue(WATERLOGGED, waterlogged)
-                .setValue(FACING, clicked.getOpposite());
+                .setValue(FACING, clicked.getCounterClockWise());
         return wall.canSurvive(level, pos) ? wall : null;
     }
 
@@ -126,7 +127,8 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
     protected boolean canSurvive(final BlockState state, final LevelReader level, final BlockPos pos) {
         if (state.getValue(ATTACHED)) {
             final Direction along = state.getValue(FACING);
-            return sturdy(level, pos, along) && sturdy(level, pos, along.getOpposite());
+            final Direction supportDirection = along.getClockWise();
+            return sturdy(level, pos, supportDirection) && sturdy(level, pos, supportDirection.getOpposite());
         }
         final BlockPos below = pos.below();
         return level.getBlockState(below).isFaceSturdy(level, below, Direction.UP);
@@ -134,10 +136,12 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(final BlockState state, final Level level, final BlockPos pos, final Player player, final BlockHitResult hit) {
+        Direction facing = state.getValue(FACING);
+        Direction hitDirection = hit.getDirection();
+        if (hitDirection != facing && hitDirection != facing.getOpposite()) {
+            return InteractionResult.PASS;
+        }
         if (!level.isClientSide) {
-            Direction hitDirection = hit.getDirection().getAxis() != state.getValue(FACING).getAxis()
-                    ? state.getValue(FACING)
-                    : hit.getDirection();
             ring(level, pos, state, hitDirection);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
@@ -166,9 +170,9 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
 
     @Override
     protected void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
-        if (!level.isClientSide) {
-            Direction facing = state.getValue(FACING);
-            Direction hitDirection = hit.getDirection().getAxis() == facing.getAxis() ? hit.getDirection() : facing;
+        Direction facing = state.getValue(FACING);
+        Direction hitDirection = hit.getDirection();
+        if (!level.isClientSide && (hitDirection == facing || hitDirection == facing.getOpposite())) {
             ring(level, hit.getBlockPos(), state, hitDirection);
         }
     }
@@ -189,12 +193,27 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
         if (!state.getValue(WATERLOGGED)) {
             level.playSound(null, pos, SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.0F, 0.5F);
         }
+        wakeNearbyLivingPots(level, pos);
         toggleNearbyLights(level, pos);
     }
 
+    private static void wakeNearbyLivingPots(Level level, BlockPos center) {
+        if (level.isClientSide) return;
+
+        BlockPos.betweenClosed(center.offset(-RADIUS, -RADIUS, -RADIUS), center.offset(RADIUS, RADIUS, RADIUS)).forEach(pos -> {
+            int dx = pos.getX() - center.getX();
+            int dy = pos.getY() - center.getY();
+            int dz = pos.getZ() - center.getZ();
+            if (dx * dx + dy * dy + dz * dz > RADIUS * RADIUS) return;
+
+            if (level.getBlockEntity(pos) instanceof PotBlockEntity pot && pot.isLiving()) {
+                pot.wakeUp(null);
+            }
+        });
+    }
+
     private static void toggleNearbyLights(Level level, BlockPos center) {
-        BlockPos.betweenClosed(center.offset(-RADIUS, -RADIUS, -RADIUS),
-                center.offset(RADIUS, RADIUS, RADIUS)).forEach(pos -> {
+        BlockPos.betweenClosed(center.offset(-RADIUS, -RADIUS, -RADIUS), center.offset(RADIUS, RADIUS, RADIUS)).forEach(pos -> {
             int dx = pos.getX() - center.getX();
             int dy = pos.getY() - center.getY();
             int dz = pos.getZ() - center.getZ();
