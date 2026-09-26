@@ -43,6 +43,10 @@ public class NMLBlockEntities {
         BLOCK_ENTITIES.register("inverted_bell", () ->
                 BlockEntityType.Builder.of(InvertedBellControllerBlockEntity::new, NMLBlocks.INVERTED_BELL.get()).build(null));
 
+    public static final Supplier<BlockEntityType<AncientBronzeBellBlockEntity>> ANCIENT_BRONZE_BELL =
+            BLOCK_ENTITIES.register("ancient_bronze_bell", () ->
+                    BlockEntityType.Builder.of(AncientBronzeBellBlockEntity::new, NMLBlocks.ANCIENT_BRONZE_BELL.get()).build(null));
+
     public static final Supplier<BlockEntityType<MoonCarvingBlockEntity>> MOON_CARVING =
         BLOCK_ENTITIES.register("moon_carving", () ->
             BlockEntityType.Builder.of(MoonCarvingBlockEntity::new, NMLBlocks.MOON_CARVING.get()).build(null));

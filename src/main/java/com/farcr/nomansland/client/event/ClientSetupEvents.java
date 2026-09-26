@@ -86,9 +86,11 @@ public class ClientSetupEvents {
         event.register(ModelResourceLocation.standalone(NoMansLand.location("entity/ink_bomb")));
         event.register(ModelResourceLocation.standalone(NoMansLand.location("entity/explosive")));
         event.register(ModelResourceLocation.standalone(NoMansLand.location("entity/living_urn")));
-        event.register(ModelResourceLocation.standalone(InvertedBellRenderer.BELL_MODEL.id()));
-        event.register(ModelResourceLocation.standalone(InvertedBellRenderer.CLAPPER_MODEL.id()));
-        event.register(ModelResourceLocation.standalone(InvertedBellRenderer.BEAM_MODEL.id()));
+        event.register(InvertedBellRenderer.BELL_MODEL);
+        event.register(InvertedBellRenderer.CLAPPER_MODEL);
+        event.register(InvertedBellRenderer.BEAM_MODEL);
+        event.register(AncientBronzeBellRenderer.FLOOR_MOVING);
+        event.register(AncientBronzeBellRenderer.WALL_MOVING);
         if (Mods.NIRVANA.isLoaded()) event.register(ModelResourceLocation.standalone(NoMansLand.location("entity/fat_joint")));
 
         //Load all the pot models here otherwise you die
@@ -158,6 +160,7 @@ public class ClientSetupEvents {
         event.registerEntityRenderer(NMLEntities.FALLING_POT.get(), FallingPotRenderer::new);
 
         event.registerBlockEntityRenderer(NMLBlockEntities.INVERTED_BELL.get(), InvertedBellRenderer::new);
+        event.registerBlockEntityRenderer(NMLBlockEntities.ANCIENT_BRONZE_BELL.get(), AncientBronzeBellRenderer::new);
         event.registerBlockEntityRenderer(NMLBlockEntities.MOONLIGHT_BASIN.get(), MoonlightBasinRenderer::new);
     }
 
