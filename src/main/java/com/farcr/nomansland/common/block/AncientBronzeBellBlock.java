@@ -1,20 +1,39 @@
 package com.farcr.nomansland.common.block;
 
 import com.mojang.serialization.MapCodec;
+import com.farcr.nomansland.common.block.torches.ExtinguishableBlockPairing;
+import com.farcr.nomansland.common.blockentity.AncientBronzeBellBlockEntity;
+import com.farcr.nomansland.common.registry.NMLBlockEntities;
+import com.farcr.nomansland.common.registry.NMLRegistries;
+import com.farcr.nomansland.common.registry.NMLSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BellAttachType;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -23,10 +42,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class AncientBronzeBellBlock extends Block {
+public class AncientBronzeBellBlock extends BaseEntityBlock {
 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final EnumProperty<BellAttachType> ATTACHMENT = BlockStateProperties.BELL_ATTACHMENT;
+    public static final BooleanProperty ATTACHED = BlockStateProperties.ATTACHED;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    private static final int RADIUS = 7;
 
     private static final VoxelShape BODY = Shapes.or(
             shape(4, 4, 4, 12, 14, 12),
@@ -52,26 +74,29 @@ public class AncientBronzeBellBlock extends Block {
         super(properties);
         registerDefaultState(stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(ATTACHMENT, BellAttachType.FLOOR));
+                .setValue(ATTACHED, false)
+                .setValue(WATERLOGGED, false)
+                .setValue(POWERED, false));
     }
 
     public static final MapCodec<AncientBronzeBellBlock> CODEC = simpleCodec(AncientBronzeBellBlock::new);
+    private static final int RING_EVENT = 1;
 
     @Override
-    protected MapCodec<? extends Block> codec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
     @Override
     protected void createBlockStateDefinition(final StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, ATTACHMENT);
+        builder.add(FACING, ATTACHED, WATERLOGGED, POWERED);
     }
 
     @Override
     protected VoxelShape getShape(final BlockState state, final BlockGetter level, final BlockPos pos,
                                   final CollisionContext context) {
         final Direction facing = state.getValue(FACING);
-        return state.getValue(ATTACHMENT) == BellAttachType.DOUBLE_WALL
+        return state.getValue(ATTACHED)
                 ? WALL_SHAPES.get(facing)
                 : FLOOR_SHAPES.get(facing);
     }
@@ -82,26 +107,154 @@ public class AncientBronzeBellBlock extends Block {
         final Direction clicked = context.getClickedFace();
         final BlockPos pos = context.getClickedPos();
         final LevelReader level = context.getLevel();
+        final boolean waterlogged = level.getFluidState(pos).getType() == Fluids.WATER;
         if (clicked.getAxis() == Direction.Axis.Y) {
             final BlockState floor = defaultBlockState()
-                    .setValue(ATTACHMENT, BellAttachType.FLOOR)
+                    .setValue(ATTACHED, false)
+                    .setValue(WATERLOGGED, waterlogged)
                     .setValue(FACING, context.getHorizontalDirection());
             return floor.canSurvive(level, pos) ? floor : null;
         }
         final BlockState wall = defaultBlockState()
-                .setValue(ATTACHMENT, BellAttachType.DOUBLE_WALL)
+                .setValue(ATTACHED, true)
+                .setValue(WATERLOGGED, waterlogged)
                 .setValue(FACING, clicked.getOpposite());
         return wall.canSurvive(level, pos) ? wall : null;
     }
 
     @Override
     protected boolean canSurvive(final BlockState state, final LevelReader level, final BlockPos pos) {
-        if (state.getValue(ATTACHMENT) == BellAttachType.DOUBLE_WALL) {
+        if (state.getValue(ATTACHED)) {
             final Direction along = state.getValue(FACING);
             return sturdy(level, pos, along) && sturdy(level, pos, along.getOpposite());
         }
         final BlockPos below = pos.below();
         return level.getBlockState(below).isFaceSturdy(level, below, Direction.UP);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(final BlockState state, final Level level, final BlockPos pos, final Player player, final BlockHitResult hit) {
+        if (!level.isClientSide) {
+            Direction hitDirection = hit.getDirection().getAxis() != state.getValue(FACING).getAxis()
+                    ? state.getValue(FACING)
+                    : hit.getDirection();
+            ring(level, pos, state, hitDirection);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new AncientBronzeBellBlockEntity(pos, state);
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, NMLBlockEntities.ANCIENT_BRONZE_BELL.get(), AncientBronzeBellBlockEntity::tick);
+    }
+
+    @Override
+    public boolean triggerEvent(BlockState state, Level level, BlockPos pos, int id, int data) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        return blockEntity != null && blockEntity.triggerEvent(id, data);
+    }
+
+    @Override
+    protected void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
+        if (!level.isClientSide) {
+            Direction facing = state.getValue(FACING);
+            Direction hitDirection = hit.getDirection().getAxis() == facing.getAxis() ? hit.getDirection() : facing;
+            ring(level, hit.getBlockPos(), state, hitDirection);
+        }
+    }
+
+    @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        boolean powered = level.hasNeighborSignal(pos);
+        if (powered != state.getValue(POWERED)) {
+            if (powered) {
+                ring(level, pos, state, state.getValue(FACING));
+            }
+            level.setBlock(pos, state.setValue(POWERED, powered), 3);
+        }
+    }
+
+    private void ring(Level level, BlockPos pos, BlockState state, Direction direction) {
+        level.blockEvent(pos, this, RING_EVENT, direction.get3DDataValue());
+        if (!state.getValue(WATERLOGGED)) {
+            level.playSound(null, pos, SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.0F, 0.5F);
+        }
+        toggleNearbyLights(level, pos);
+    }
+
+    private static void toggleNearbyLights(Level level, BlockPos center) {
+        BlockPos.betweenClosed(center.offset(-RADIUS, -RADIUS, -RADIUS),
+                center.offset(RADIUS, RADIUS, RADIUS)).forEach(pos -> {
+            int dx = pos.getX() - center.getX();
+            int dy = pos.getY() - center.getY();
+            int dz = pos.getZ() - center.getZ();
+            if (dx * dx + dy * dy + dz * dz > RADIUS * RADIUS) return;
+
+            BlockState target = level.getBlockState(pos);
+            for (ExtinguishableBlockPairing pairing : NMLRegistries.EXTINGUISHABLE_BLOCKS) {
+                if (pairing.isLitVersion(target)) {
+                    playExtinguishSound(level, pos);
+                    level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
+                    level.setBlockAndUpdate(pos, pairing.extinguishedBlock().withPropertiesOf(target));
+                    return;
+                }
+                if (pairing.isExtinguishedVersion(target)) {
+                    playLightSound(level, pos);
+                    level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
+                    level.setBlockAndUpdate(pos, pairing.litBlock().withPropertiesOf(target));
+                    return;
+                }
+            }
+
+            if (target.is(BlockTags.CANDLES) || target.is(BlockTags.CANDLE_CAKES)) {
+                if (AbstractCandleBlock.isLit(target)) {
+                    level.setBlock(pos, target.setValue(BlockStateProperties.LIT, false), 11);
+                    level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
+                    playExtinguishSound(level, pos);
+                    if (level instanceof ServerLevel serverLevel) {
+                        int particleCount = target.hasProperty(BlockStateProperties.CANDLES)
+                                ? target.getValue(BlockStateProperties.CANDLES)
+                                : 1;
+                        serverLevel.sendParticles(ParticleTypes.SMOKE, pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5,
+                                particleCount, 0.15, 0.05, 0.15, 0.01);
+                    }
+                } else if (!target.getValue(BlockStateProperties.LIT)
+                        && (!target.hasProperty(BlockStateProperties.WATERLOGGED)
+                        || !target.getValue(BlockStateProperties.WATERLOGGED))) {
+                    playLightSound(level, pos);
+                    level.setBlock(pos, target.setValue(BlockStateProperties.LIT, true), 11);
+                    level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
+                }
+            } else if (target.is(BlockTags.CAMPFIRES) && target.hasProperty(BlockStateProperties.LIT)) {
+                if (target.getValue(BlockStateProperties.LIT)) {
+                    playExtinguishSound(level, pos);
+                    CampfireBlock.dowse(null, level, pos, target);
+                    level.setBlock(pos, target.setValue(BlockStateProperties.LIT, false), 3);
+                } else if (CampfireBlock.canLight(target)) {
+                    playLightSound(level, pos);
+                    level.setBlock(pos, target.setValue(BlockStateProperties.LIT, true), 11);
+                    level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
+                }
+            }
+        });
+    }
+
+    private static void playExtinguishSound(Level level, BlockPos pos) {
+        level.playSound(null, pos, NMLSounds.TORCH_EXTINGUISH.get(), SoundSource.BLOCKS, 0.4F, 1.0F);
+    }
+
+    private static void playLightSound(Level level, BlockPos pos) {
+        level.playSound(null, pos, NMLSounds.TORCH_LIGHT.get(), SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
     }
 
     private static boolean sturdy(final LevelReader level, final BlockPos pos, final Direction side) {
@@ -110,11 +263,19 @@ public class AncientBronzeBellBlock extends Block {
     }
 
     @Override
-    protected BlockState updateShape(final BlockState state, final Direction direction, final BlockState neighbour,
-                                     final net.minecraft.world.level.LevelAccessor level, final BlockPos pos,
-                                     final BlockPos neighbourPos) {
-        return canSurvive(state, level, pos) ? state
-                : net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
+    protected BlockState updateShape(final BlockState state, final Direction direction, final BlockState neighbour, final net.minecraft.world.level.LevelAccessor level, final BlockPos pos, final BlockPos neighbourPos) {
+        if (!canSurvive(state, level, pos)) {
+            return net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
+        }
+        if (state.getValue(WATERLOGGED)) {
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        }
+        return super.updateShape(state, direction, neighbour, level, pos, neighbourPos);
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     private static VoxelShape shape(final double x1, final double y1, final double z1,
@@ -147,5 +308,15 @@ public class AncientBronzeBellBlock extends Block {
             turned = next;
         }
         return turned;
+    }
+
+    @Override
+    protected BlockState rotate(final BlockState state, final Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    protected BlockState mirror(final BlockState state, final Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 }
