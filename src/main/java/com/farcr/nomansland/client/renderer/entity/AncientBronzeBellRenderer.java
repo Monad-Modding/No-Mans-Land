@@ -39,26 +39,25 @@ public class AncientBronzeBellRenderer implements BlockEntityRenderer<AncientBro
         Direction facing = state.getValue(AncientBronzeBellBlock.FACING);
         boolean wall = state.getValue(AncientBronzeBellBlock.ATTACHED);
         float xRotation = 0;
-        float zRotation = 0;
         if (bell.shaking) {
             float swing = Mth.sin((bell.ticks + partialTick) / Mth.PI) / (4.0F + (bell.ticks + partialTick) / 3.0F);
-            Direction direction = bell.clickDirection;
-            if (facing.getAxis() == Direction.Axis.Z) {
-                xRotation = direction == Direction.SOUTH ? swing : -swing;
-            } else {
-                zRotation = direction == Direction.WEST ? swing : -swing;
-            }
+            Direction positiveDirection = switch (facing) {
+                case NORTH -> Direction.SOUTH;
+                case EAST -> Direction.EAST;
+                case SOUTH -> Direction.NORTH;
+                case WEST -> Direction.WEST;
+                default -> facing;
+            };
+            float direction = bell.clickDirection == positiveDirection ? 1 : -1;
+            xRotation = swing * direction;
         }
 
         poseStack.pushPose();
+        int yRotation = switch (facing) { case EAST -> 90; case SOUTH -> 180; case WEST -> 270; default -> 0; };
+        poseStack.rotateAround(Axis.YP.rotationDegrees(yRotation), 0.5F, 0.5F, 0.5F);
         poseStack.translate(0.5, 0.875, 0.5);
         poseStack.mulPose(Axis.XP.rotation(xRotation));
-        poseStack.mulPose(Axis.ZP.rotation(zRotation));
         poseStack.translate(-0.5, -0.875, -0.5);
-        int yRotation = wall
-                ? switch (facing) { case NORTH -> 90; case EAST -> 180; case SOUTH -> 270; default -> 0; }
-                : switch (facing) { case EAST -> 90; case SOUTH -> 180; case WEST -> 270; default -> 0; };
-        poseStack.rotateAround(Axis.YP.rotationDegrees(yRotation), 0.5F, 0.5F, 0.5F);
 
         renderModel(bell, wall ? WALL_MOVING : FLOOR_MOVING, poseStack, buffers, packedLight, packedOverlay);
         poseStack.popPose();
