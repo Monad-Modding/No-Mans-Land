@@ -90,8 +90,8 @@ public class NMLItemTagsProvider extends ItemTagsProvider {
 
         tag(ItemTags.HEAD_ARMOR).add(NMLItems.ANCIENT_BRONZE_MASK.get());
         tag(ItemTags.HEAD_ARMOR_ENCHANTABLE).add(NMLItems.ANCIENT_BRONZE_MASK.get());
-        tag(ItemTags.EQUIPPABLE_ENCHANTABLE).add(NMLItems.ANCIENT_BRONZE_MASK.get(),
-                                                (NMLItems.TORTOISE_SHELL.get()));
+        tag(ItemTags.EQUIPPABLE_ENCHANTABLE).add(NMLItems.ANCIENT_BRONZE_MASK.get());
+        tag(ItemTags.EQUIPPABLE_ENCHANTABLE).add(NMLItems.ANCIENT_BRONZE_MASK.get());
         tag(ItemTags.CHEST_ARMOR).add(NMLItems.TORTOISE_SHELL.get());
         tag(ItemTags.CHEST_ARMOR_ENCHANTABLE).add(NMLItems.TORTOISE_SHELL.get());
         tag(ItemTags.FISHES).add(NMLItems.COOKED_BILLHOOK_BASS.get(), NMLItems.BILLHOOK_BASS.get());
