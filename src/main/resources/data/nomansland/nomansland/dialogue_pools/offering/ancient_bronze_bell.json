@@ -1,0 +1,8 @@
+{
+    "condition": {
+        "type": "nomansland:item_conditional",
+        "items": "nomansland:ancient_bronze_bell"
+    },
+    "weight": 1,
+    "text": "Craftsmanship with ritual purpose,/ the harnessing of sound, that is,/ movement,//\n to communicate to higher spheres.///\n Lost knowledge by now, along with the wisdom of those who discovered it."
+}
