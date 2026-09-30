@@ -112,7 +112,7 @@ public class PlatformBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     public static boolean isPlatform(BlockState state) {
-        return state.getBlock() instanceof PlatformBlock || state.getBlock() instanceof PlatformStairsBlock;
+        return state.getBlock() instanceof PlatformBlock || state.getBlock() instanceof PlatformStairsBlock || state.getBlock() instanceof PlatformStepBlock;
     }
 
     @Override

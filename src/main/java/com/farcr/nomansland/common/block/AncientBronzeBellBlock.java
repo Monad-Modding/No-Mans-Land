@@ -55,7 +55,7 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
             shape(4, 4, 4, 12, 14, 12),
             shape(3, 2, 3, 13, 4, 13),
             shape(7, 2, 7, 9, 10, 9),
-            shape(7, 14, 7, 9, 16, 9));
+            shape(7, 16, 7, 9, 18, 9));
 
     private static final VoxelShape BAR = Shapes.or(
             shape(0, 12, 6, 2, 16, 10),
