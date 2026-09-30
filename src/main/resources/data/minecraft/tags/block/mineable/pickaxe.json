@@ -67,9 +67,15 @@
     "nomansland:moon_carving",
     "nomansland:large_stellar_tile",
     "nomansland:stellar_tiles",
+    "nomansland:stellar_tile_stairs",
+    "nomansland:stellar_tile_slab",
     "nomansland:large_lunar_tile",
     "nomansland:lunar_tiles",
+    "nomansland:lunar_tile_stairs",
+    "nomansland:lunar_tile_slab",
     "nomansland:large_solar_tile",
-    "nomansland:solar_tiles"
+    "nomansland:solar_tiles",
+    "nomansland:solar_tile_stairs",
+    "nomansland:solar_tile_slab"
   ]
 }

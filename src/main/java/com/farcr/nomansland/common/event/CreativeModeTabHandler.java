@@ -131,10 +131,16 @@ public class CreativeModeTabHandler {
 
     private void addBuildingBlocks(final BuildCreativeModeTabContentsEvent event) {
 
+        insertAfter(REINFORCED_DEEPSLATE, SOLAR_TILE_SLAB);
+        insertAfter(REINFORCED_DEEPSLATE, SOLAR_TILE_STAIRS);
         insertAfter(REINFORCED_DEEPSLATE, SOLAR_TILES);
         insertAfter(REINFORCED_DEEPSLATE, LARGE_SOLAR_TILE);
+        insertAfter(REINFORCED_DEEPSLATE, LUNAR_TILE_SLAB);
+        insertAfter(REINFORCED_DEEPSLATE, LUNAR_TILE_STAIRS);
         insertAfter(REINFORCED_DEEPSLATE, LUNAR_TILES);
         insertAfter(REINFORCED_DEEPSLATE, LARGE_LUNAR_TILE);
+        insertAfter(REINFORCED_DEEPSLATE, STELLAR_TILE_SLAB);
+        insertAfter(REINFORCED_DEEPSLATE, STELLAR_TILE_STAIRS);
         insertAfter(REINFORCED_DEEPSLATE, STELLAR_TILES);
         insertAfter(REINFORCED_DEEPSLATE, LARGE_STELLAR_TILE);
 

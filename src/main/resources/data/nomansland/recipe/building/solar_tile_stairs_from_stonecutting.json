@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "nomansland:solar_tiles"
+  },
+  "result": {
+    "id": "nomansland:solar_tile_stairs"
+  }
+}

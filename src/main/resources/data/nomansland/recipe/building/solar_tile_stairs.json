@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tile_stairs",
+  "key": {
+    "#": {
+      "item": "nomansland:solar_tiles"
+    }
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "id": "nomansland:solar_tile_stairs"
+  },
+  "show_notification": true
+}

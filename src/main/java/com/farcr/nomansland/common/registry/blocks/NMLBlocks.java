@@ -342,28 +342,28 @@ public class NMLBlocks {
             () -> new Block(ofFullCopy(Blocks.DEEPSLATE_BRICKS)), BlockProperties.stoneLike());
     public static final BlockDefinition<Block> STELLAR_TILES = register("stellar_tiles",
             () -> new Block(ofFullCopy(Blocks.DEEPSLATE_TILES)), BlockProperties.stoneLike());
-//    public static final BlockDefinition<StairBlock> STELLAR_TILE_STAIRS = register("stellar_tile_stairs",
-//            () -> new StairBlock(STELLAR_TILES.get().defaultBlockState(), ofFullCopy(NMLBlocks.LARGE_STELLAR_TILE.get())), BlockProperties.stoneLikeStairs());
-//    public static final BlockDefinition<SlabBlock> STELLAR_TILE_SLAB = register("stellar_tile_slab",
-//            () -> new SlabBlock(ofFullCopy(NMLBlocks.STELLAR_TILES.get())), BlockProperties.stoneLikeSlab());
+    public static final BlockDefinition<StairBlock> STELLAR_TILE_STAIRS = register("stellar_tile_stairs",
+            () -> new StairBlock(STELLAR_TILES.get().defaultBlockState(), ofFullCopy(NMLBlocks.STELLAR_TILES.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> STELLAR_TILE_SLAB = register("stellar_tile_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.STELLAR_TILES.get())), BlockProperties.stoneLikeSlab());
 
     public static final BlockDefinition<Block> LARGE_SOLAR_TILE = register("large_solar_tile",
             () -> new Block(ofFullCopy(Blocks.DEEPSLATE_BRICKS)), BlockProperties.stoneLike());
     public static final BlockDefinition<Block> SOLAR_TILES = register("solar_tiles",
             () -> new Block(ofFullCopy(Blocks.DEEPSLATE_TILES)), BlockProperties.stoneLike());
-//    public static final BlockDefinition<StairBlock> SOLAR_TILE_STAIRS = register("solar_tile_stairs",
-//            () -> new StairBlock(SOLAR_TILES.get().defaultBlockState(), ofFullCopy(NMLBlocks.LARGE_SOLAR_TILE.get())), BlockProperties.stoneLikeStairs());
-//    public static final BlockDefinition<SlabBlock> SOLAR_TILE_SLAB = register("solar_tile_slab",
-//            () -> new SlabBlock(ofFullCopy(NMLBlocks.SOLAR_TILES.get())), BlockProperties.stoneLikeSlab());
+    public static final BlockDefinition<StairBlock> SOLAR_TILE_STAIRS = register("solar_tile_stairs",
+            () -> new StairBlock(SOLAR_TILES.get().defaultBlockState(), ofFullCopy(NMLBlocks.SOLAR_TILES.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> SOLAR_TILE_SLAB = register("solar_tile_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.SOLAR_TILES.get())), BlockProperties.stoneLikeSlab());
 
     public static final BlockDefinition<Block> LARGE_LUNAR_TILE = register("large_lunar_tile",
             () -> new Block(ofFullCopy(Blocks.DEEPSLATE_BRICKS)), BlockProperties.stoneLike());
     public static final BlockDefinition<Block> LUNAR_TILES = register("lunar_tiles",
             () -> new Block(ofFullCopy(Blocks.DEEPSLATE_TILES)), BlockProperties.stoneLike());
-//    public static final BlockDefinition<StairBlock> LUNAR_TILE_STAIRS = register("lunar_tile_stairs",
-//            () -> new StairBlock(LUNAR_TILES.get().defaultBlockState(), ofFullCopy(NMLBlocks.LARGE_LUNAR_TILE.get())), BlockProperties.stoneLikeStairs());
-//    public static final BlockDefinition<SlabBlock> LUNAR_TILE_SLAB = register("lunar_tile_slab",
-//            () -> new SlabBlock(ofFullCopy(NMLBlocks.LUNAR_TILES.get())), BlockProperties.stoneLikeSlab());
+    public static final BlockDefinition<StairBlock> LUNAR_TILE_STAIRS = register("lunar_tile_stairs",
+            () -> new StairBlock(LUNAR_TILES.get().defaultBlockState(), ofFullCopy(NMLBlocks.LUNAR_TILES.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> LUNAR_TILE_SLAB = register("lunar_tile_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.LUNAR_TILES.get())), BlockProperties.stoneLikeSlab());
 
     public static final BlockDefinition<Block> SILT_BRICKS = register("silt_bricks",
             () -> new Block(ofFullCopy(Blocks.PACKED_MUD)), BlockProperties.stoneLike());

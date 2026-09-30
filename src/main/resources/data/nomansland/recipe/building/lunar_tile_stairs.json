@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tile_stairs",
+  "key": {
+    "#": {
+      "item": "nomansland:lunar_tiles"
+    }
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "id": "nomansland:lunar_tile_stairs"
+  },
+  "show_notification": true
+}
