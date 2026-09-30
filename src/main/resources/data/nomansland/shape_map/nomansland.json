@@ -1,6 +1,7 @@
 {
   "add": {
-    "nomansland:wooden_platform_stairs": [
+    "nomansland:wooden_platform": [
+      "nomansland:wooden_platform_stairs",
       "nomansland:wooden_platform_step"
     ]
   }
