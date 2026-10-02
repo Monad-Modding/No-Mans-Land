@@ -49,6 +49,7 @@
     "SnowAndFreezeFeatureMixin",
     "SnowyDirtBlockMixin",
     "SpreadingSnowyDirtBlockMixin",
+    "StandingAndWallBlockItemMixin",
     "SteepMaterialConditionMixin",
     "StructurePlaceSettingsMixin",
     "StructureTemplateMixin",

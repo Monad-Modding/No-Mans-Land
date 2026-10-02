@@ -1,7 +1,11 @@
 package com.farcr.nomansland.common.block.torches;
 
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
 /**
  * A pair of lit and extinguished blocks
@@ -39,4 +43,23 @@ public record ExtinguishableBlockPairing(Block litBlock, Block extinguishedBlock
         return toCheck.is(this.extinguishedBlock);
     }
 
+    public boolean canRelight(BlockState state) {
+        return this.isExtinguishedVersion(state) && !isSubmerged(state);
+    }
+
+    public BlockState extinguishedIn(BlockState litState, FluidState fluid) {
+        BlockState extinguished = this.extinguishedBlock.withPropertiesOf(litState);
+        if (extinguished.hasProperty(BlockStateProperties.WATERLOGGED)) {
+            extinguished = extinguished.setValue(BlockStateProperties.WATERLOGGED, fluid.getType() == Fluids.WATER);
+        }
+        return extinguished;
+    }
+
+    public static boolean isSubmerged(BlockState state) {
+        return state.hasProperty(BlockStateProperties.WATERLOGGED) && state.getValue(BlockStateProperties.WATERLOGGED);
+    }
+
+    public static boolean extinguishesIn(FluidState fluid) {
+        return fluid.is(FluidTags.WATER);
+    }
 }

@@ -227,7 +227,7 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
                     level.setBlockAndUpdate(pos, pairing.extinguishedBlock().withPropertiesOf(target));
                     return;
                 }
-                if (pairing.isExtinguishedVersion(target)) {
+                if (pairing.canRelight(target)) {
                     playLightSound(level, pos);
                     level.gameEvent(null, GameEvent.BLOCK_CHANGE, pos);
                     level.setBlockAndUpdate(pos, pairing.litBlock().withPropertiesOf(target));

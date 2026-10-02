@@ -6,6 +6,14 @@ import com.farcr.nomansland.common.registry.NMLRegistries;
 import com.farcr.nomansland.common.registry.NMLSounds;
 import com.farcr.nomansland.common.registry.NMLTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -26,12 +34,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class ExtinguishedWallTorchBlock extends WallTorchBlock {
+public class ExtinguishedWallTorchBlock extends WallTorchBlock implements SimpleWaterloggedBlock {
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     private Block litBlock;
 
     public ExtinguishedWallTorchBlock(SimpleParticleType flameParticle, Properties properties) {
         super(flameParticle, properties);
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false));
     }
 
     public static final MapCodec<WallTorchBlock> CODEC = RecordCodecBuilder.<ExtinguishedWallTorchBlock>mapCodec(instance -> instance.group(
@@ -50,7 +60,7 @@ public class ExtinguishedWallTorchBlock extends WallTorchBlock {
 
     @Override
     public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (stack.is(NMLTags.FIRESTARTERS)) {
+        if (stack.is(NMLTags.FIRESTARTERS) && !state.getValue(WATERLOGGED)) {
             level.playSound(player,
                     player.getX(),
                     player.getY(),
@@ -81,7 +91,7 @@ public class ExtinguishedWallTorchBlock extends WallTorchBlock {
 
     @Override
     protected void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
-        if (!level.isClientSide && projectile.isOnFire()) {
+        if (!level.isClientSide && projectile.isOnFire() && !state.getValue(WATERLOGGED)) {
             level.setBlock(hit.getBlockPos(), this.getLitBlock().withPropertiesOf(state), 11);
         }
     }
@@ -119,5 +129,31 @@ public class ExtinguishedWallTorchBlock extends WallTorchBlock {
         assert this.litBlock != null;
 
         return this.litBlock;
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(WATERLOGGED);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState state = super.getStateForPlacement(context);
+        if (state == null) return null;
+        return state.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        if (state.getValue(WATERLOGGED)) {
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        }
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 }

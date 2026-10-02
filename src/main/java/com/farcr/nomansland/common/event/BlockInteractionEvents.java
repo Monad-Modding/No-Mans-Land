@@ -62,7 +62,7 @@ public class BlockInteractionEvents {
                         break;
                     }
                 } else { //lighting block
-                    if (pair.isExtinguishedVersion(state)) {
+                    if (pair.canRelight(state)) {
                         level.playSound(player, pos, stack.is(Items.FLINT_AND_STEEL) ? NMLSounds.TORCH_LIGHT_BY_FLINT_AND_STEEL.get() : NMLSounds.TORCH_LIGHT.get(), SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
                         level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
                         level.setBlockAndUpdate(pos, pair.litBlock().withPropertiesOf(state));
