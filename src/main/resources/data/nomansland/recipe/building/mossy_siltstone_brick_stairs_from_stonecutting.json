@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "nomansland:mossy_siltstone_bricks"
+  },
+  "result": {
+    "id": "nomansland:mossy_siltstone_brick_stairs"
+  }
+}

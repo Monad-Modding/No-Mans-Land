@@ -424,6 +424,14 @@ public class NMLBlocks {
             () -> new SlabBlock(ofFullCopy(NMLBlocks.SILTSTONE_BRICKS.get())), BlockProperties.stoneLikeSlab());
     public static final BlockDefinition<WallBlock> SILTSTONE_BRICK_WALL = register("siltstone_brick_wall",
             () -> new WallBlock(ofFullCopy(Blocks.STONE_BRICK_WALL)), BlockProperties.stoneLikeWall());
+    public static final BlockDefinition<Block> MOSSY_SILTSTONE_BRICKS = register("mossy_siltstone_bricks",
+            () -> new Block(ofFullCopy(Blocks.STONE_BRICKS)), BlockProperties.stoneLike());
+    public static final BlockDefinition<StairBlock> MOSSY_SILTSTONE_BRICK_STAIRS = register("mossy_siltstone_brick_stairs",
+            () -> new StairBlock(MOSSY_SILTSTONE_BRICKS.get().defaultBlockState(), ofFullCopy(NMLBlocks.MOSSY_SILTSTONE_BRICKS.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> MOSSY_SILTSTONE_BRICK_SLAB = register("mossy_siltstone_brick_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.MOSSY_SILTSTONE_BRICKS.get())), BlockProperties.stoneLikeSlab());
+    public static final BlockDefinition<WallBlock> MOSSY_SILTSTONE_BRICK_WALL = register("mossy_siltstone_brick_wall",
+            () -> new WallBlock(ofFullCopy(Blocks.STONE_BRICK_WALL)), BlockProperties.stoneLikeWall());
     public static final BlockDefinition<Block> CHISELED_SILTSTONE = register("chiseled_siltstone",
             () -> new Block(ofFullCopy(NMLBlocks.SILTSTONE.get())), BlockProperties.stoneLike());
     //Deepslate
