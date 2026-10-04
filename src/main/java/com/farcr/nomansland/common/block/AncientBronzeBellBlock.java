@@ -7,6 +7,7 @@ import com.farcr.nomansland.common.blockentity.PotBlockEntity;
 import com.farcr.nomansland.common.registry.NMLBlockEntities;
 import com.farcr.nomansland.common.registry.NMLRegistries;
 import com.farcr.nomansland.common.registry.NMLSounds;
+import net.mehvahdjukaar.moonlight.api.block.ILightable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -233,6 +234,15 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
                     level.setBlockAndUpdate(pos, pairing.litBlock().withPropertiesOf(target));
                     return;
                 }
+            }
+
+            if (target.getBlock() instanceof ILightable lightable) {
+                if (lightable.isLitUp(target, level, pos)) {
+                    lightable.tryExtinguish(null, target, pos, level);
+                } else {
+                    lightable.tryLightUp(null, target, pos, level, ILightable.FireSoundType.FLINT_AND_STEEL);
+                }
+                return;
             }
 
             if (target.is(BlockTags.CANDLES) || target.is(BlockTags.CANDLE_CAKES)) {
