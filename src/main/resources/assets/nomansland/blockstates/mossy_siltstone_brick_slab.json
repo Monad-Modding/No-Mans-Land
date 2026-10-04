@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "type=bottom": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_slab_0"
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_slab_1"
+      }
+    ],
+    "type=double": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_bricks_0"
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_bricks_1"
+      }
+    ],
+    "type=top": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_slab_top_0"
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_slab_top_1"
+      }
+    ]
+  }
+}

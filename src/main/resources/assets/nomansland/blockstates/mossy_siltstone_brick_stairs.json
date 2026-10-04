@@ -1,0 +1,494 @@
+{
+  "variants": {
+    "facing=east,half=bottom,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 270
+      }
+    ],
+    "facing=east,half=bottom,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0"
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1"
+      }
+    ],
+    "facing=east,half=bottom,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 270
+      }
+    ],
+    "facing=east,half=bottom,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0"
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1"
+      }
+    ],
+    "facing=east,half=bottom,shape=straight": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_0"
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_1"
+      }
+    ],
+    "facing=east,half=top,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180
+      }
+    ],
+    "facing=east,half=top,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      }
+    ],
+    "facing=east,half=top,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180
+      }
+    ],
+    "facing=east,half=top,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      }
+    ],
+    "facing=east,half=top,shape=straight": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_0",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_1",
+        "uvlock": true,
+        "x": 180
+      }
+    ],
+    "facing=north,half=bottom,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 180
+      }
+    ],
+    "facing=north,half=bottom,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 270
+      }
+    ],
+    "facing=north,half=bottom,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 180
+      }
+    ],
+    "facing=north,half=bottom,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 270
+      }
+    ],
+    "facing=north,half=bottom,shape=straight": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_0",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_1",
+        "uvlock": true,
+        "y": 270
+      }
+    ],
+    "facing=north,half=top,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      }
+    ],
+    "facing=north,half=top,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180
+      }
+    ],
+    "facing=north,half=top,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      }
+    ],
+    "facing=north,half=top,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180
+      }
+    ],
+    "facing=north,half=top,shape=straight": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      }
+    ],
+    "facing=south,half=bottom,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0"
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1"
+      }
+    ],
+    "facing=south,half=bottom,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 90
+      }
+    ],
+    "facing=south,half=bottom,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0"
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1"
+      }
+    ],
+    "facing=south,half=bottom,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 90
+      }
+    ],
+    "facing=south,half=bottom,shape=straight": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_0",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_1",
+        "uvlock": true,
+        "y": 90
+      }
+    ],
+    "facing=south,half=top,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      }
+    ],
+    "facing=south,half=top,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      }
+    ],
+    "facing=south,half=top,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      }
+    ],
+    "facing=south,half=top,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      }
+    ],
+    "facing=south,half=top,shape=straight": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      }
+    ],
+    "facing=west,half=bottom,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 90
+      }
+    ],
+    "facing=west,half=bottom,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 180
+      }
+    ],
+    "facing=west,half=bottom,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 90
+      }
+    ],
+    "facing=west,half=bottom,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 180
+      }
+    ],
+    "facing=west,half=bottom,shape=straight": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_0",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_1",
+        "uvlock": true,
+        "y": 180
+      }
+    ],
+    "facing=west,half=top,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      }
+    ],
+    "facing=west,half=top,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      }
+    ],
+    "facing=west,half=top,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      }
+    ],
+    "facing=west,half=top,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      }
+    ],
+    "facing=west,half=top,shape=straight": [
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/siltstone_bricks/mossy_siltstone_brick_stairs_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      }
+    ]
+  }
+}

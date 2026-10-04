@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "nomansland:block/underground/mossy_siltstone_bricks_0"
+  }
+}
