@@ -6,6 +6,7 @@ import com.farcr.nomansland.common.block.torches.ExtinguishableBlockPairing;
 import com.farcr.nomansland.common.integration.Mods;
 import com.farcr.nomansland.common.registry.*;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
+import net.mehvahdjukaar.moonlight.api.block.ILightable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -15,6 +16,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.FireChargeItem;
+import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -73,6 +76,12 @@ public class BlockInteractionEvents {
                 }
             }
 
+            if (!event.isCanceled() && state.getBlock() instanceof ILightable lightable && useOnLightable(lightable, level, pos, state, player, stack, isExtinguishing, isLighting)) {
+                event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
+                event.setCanceled(true);
+                return;
+            }
+
             // Lighting vanilla candles, candle cakes, and campfires with firestarters
             if (isLighting && !event.isCanceled()
                     && state.hasProperty(BlockStateProperties.LIT)
@@ -85,6 +94,17 @@ public class BlockInteractionEvents {
                 event.setCanceled(true);
             }
         }
+    }
+
+    private static boolean useOnLightable(ILightable lightable, Level level, BlockPos pos, BlockState state, Player player, ItemStack stack, boolean extinguishing, boolean lighting) {
+        boolean lit = lightable.isLitUp(state, level, pos);
+        if (lighting && !lit && !(stack.getItem() instanceof FlintAndSteelItem) && !(stack.getItem() instanceof FireChargeItem) && !stack.is(ILightable.FLINT_AND_STEELS)) {
+            return lightable.tryLightUp(player, state, pos, level, ILightable.FireSoundType.FLINT_AND_STEEL);
+        }
+        if (extinguishing && lit && !lightable.canBeExtinguishedBy(stack)) {
+            return lightable.tryExtinguish(player, state, pos, level);
+        }
+        return false;
     }
 
     private static void frostGrass(PlayerInteractEvent.RightClickBlock event, Level level, BlockPos pos, BlockState state, Player player, ItemStack stack) {

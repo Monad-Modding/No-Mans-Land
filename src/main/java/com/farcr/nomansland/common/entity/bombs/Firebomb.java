@@ -1,29 +1,25 @@
 package com.farcr.nomansland.common.entity.bombs;
 
-
 import com.farcr.nomansland.NMLConfig;
+import com.farcr.nomansland.common.block.torches.Lightables;
 import com.farcr.nomansland.common.registry.NMLSounds;
-import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import com.farcr.nomansland.common.registry.entities.NMLEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.TntBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-import static net.minecraft.world.level.block.WallTorchBlock.FACING;
 
 public class Firebomb extends ThrowableBombEntity {
 
@@ -91,30 +87,10 @@ public class Firebomb extends ThrowableBombEntity {
         // Light nearby campfires on fire
         BlockPos.withinManhattan(blockPosition(), 6, 4, 6).forEach(pos -> {
             BlockState state = level.getBlockState(pos);
-            if (state.is(BlockTags.CAMPFIRES) && state.hasProperty(CampfireBlock.LIT) && !state.getValue(CampfireBlock.LIT)) {
-                level.setBlock(pos, state.setValue(CampfireBlock.LIT, true), 3);
-            }
+            Lightables.light(level, pos, state, this);
             if (state.getBlock() == Blocks.TNT) {
                 TntBlock.explode(level, pos);
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
-            }
-            if (state.getBlock() == NMLBlocks.EXTINGUISHED_TORCH.get()) {
-                level.setBlock(pos, Blocks.TORCH.defaultBlockState(), 3);
-            } else if (state.getBlock() == NMLBlocks.EXTINGUISHED_WALL_TORCH.get()) {
-                level.setBlock(pos, Blocks.WALL_TORCH.defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
-            } else if (state.getBlock() == NMLBlocks.EXTINGUISHED_SOUL_TORCH.get()) {
-                level.setBlock(pos, Blocks.SOUL_TORCH.defaultBlockState(), 3);
-            } else if (state.getBlock() == NMLBlocks.EXTINGUISHED_SOUL_WALL_TORCH.get()) {
-                level.setBlock(pos, Blocks.SOUL_WALL_TORCH.defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
-            } else if (state.getBlock() == NMLBlocks.EXTINGUISHED_SCONCE_TORCH.get()) {
-                level.setBlock(pos, NMLBlocks.SCONCE_TORCH.get().defaultBlockState(), 3);
-            } else if (state.getBlock() == NMLBlocks.EXTINGUISHED_SCONCE_WALL_TORCH.get()) {
-                level.setBlock(pos, NMLBlocks.SCONCE_WALL_TORCH.get().defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
-            } else if (state.getBlock() == NMLBlocks.EXTINGUISHED_SCONCE_SOUL_TORCH.get()) {
-                level.setBlock(pos, NMLBlocks.SCONCE_SOUL_TORCH.get().defaultBlockState(), 3);
-            } else if (state.getBlock() == NMLBlocks.EXTINGUISHED_SCONCE_SOUL_WALL_TORCH.get()) {
-
-                level.setBlock(pos, NMLBlocks.SCONCE_SOUL_WALL_TORCH.get().defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
             }
 
         });
