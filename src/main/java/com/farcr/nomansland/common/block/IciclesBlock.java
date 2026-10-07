@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -116,6 +118,30 @@ public class IciclesBlock extends Block implements Fallable {
     public void onBrokenAfterFall(Level level, BlockPos pos, FallingBlockEntity fallingBlock) {
         if (!fallingBlock.isSilent() && level instanceof ServerLevel serverLevel) {
             serverLevel.playSound(fallingBlock, pos, NMLSounds.ICICLE_SHATTER.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
+        }
+    }
+
+    public static void hitRider(LivingEntity rider) {
+        Level level = rider.level();
+        AABB box = rider.getBoundingBox();
+        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+        for (int x = Mth.floor(box.minX); x <= Mth.floor(box.maxX); x++) {
+            for (int y = Mth.floor(box.minY); y <= Mth.floor(box.maxY); y++) {
+                for (int z = Mth.floor(box.minZ); z <= Mth.floor(box.maxZ); z++) {
+                    cursor.set(x, y, z);
+                    BlockState state = level.getBlockState(cursor);
+                    if (!(state.getBlock() instanceof IciclesBlock) || state.getValue(TIP_DIRECTION) != Direction.DOWN) {
+                        continue;
+                    }
+                    VoxelShape shape = state.getShape(level, cursor);
+                    if (shape.isEmpty() || !shape.bounds().move(cursor).intersects(box)) {
+                        continue;
+                    }
+                    level.destroyBlock(cursor, false);
+                    rider.setTicksFrozen(40);
+                    rider.hurt(NMLDamageTypes.getSimpleDamageSource(level, NMLDamageTypes.ICICLE_PIERCE), 4);
+                }
+            }
         }
     }
 
