@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block.cauldrons;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.common.registry.NMLParticleTypes;
 import com.farcr.nomansland.common.registry.NMLSounds;
 import com.farcr.nomansland.common.registry.NMLTags;
@@ -41,6 +42,7 @@ public class ResinCauldron extends FourLayeredCauldronBlock {
                 player.drop(containedStack, false);
             lowerFillLevel(state, level, pos);
             level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS);
+            level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
             player.awardStat(Stats.USE_CAULDRON);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
@@ -56,6 +58,7 @@ public class ResinCauldron extends FourLayeredCauldronBlock {
                 stack.consume(2, player);
                 raiseFillLevel(state, level, pos);
                 level.playSound(null, pos, NMLSounds.RESIN_CONSUMED.get(), SoundSource.BLOCKS);
+                level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
             }
         }
 

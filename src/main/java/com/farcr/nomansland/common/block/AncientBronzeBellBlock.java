@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import net.minecraft.world.entity.Entity;
 import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.block.torches.ExtinguishableBlockPairing;
 import com.farcr.nomansland.common.blockentity.AncientBronzeBellBlockEntity;
@@ -143,7 +144,7 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
             return InteractionResult.PASS;
         }
         if (!level.isClientSide) {
-            ring(level, pos, state, hitDirection);
+            ring(level, pos, state, hitDirection, player);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -174,7 +175,7 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
         Direction facing = state.getValue(FACING);
         Direction hitDirection = hit.getDirection();
         if (!level.isClientSide && (hitDirection == facing || hitDirection == facing.getOpposite())) {
-            ring(level, hit.getBlockPos(), state, hitDirection);
+            ring(level, hit.getBlockPos(), state, hitDirection, projectile.getOwner() instanceof Player owner ? owner : null);
         }
     }
 
@@ -183,17 +184,18 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
         boolean powered = level.hasNeighborSignal(pos);
         if (powered != state.getValue(POWERED)) {
             if (powered) {
-                ring(level, pos, state, state.getValue(FACING));
+                ring(level, pos, state, state.getValue(FACING), null);
             }
             level.setBlock(pos, state.setValue(POWERED, powered), 3);
         }
     }
 
-    private void ring(Level level, BlockPos pos, BlockState state, Direction direction) {
+    private void ring(Level level, BlockPos pos, BlockState state, Direction direction, @Nullable Entity ringer) {
         level.blockEvent(pos, this, RING_EVENT, direction.get3DDataValue());
         if (!state.getValue(WATERLOGGED)) {
             level.playSound(null, pos, SoundEvents.BELL_BLOCK, SoundSource.BLOCKS, 2.0F, 0.5F);
         }
+        level.gameEvent(ringer, GameEvent.BLOCK_CHANGE, pos);
         wakeNearbyLivingPots(level, pos);
         toggleNearbyLights(level, pos);
     }

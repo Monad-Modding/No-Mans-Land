@@ -295,6 +295,7 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
 
         level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT_FAIL, SoundSource.BLOCKS, 1, 1);
         pot.wobble(DecoratedPotBlockEntity.WobbleStyle.NEGATIVE);
+        level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
 
         if (pot.isLiving()) {
             pot.wakeUp(null);

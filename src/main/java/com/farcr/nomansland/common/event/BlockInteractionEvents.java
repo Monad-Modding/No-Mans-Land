@@ -110,9 +110,11 @@ public class BlockInteractionEvents {
     private static void frostGrass(PlayerInteractEvent.RightClickBlock event, Level level, BlockPos pos, BlockState state, Player player, ItemStack stack) {
         // Grass Frosting
         if (stack.is(Blocks.SNOW.asItem()) && !player.isSpectator() && state.is(Blocks.SHORT_GRASS) && !Mods.SNOWREALMAGIC.isLoaded()) {
-            level.setBlockAndUpdate(pos, NMLBlocks.FROSTED_GRASS.get().defaultBlockState().setValue(SNOWLOGGED, true));
+            BlockState frosted = NMLBlocks.FROSTED_GRASS.get().defaultBlockState().setValue(SNOWLOGGED, true);
+            level.setBlockAndUpdate(pos, frosted);
             stack.consume(1, player);
             level.playSound(player, pos, SoundEvents.SNOW_PLACE, SoundSource.PLAYERS, 1, (level.random.nextFloat() - level.random.nextFloat()) * 0.6F + 1.2F);
+            level.gameEvent(GameEvent.BLOCK_PLACE, pos, GameEvent.Context.of(player, frosted));
             BlockPos posUnder = pos.below();
             BlockState stateUnder = level.getBlockState(posUnder);
             if (stateUnder.getBlock() instanceof SnowyDirtBlock)
@@ -319,6 +321,7 @@ public class BlockInteractionEvents {
             level.playSound(player, position, soundtype.getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
             stack.consume(1, player);
             level.setBlockAndUpdate(position, state);
+            level.gameEvent(GameEvent.BLOCK_PLACE, position, GameEvent.Context.of(player, state));
             return true;
         }
         return false;

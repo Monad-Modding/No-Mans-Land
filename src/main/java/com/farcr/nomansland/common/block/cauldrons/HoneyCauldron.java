@@ -68,6 +68,7 @@ public class HoneyCauldron extends FourLayeredCauldronBlock {
                 player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, bottleStack));
                 lowerFillLevel(state, level, pos);
                 level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+                level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
             }
         } else if (stack.is(bottleStack.getItem()) && !isFull(state)) {
             interacted = true;
@@ -75,6 +76,7 @@ public class HoneyCauldron extends FourLayeredCauldronBlock {
                 player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.GLASS_BOTTLE.getDefaultInstance()));
                 raiseFillLevel(state, level, pos);
                 level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+                level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
             }
         }
 

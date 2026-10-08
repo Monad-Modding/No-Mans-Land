@@ -1,4 +1,5 @@
 package com.farcr.nomansland.common.block.torches;
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mojang.serialization.MapCodec;
 
@@ -70,6 +71,7 @@ public class ExtinguishedWallTorchBlock extends WallTorchBlock implements Simple
                     1.0F,
                     1.0F);
             level.setBlock(pos, getLitBlock().withPropertiesOf(state), 3);
+            level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             if (!level.isClientSide) {
                 Direction direction = state.getValue(FACING).getOpposite();
                 ServerLevel serverLevel = (ServerLevel) level;

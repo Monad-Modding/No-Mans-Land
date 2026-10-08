@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.networking;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.carving.CarvingType;
 import com.farcr.nomansland.common.item.ChiselItem;
@@ -83,6 +84,7 @@ public record ServerBoundChiselPacket(BlockPos start, BlockPos end, Direction di
 
         Vec3 pos = placementBox.getCenter();
         level.playSound(null, pos.x, pos.y, pos.z, SoundEvents.STONE_BREAK, SoundSource.BLOCKS);
+        level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player));
 
         type.afterPlacement(player, min, max, this.direction);
     }

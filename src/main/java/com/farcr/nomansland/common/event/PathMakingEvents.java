@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.event;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.NMLConfig;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.registry.NMLTags;
@@ -107,9 +108,10 @@ public class PathMakingEvents {
                         Map.entry(NMLBlocks.SILT.get(), NMLBlocks.SILT_PATH)
                 ).get(state.getBlock()).value().defaultBlockState();
 
-                if ((state.is(Blocks.DIRT) || state.is(Blocks.COARSE_DIRT) || state.is(Blocks.ROOTED_DIRT) || state.is(Blocks.GRASS_BLOCK)) && level.getBlockState(pos.above()).is(Blocks.SNOW))
-                    level.setBlockAndUpdate(pos, NMLBlocks.SNOWY_GRASS_PATH.get().defaultBlockState());
-                else level.setBlockAndUpdate(pos, pathState);
+                BlockState flattened = (state.is(Blocks.DIRT) || state.is(Blocks.COARSE_DIRT) || state.is(Blocks.ROOTED_DIRT) || state.is(Blocks.GRASS_BLOCK)) && level.getBlockState(pos.above()).is(Blocks.SNOW)
+                        ? NMLBlocks.SNOWY_GRASS_PATH.get().defaultBlockState() : pathState;
+                level.setBlockAndUpdate(pos, flattened);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, flattened));
             }
 
             event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));

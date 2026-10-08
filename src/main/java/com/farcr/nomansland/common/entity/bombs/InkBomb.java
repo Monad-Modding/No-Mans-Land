@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.entity.bombs;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.common.entity.InkCloud;
 import com.farcr.nomansland.common.registry.NMLSounds;
 import com.farcr.nomansland.common.registry.NMLTags;
@@ -52,6 +53,7 @@ public class InkBomb extends ThrowableBombEntity {
         Level level = level();
 
         level.playSound(null, blockPosition(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 4, (1 + (random.nextFloat() - random.nextFloat()) * 0.2F) * 0.7F);
+        level.gameEvent(this, GameEvent.EXPLODE, this.position());
         level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(3.5F)).forEach(entity -> {
             entity.hurt(Explosion.getDefaultDamageSource(level, this), 4);
 

@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -56,6 +57,7 @@ public class GroundPickupBlock extends Block implements SimpleWaterloggedBlock {
                 if (!player.addItem(item)) player.drop(item, false);
             }
             level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            level.gameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Context.of(player, state));
         }
 
         level.playSound(player,

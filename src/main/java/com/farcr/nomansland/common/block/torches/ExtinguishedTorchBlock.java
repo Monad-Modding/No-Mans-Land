@@ -1,4 +1,5 @@
 package com.farcr.nomansland.common.block.torches;
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.mojang.serialization.MapCodec;
 
@@ -70,6 +71,7 @@ public class ExtinguishedTorchBlock extends TorchBlock implements SimpleWaterlog
                     1.0F,
                     1.0F);
             level.setBlock(pos, this.getLitBlock().defaultBlockState(), 3);
+            level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             if (!level.isClientSide) {
                 final ServerLevel serverLevel = (ServerLevel) level;
                 serverLevel.sendParticles(this.flameParticle, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5, 5, 0, 0, 0, 0);

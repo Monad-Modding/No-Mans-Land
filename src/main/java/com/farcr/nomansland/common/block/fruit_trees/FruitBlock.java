@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block.fruit_trees;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -84,6 +85,7 @@ public class FruitBlock extends BushBlock implements BonemealableBlock {
                 if (!player.addItem(fruitStack)) player.drop(fruitStack, false);
             }
             level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, Blocks.AIR.defaultBlockState()));
         }
 
         level.playSound(player,

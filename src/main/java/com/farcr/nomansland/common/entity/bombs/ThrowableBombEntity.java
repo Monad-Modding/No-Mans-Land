@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.entity.bombs;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.common.registry.NMLTags;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -116,6 +117,9 @@ public abstract class ThrowableBombEntity extends ThrowableProjectile {
     public void startFuse(int maxFuse) {
         this.maxFuse = maxFuse;
         entityData.set(DATA_SHOULD_FUSE_ID, maxFuse >= 0);
+        if (maxFuse >= 0 && !this.level().isClientSide) {
+            this.gameEvent(GameEvent.PRIME_FUSE, this.getOwner());
+        }
     }
 
     protected abstract void explode();
