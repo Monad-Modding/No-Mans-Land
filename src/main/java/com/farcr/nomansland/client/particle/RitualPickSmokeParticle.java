@@ -9,6 +9,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -59,6 +60,6 @@ public class RitualPickSmokeParticle extends TextureSheetParticle {
     }
 
     public static ShaderInstance getShader() {
-        return SHADER;
+        return SHADER != null ? SHADER : GameRenderer.getParticleShader();
     }
 }
