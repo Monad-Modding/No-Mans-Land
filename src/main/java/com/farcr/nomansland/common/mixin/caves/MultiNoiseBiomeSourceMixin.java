@@ -21,9 +21,7 @@ public abstract class MultiNoiseBiomeSourceMixin extends BiomeSource {
     public @NotNull Set<Holder<Biome>> possibleBiomes() {
         Set<Holder<Biome>> biomes = new HashSet<>(super.possibleBiomes());
         // The cave biomes are only ever placed in the overworld (see DimensionBiomePlacementMixin),
-        // so they must not be reported as possible biomes of other dimensions' sources. Mods like
-        // BetterNether merge the vanilla nether source's possible biomes into their own biome
-        // picker, which would make the cave biomes actually generate in the nether.
+        // so they must not be reported as possible biomes of other dimensions' sources.
         if (BuiltinDimensionTypes.OVERWORLD.location()
                 .equals(((InterfaceBiomeSource) (Object) this).biolith$getDimensionType().location())) {
             BiomeCoordinator.getBiomeLookup().ifPresent(lookup ->
