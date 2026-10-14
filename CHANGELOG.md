@@ -1,4 +1,3 @@
 - Fix crash when Moonlight is not installed
 - Fix alchemist tools item models and vanity lang being incorrect
 - Fix caves biomes appearing in other dimensions
-- Added Korean translations (Strawberry-Sushi)
