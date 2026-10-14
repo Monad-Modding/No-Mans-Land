@@ -1,7 +1,8 @@
 package com.farcr.nomansland.common.block.torches;
 
+import com.farcr.nomansland.common.integration.Mods;
+import com.farcr.nomansland.common.integration.MoonlightIntegration;
 import com.farcr.nomansland.common.registry.NMLRegistries;
-import net.mehvahdjukaar.moonlight.api.block.ILightable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -24,8 +25,8 @@ public final class Lightables {
                 return true;
             }
         }
-        if (state.getBlock() instanceof ILightable lightable) {
-            return lightable.tryLightUp(cause, state, pos, level, ILightable.FireSoundType.FIRE_CHANGE);
+        if (Mods.MOONLIGHT.isLoaded() && MoonlightIntegration.isLightable(state)) {
+            return MoonlightIntegration.light(level, pos, state, cause);
         }
         if (CampfireBlock.canLight(state) || CandleBlock.canLight(state) || CandleCakeBlock.canLight(state)) {
             level.setBlock(pos, state.setValue(BlockStateProperties.LIT, true), 11);

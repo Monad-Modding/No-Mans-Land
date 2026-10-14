@@ -4,9 +4,9 @@ import com.farcr.nomansland.NMLConfig;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.block.torches.ExtinguishableBlockPairing;
 import com.farcr.nomansland.common.integration.Mods;
+import com.farcr.nomansland.common.integration.MoonlightIntegration;
 import com.farcr.nomansland.common.registry.*;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
-import net.mehvahdjukaar.moonlight.api.block.ILightable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -76,7 +76,7 @@ public class BlockInteractionEvents {
                 }
             }
 
-            if (!event.isCanceled() && state.getBlock() instanceof ILightable lightable && useOnLightable(lightable, level, pos, state, player, stack, isExtinguishing, isLighting)) {
+            if (!event.isCanceled() && Mods.MOONLIGHT.isLoaded() && MoonlightIntegration.use(level, pos, state, player, stack, isExtinguishing, isLighting)) {
                 event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
                 event.setCanceled(true);
                 return;
@@ -94,17 +94,6 @@ public class BlockInteractionEvents {
                 event.setCanceled(true);
             }
         }
-    }
-
-    private static boolean useOnLightable(ILightable lightable, Level level, BlockPos pos, BlockState state, Player player, ItemStack stack, boolean extinguishing, boolean lighting) {
-        boolean lit = lightable.isLitUp(state, level, pos);
-        if (lighting && !lit && !(stack.getItem() instanceof FlintAndSteelItem) && !(stack.getItem() instanceof FireChargeItem) && !stack.is(ILightable.FLINT_AND_STEELS)) {
-            return lightable.tryLightUp(player, state, pos, level, ILightable.FireSoundType.FLINT_AND_STEEL);
-        }
-        if (extinguishing && lit && !lightable.canBeExtinguishedBy(stack)) {
-            return lightable.tryExtinguish(player, state, pos, level);
-        }
-        return false;
     }
 
     private static void frostGrass(PlayerInteractEvent.RightClickBlock event, Level level, BlockPos pos, BlockState state, Player player, ItemStack stack) {

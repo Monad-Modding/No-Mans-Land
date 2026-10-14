@@ -8,7 +8,8 @@ import com.farcr.nomansland.common.blockentity.PotBlockEntity;
 import com.farcr.nomansland.common.registry.NMLBlockEntities;
 import com.farcr.nomansland.common.registry.NMLRegistries;
 import com.farcr.nomansland.common.registry.NMLSounds;
-import net.mehvahdjukaar.moonlight.api.block.ILightable;
+import com.farcr.nomansland.common.integration.Mods;
+import com.farcr.nomansland.common.integration.MoonlightIntegration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -238,12 +239,8 @@ public class AncientBronzeBellBlock extends BaseEntityBlock {
                 }
             }
 
-            if (target.getBlock() instanceof ILightable lightable) {
-                if (lightable.isLitUp(target, level, pos)) {
-                    lightable.tryExtinguish(null, target, pos, level);
-                } else {
-                    lightable.tryLightUp(null, target, pos, level, ILightable.FireSoundType.FLINT_AND_STEEL);
-                }
+            if (Mods.MOONLIGHT.isLoaded() && MoonlightIntegration.isLightable(target)) {
+                MoonlightIntegration.toggle(level, pos, target);
                 return;
             }
 
