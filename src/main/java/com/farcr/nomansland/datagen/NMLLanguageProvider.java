@@ -228,11 +228,14 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("block.nomansland.inverted_bell.bad_teleport", "The bell's ringing leaves you battered...");
         add("block_type.nomansland.trimmed_planks", "Trimmed %s Planks");
         add("block_type.nomansland.bookshelf", "%s Bookshelf");
+        add("design.nomansland.tortoise", "Tortoise Shell");
         add("design.nomansland.tortoise.sandy", "Sandy");
         add("design.nomansland.tortoise.green", "Green");
         add("design.nomansland.tortoise.gray", "Gray");
-        add("design.nomansland.ancient_bronze_mask.alchemist", "Alchemist");
-        add("design.nomansland.warp_worn.warp_worn", "Warp-worn");
+        add("design.nomansland.alchemist", "Alchemist");
+        add("design.nomansland.alchemist.alchemist", "Alchemist");
+        add("design.nomansland.warp_worn_mask", "Warp-worn");
+        add("design.nomansland.warp_worn_mask.warp_worn", "Warp-worn");
         add("screen.nomansland.carving", "Scroll to select carving");
 
         add("item.nomansland.ancestral_oath_sword.refuse", "The sword refuses to violate its oath of pacifism...");
