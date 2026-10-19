@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,double=false": {
+      "model": "clutternomore:block/nomansland/vertical_polished_limestone_slab"
+    },
+    "facing=north,double=true": {
+      "model": "clutternomore:block/nomansland/vertical_polished_limestone_slab_double"
+    },
+    "facing=east,double=false": {
+      "model": "clutternomore:block/nomansland/vertical_polished_limestone_slab",
+      "y": 90
+    },
+    "facing=east,double=true": {
+      "model": "clutternomore:block/nomansland/vertical_polished_limestone_slab_double",
+      "y": 90
+    },
+    "facing=south,double=false": {
+      "model": "clutternomore:block/nomansland/vertical_polished_limestone_slab",
+      "y": 180
+    },
+    "facing=south,double=true": {
+      "model": "clutternomore:block/nomansland/vertical_polished_limestone_slab_double",
+      "y": 180
+    },
+    "facing=west,double=false": {
+      "model": "clutternomore:block/nomansland/vertical_polished_limestone_slab",
+      "y": 270
+    },
+    "facing=west,double=true": {
+      "model": "clutternomore:block/nomansland/vertical_polished_limestone_slab_double",
+      "y": 270
+    }
+  }
+}
