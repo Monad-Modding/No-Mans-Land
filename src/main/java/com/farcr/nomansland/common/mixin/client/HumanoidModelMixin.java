@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.mixin.client;
 
+import com.farcr.nomansland.client.animation.BandageAnimations;
 import com.farcr.nomansland.client.extensions.AncestralOathSwordClientExtensions;
 import com.farcr.nomansland.common.entity.buddy.Buddy;
 import com.farcr.nomansland.common.extension.LivingEntityExtension;
@@ -16,6 +17,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -143,5 +145,11 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> extends Ageable
         entityExtension.nml$updateParryAnimationTime(
             Minecraft.getInstance().getTimer().getGameTimeDeltaTicks()
         );
+
+        if (entity instanceof Player player && BandageAnimations.isHealingOther(player)) {
+            BandageAnimations.poseThirdPerson((HumanoidModel<?>) (Object) this, player, ageInTicks - player.tickCount);
+        } else if (entity instanceof Player player && BandageAnimations.isHealingSelf(player)) {
+            BandageAnimations.poseThirdPersonSelf((HumanoidModel<?>) (Object) this, player, ageInTicks - player.tickCount);
+        }
     }
 }
