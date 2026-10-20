@@ -452,6 +452,34 @@
     ],
     "subtitle": "subtitles.block.generic.footsteps"
   },
+  "block.pot.regenerate": {
+    "sounds": [
+      {
+        "name": "nomansland:block/pot/regenerate1",
+        "pitch": 1.3
+      },
+      {
+        "name": "nomansland:block/pot/regenerate2",
+        "pitch": 1.3
+      },
+      {
+        "name": "nomansland:block/pot/regenerate3",
+        "pitch": 1.3
+      },
+      {
+        "name": "nomansland:block/pot/regenerate4",
+        "pitch": 1.3
+      },
+      {
+        "name": "nomansland:block/pot/regenerate5",
+        "pitch": 1.3
+      },
+      {
+        "name": "nomansland:block/pot/regenerate6",
+        "pitch": 1.3
+      }
+    ]
+  },
   "block.quartzite.break": {
     "sounds": [
       "nomansland:block/quartzite/break1",
