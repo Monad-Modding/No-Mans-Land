@@ -31,24 +31,21 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
 public class PotBlockEntity extends BlockEntity implements RandomizableContainer, ContainerSingleItem.BlockContainerSingleItem {
 
+    private static final String ITEM_KEY = "Item";
+
     public PotVariant variant;
-    private final EnumSet<PotModifier> modifiers = EnumSet.noneOf(PotModifier.class);
-    private PotionContents storedPotion = PotionContents.EMPTY;
-    private @Nullable ResourceLocation potionTableId;
-    private long potionTableSeed = 0L;
+    private final PotContents contents = new PotContents();
     public boolean skipBreakEffects;
     public boolean shouldDropItems;
     public boolean preventRegen;
     public long wobbleStartedAtTick;
     public @Nullable DecoratedPotBlockEntity.WobbleStyle lastWobbleStyle;
-    private ItemStack item = ItemStack.EMPTY;
-    protected @Nullable ResourceKey<LootTable> lootTable;
-    protected long lootTableSeed = 0L;
 
     public PotBlockEntity(BlockPos pos, BlockState state) {
         super(NMLBlockEntities.POT.get(), pos, state);
@@ -70,68 +67,29 @@ public class PotBlockEntity extends BlockEntity implements RandomizableContainer
         level.blockEntityChanged(worldPosition);
     }
 
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-
-        if (variant != null && level != null) {
-            Optional.ofNullable(level.registryAccess().registryOrThrow(NMLRegistries.POT_VARIANT_KEY).getKey(variant)).ifPresent(key -> {
-                tag.putString("Variant", key.toString());
-            });
-        }
-
-        if (!modifiers.isEmpty()) {
-            ListTag modList = new ListTag();
-            for (PotModifier mod : modifiers) {
-                modList.add(StringTag.valueOf(mod.getSerializedName()));
-            }
-            tag.put("Modifiers", modList);
-        }
-
-        if (potionTableId != null) {
-            tag.putString("PotionTable", potionTableId.toString());
-            if (potionTableSeed != 0L) tag.putLong("PotionTableSeed", potionTableSeed);
-        } else if (!storedPotion.equals(PotionContents.EMPTY)) {
-            Tag potionTag = PotionContents.CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), storedPotion).getOrThrow();
-            tag.put("StoredPotion", potionTag);
-        }
-
-        if (!this.trySaveLootTable(tag) && !item.isEmpty()) {
-            tag.put("Item", item.save(registries));
-        }
+    public PotContents getContents() {
+        return this.contents;
     }
 
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-
-        if (tag.contains("Variant")) {
-            registries.lookupOrThrow(NMLRegistries.POT_VARIANT_KEY)
-                    .get(ResourceKey.create(NMLRegistries.POT_VARIANT_KEY, ResourceLocation.parse(tag.getString("Variant"))))
-                    .ifPresent(holder -> variant = holder.value());
-        }
-
-        modifiers.clear();
-        if (tag.contains("Modifiers")) {
-            ListTag modList = tag.getList("Modifiers", Tag.TAG_STRING);
-            for (int i = 0; i < modList.size(); i++) {
-                try {
-                    modifiers.add(PotModifier.valueOf(modList.getString(i).toUpperCase()));
-                } catch (IllegalArgumentException ignored) {}
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        if (this.variant != null && this.level != null) {
+            ResourceLocation key = this.level.registryAccess().registryOrThrow(NMLRegistries.POT_VARIANT_KEY).getKey(this.variant);
+            if (key != null) {
+                tag.putString("Variant", key.toString());
             }
         }
+        this.contents.save(tag, registries, ITEM_KEY);
+    }
 
-        potionTableId = null;
-        storedPotion = PotionContents.EMPTY;
-        if (tag.contains("PotionTable")) {
-            potionTableId = ResourceLocation.parse(tag.getString("PotionTable"));
-            potionTableSeed = tag.contains("PotionTableSeed", Tag.TAG_LONG) ? tag.getLong("PotionTableSeed") : 0L;
-        } else if (tag.contains("StoredPotion")) {
-            PotionContents.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), tag.get("StoredPotion"))
-                    .resultOrPartial().ifPresent(p -> storedPotion = p);
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        if (tag.contains("Variant")) {
+            registries.lookupOrThrow(NMLRegistries.POT_VARIANT_KEY).get(ResourceKey.create(NMLRegistries.POT_VARIANT_KEY, ResourceLocation.parse(tag.getString("Variant")))).ifPresent(holder -> this.variant = holder.value());
         }
-
-        if (!this.tryLoadLootTable(tag)) {
-            item = ItemStack.parseOptional(registries, tag.getCompound("Item"));
-        }
+        this.contents.load(tag, registries, ITEM_KEY);
     }
 
     public void restoreFromFallingBlock(CompoundTag tag, HolderLookup.Provider registries) {
@@ -153,14 +111,14 @@ public class PotBlockEntity extends BlockEntity implements RandomizableContainer
             });
         }
 
-        if (!modifiers.isEmpty()) {
-            components.set(NMLDataComponents.POT_MODIFIERS, modifiers.stream().map(PotModifier::getSerializedName).toList());
+        if (!this.contents.getModifiers().isEmpty()) {
+            components.set(NMLDataComponents.POT_MODIFIERS, this.contents.getModifiers().stream().map(PotModifier::getSerializedName).toList());
         }
 
-        if (potionTableId != null) {
-            components.set(NMLDataComponents.POT_POTION_TABLE, new SeededPotionTable(potionTableId, potionTableSeed));
-        } else if (!storedPotion.equals(PotionContents.EMPTY)) {
-            components.set(DataComponents.POTION_CONTENTS, storedPotion);
+        if (this.contents.getPotionTable() != null) {
+            components.set(NMLDataComponents.POT_POTION_TABLE, new SeededPotionTable(this.contents.getPotionTable(), this.contents.getPotionTableSeed()));
+        } else if (!this.contents.getPotion(null).equals(PotionContents.EMPTY)) {
+            components.set(DataComponents.POTION_CONTENTS, this.contents.getPotion(null));
         }
     }
 
@@ -174,22 +132,22 @@ public class PotBlockEntity extends BlockEntity implements RandomizableContainer
                     .ifPresent(v -> variant = v);
         });
 
-        modifiers.clear();
-        java.util.List<String> modList = componentInput.getOrDefault(NMLDataComponents.POT_MODIFIERS, List.of());
-        for (String name : modList) {
+        EnumSet<PotModifier> modifiers = EnumSet.noneOf(PotModifier.class);
+        for (String name : componentInput.getOrDefault(NMLDataComponents.POT_MODIFIERS, List.<String>of())) {
             try {
-                modifiers.add(PotModifier.valueOf(name.toUpperCase()));
-            } catch (IllegalArgumentException ignored) {}
+                modifiers.add(PotModifier.valueOf(name.toUpperCase(Locale.ROOT)));
+            } catch (IllegalArgumentException ignored) {
+            }
         }
+        this.contents.setModifiers(modifiers);
 
         SeededPotionTable potionTableComponent = componentInput.get(NMLDataComponents.POT_POTION_TABLE);
         if (potionTableComponent != null) {
-            this.potionTableId = potionTableComponent.potionTable();
-            this.potionTableSeed = potionTableComponent.seed();
+            this.contents.setPotionTable(potionTableComponent.potionTable(), potionTableComponent.seed());
         } else {
             PotionContents potion = componentInput.get(DataComponents.POTION_CONTENTS);
             if (potion != null) {
-                storedPotion = potion;
+                this.contents.setPotion(potion);
             }
         }
     }
@@ -238,22 +196,21 @@ public class PotBlockEntity extends BlockEntity implements RandomizableContainer
 
     public ItemStack getTheItem() {
         this.unpackLootTable(null);
-        return this.item;
+        return this.contents.getItem();
     }
 
     public ItemStack splitTheItem(int amount) {
         this.unpackLootTable(null);
-        ItemStack itemstack = this.item.split(amount);
-        if (this.item.isEmpty()) {
-            this.item = ItemStack.EMPTY;
+        ItemStack split = this.contents.getItem().split(amount);
+        if (this.contents.getItem().isEmpty()) {
+            this.contents.setItem(ItemStack.EMPTY);
         }
-
-        return itemstack;
+        return split;
     }
 
     public void setTheItem(ItemStack item) {
         this.unpackLootTable(null);
-        this.item = item;
+        this.contents.setItem(item);
     }
 
     public void setFromItem(ItemStack item) {
@@ -266,130 +223,113 @@ public class PotBlockEntity extends BlockEntity implements RandomizableContainer
 
     public boolean insert(ItemStack stack) {
         this.unpackLootTable(null);
-
-        if (item.isEmpty() || (item.getMaxStackSize() > item.getCount() + stack.getCount() && ItemStack.isSameItemSameComponents(item, stack))) {
-            setTheItem(stack.copyWithCount(item.getCount() + stack.getCount()));
+        ItemStack item = this.contents.getItem();
+        if (item.isEmpty() || item.getMaxStackSize() > item.getCount() + stack.getCount() && ItemStack.isSameItemSameComponents(item, stack)) {
+            this.setTheItem(stack.copyWithCount(item.getCount() + stack.getCount()));
             return true;
         }
-
         return false;
     }
 
     public boolean isLiving() {
-        return hasModifier(PotModifier.ALIVE);
+        return this.contents.hasModifier(PotModifier.ALIVE);
     }
 
     public Set<PotModifier> getModifiers() {
-        return modifiers;
+        return this.contents.getModifiers();
     }
 
     public boolean hasModifier(PotModifier modifier) {
-        return modifiers.contains(modifier);
+        return this.contents.hasModifier(modifier);
     }
 
     public void addModifier(PotModifier modifier) {
-        modifiers.add(modifier);
-        setChanged();
+        this.contents.getModifiers().add(modifier);
+        this.setChanged();
     }
 
     public void removeModifier(PotModifier modifier) {
-        modifiers.remove(modifier);
-        setChanged();
+        this.contents.getModifiers().remove(modifier);
+        this.setChanged();
     }
 
     public PotionContents getStoredPotion() {
-        unpackPotionTable();
-        return storedPotion;
+        if (this.level != null && this.contents.unpackPotionTable(this.level)) {
+            this.setChanged();
+        }
+        return this.contents.getPotion(null);
     }
 
     public void setStoredPotion(PotionContents potion) {
-        this.storedPotion = potion;
-        this.potionTableId = null;
-        setChanged();
+        this.contents.setPotion(potion);
+        this.setChanged();
     }
 
     public void setPotionTable(ResourceLocation potionTableId, long seed) {
-        this.potionTableId = potionTableId;
-        this.potionTableSeed = seed;
+        this.contents.setPotionTable(potionTableId, seed);
     }
 
     @Nullable
     public ResourceLocation getPotionTableId() {
-        return potionTableId;
+        return this.contents.getPotionTable();
     }
 
     public long getPotionTableSeed() {
-        return potionTableSeed;
-    }
-
-    private void unpackPotionTable() {
-        if (potionTableId != null && level != null && !level.isClientSide) {
-            PotionContents resolved = PotionTable.resolve(level, potionTableId, potionTableSeed);
-            if (resolved != null) {
-                storedPotion = resolved;
-            }
-            potionTableId = null;
-            setChanged();
-        }
+        return this.contents.getPotionTableSeed();
     }
 
     public void wakeUp(@Nullable LivingEntity disturber) {
-        LivingPot pot = spawnLivingPot();
+        LivingPot pot = this.spawnLivingPot();
         if (pot == null) return;
-
         if (disturber instanceof Player player && player.canBeSeenAsEnemy()) {
             pot.angerAt(player);
         }
         pot.startWakeUp();
-
-        BlockPos pos = getBlockPos();
-        level.playSound(null, pos, SoundEvents.DECORATED_POT_STEP, SoundSource.HOSTILE, 1.0F, 0.8F);
-        if (level instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(
-                    ParticleTypes.DUST_PLUME,
-                    pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5,
-                    8, 0.3, 0.05, 0.3, 0.02);
+        BlockPos pos = this.getBlockPos();
+        this.level.playSound(null, pos, SoundEvents.DECORATED_POT_STEP, SoundSource.HOSTILE, 1.0F, 0.8F);
+        if (this.level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.DUST_PLUME, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, 8, 0.3, 0.05, 0.3, 0.02);
         }
     }
 
     public void wakeUpSilent() {
-        spawnLivingPot();
+        this.spawnLivingPot();
     }
 
-    /**
-     * Spawns the {@link LivingPot} entity for this pot, flags break effects to be skipped, and removes the block.
-     * Returns the spawned entity, or {@code null} on the client / when there is no level.
-     */
     @Nullable
     private LivingPot spawnLivingPot() {
-        if (level == null || level.isClientSide) return null;
+        if (this.level == null || this.level.isClientSide) return null;
         LivingPot pot = LivingPot.fromPot(this);
-        level.addFreshEntity(pot);
+        this.level.addFreshEntity(pot);
         this.skipBreakEffects = true;
-        level.removeBlock(getBlockPos(), false);
+        this.level.removeBlock(this.getBlockPos(), false);
         return pot;
     }
 
     public float getFullness() {
         this.unpackLootTable(null);
-
+        ItemStack item = this.contents.getItem();
         return (float) item.getCount() / item.getMaxStackSize();
     }
 
     @Nullable
+    @Override
     public ResourceKey<LootTable> getLootTable() {
-        return this.lootTable;
+        return this.contents.getLootTable();
     }
 
+    @Override
     public void setLootTable(@Nullable ResourceKey<LootTable> lootTable) {
-        this.lootTable = lootTable;
+        this.contents.setLootTable(lootTable);
     }
 
+    @Override
     public long getLootTableSeed() {
-        return this.lootTableSeed;
+        return this.contents.getLootTableSeed();
     }
 
+    @Override
     public void setLootTableSeed(long seed) {
-        this.lootTableSeed = seed;
+        this.contents.setLootTableSeed(seed);
     }
 }

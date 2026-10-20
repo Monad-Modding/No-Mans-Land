@@ -368,7 +368,9 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
         if (level.getBlockEntity(pos) instanceof PotBlockEntity pot) {
             if (pot.variant == null) {
                 pot.ensureVariant(size);
-            } else if (state.getValue(BRITTLE) != pot.variant.traits().contains(PotTrait.BRITTLE)) state.setValue(BRITTLE, pot.variant.traits().contains(PotTrait.BRITTLE));
+            } else if (state.getValue(BRITTLE) != pot.variant.traits().contains(PotTrait.BRITTLE)) {
+                level.setBlock(pos, state.setValue(BRITTLE, pot.variant.traits().contains(PotTrait.BRITTLE)), Block.UPDATE_CLIENTS);
+            }
         }
 
         level.scheduleTick(pos, this, this.getDelayAfterPlace());

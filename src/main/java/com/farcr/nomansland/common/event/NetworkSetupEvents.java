@@ -60,6 +60,7 @@ public class NetworkSetupEvents {
         registrar.playToClient(ClientboundDistantChunkPacket.TYPE, ClientboundDistantChunkPacket.STREAM_CODEC, ClientboundDistantChunkPacket::handleData);
 
         registrar.playToClient(ClientboundBandageSoundPacket.TYPE, ClientboundBandageSoundPacket.STREAM_CODEC, ClientboundBandageSoundPacket::handleData);
+        registrar.playToClient(ClientboundPotRegenerationPacket.TYPE, ClientboundPotRegenerationPacket.STREAM_CODEC, ClientboundPotRegenerationPacket::handleData);
 
         // ancestral oath sword packets
         registrar.playToClient(ClientboundOathSwordAnimate.TYPE, ClientboundOathSwordAnimate.STREAM_CODEC, ClientboundOathSwordAnimate::handleData);

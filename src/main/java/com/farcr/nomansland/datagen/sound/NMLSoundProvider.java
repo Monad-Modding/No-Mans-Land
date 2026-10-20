@@ -163,6 +163,7 @@ public class NMLSoundProvider extends LodestoneBlockSoundEventSystem {
         add(NMLSounds.BUDDY_BONE_BREAK, s -> s.with(allSounds("entity/buddy/bone_break")));
 
         //Living Urn
+        add(NMLSounds.POT_REGENERATE, s -> s.subtitle(null).with(allSounds("block/pot/regenerate", se -> se.pitch(1.3f))));
         add(NMLSounds.LIVING_URN_SHATTERS, s -> s.with(allSounds("minecraft:block/decorated_pot/shatter")));
 
         //Living Pot
