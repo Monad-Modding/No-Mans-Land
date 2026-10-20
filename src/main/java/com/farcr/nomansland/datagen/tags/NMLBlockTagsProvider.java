@@ -98,6 +98,30 @@ public class NMLBlockTagsProvider extends BlockTagsProvider {
                 NMLBlocks.WILLOW.log().block()
         );
 
+        tag(BlockTags.FLOWER_POTS).add(
+                NMLBlocks.POTTED_ACONITE.block(),
+                NMLBlocks.POTTED_AUTUMN_CROCUS.block(),
+                NMLBlocks.POTTED_AUTUMNAL_OAK_SAPLING.block(),
+                NMLBlocks.POTTED_BARREL_CACTUS.block(),
+                NMLBlocks.POTTED_BLUE_LUPINE.block(),
+                NMLBlocks.POTTED_FIELD_MUSHROOM.block(),
+                NMLBlocks.POTTED_MAPLE_SAPLING.block(),
+                NMLBlocks.POTTED_PALE_CHERRY_SAPLING.block(),
+                NMLBlocks.POTTED_PICKLEWEED.block(),
+                NMLBlocks.POTTED_PINE_SAPLING.block(),
+                NMLBlocks.POTTED_PINK_LUPINE.block(),
+                NMLBlocks.POTTED_RED_LUPINE.block(),
+                NMLBlocks.POTTED_RED_MAPLE_SAPLING.block(),
+                NMLBlocks.POTTED_STARFLOWER.block(),
+                NMLBlocks.POTTED_SUCCULENT.block(),
+                NMLBlocks.POTTED_THISTLE.block(),
+                NMLBlocks.POTTED_WALNUT_SAPLING.block(),
+                NMLBlocks.POTTED_WILD_MINT.block(),
+                NMLBlocks.POTTED_WILLOW_SAPLING.block(),
+                NMLBlocks.POTTED_YELLOW_BIRCH_SAPLING.block(),
+                NMLBlocks.POTTED_YELLOW_LUPINE.block()
+        );
+
         addToTags(NMLBlocks.SILT.block(),
                 BlockTags.OVERWORLD_CARVER_REPLACEABLES,
                 BlockTags.LUSH_GROUND_REPLACEABLE,
