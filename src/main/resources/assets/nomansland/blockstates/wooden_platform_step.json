@@ -8,12 +8,11 @@
       "y": 90
     },
     "facing=north,up=false": {
-      "model": "nomansland:block/building/wooden_platform_step_lower",
-      "y": 180
+      "model": "nomansland:block/building/wooden_platform_step_lower_flipped"
     },
     "facing=east,up=false": {
-      "model": "nomansland:block/building/wooden_platform_step_lower",
-      "y": 270
+      "model": "nomansland:block/building/wooden_platform_step_lower_flipped",
+      "y": 90
     },
     "facing=south,up=true": {
       "model": "nomansland:block/building/wooden_platform_step_upper"
