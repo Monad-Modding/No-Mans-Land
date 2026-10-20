@@ -40,6 +40,8 @@ public class NMLTags {
     public static final TagKey<Biome> HAS_CACTUS = createBiomeTag("has_cactus");
     public static final TagKey<Block> BOMB_EXPLODE = createBlockTag("firebomb_explode");
     public static final TagKey<Block> HEAT_SOURCES = createBlockTag("heat_sources");
+    public static final TagKey<Block> TREE_GROUND = createBlockTag("tree_ground");
+    public static final TagKey<Block> CATCHES_DRIPS = createBlockTag("catches_drips");
     public static final TagKey<EntityType<?>> ANCHOR_BLACKLIST = createEntityTag("anchor_blacklist");
     public static final TagKey<Biome> OLD_GROWTH_FOREST = createBiomeTag("old_growth_forest");
     public static final TagKey<EntityType<?>> CANNOT_BE_PACIFIED = createEntityTag("cannot_be_pacified");

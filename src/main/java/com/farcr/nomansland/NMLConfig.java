@@ -49,7 +49,6 @@ public class NMLConfig {
     public static ModConfigSpec.BooleanValue TROPICAL_BEACH;
     public static final String CATEGORY_TAP = "tap";
     public static ModConfigSpec.DoubleValue FILLING_SPEED_MULTIPLIER;
-    public static ModConfigSpec.IntValue TICKS_TO_FILL_CAULDRON;
     public static final String CATEGORY_ANCHOR = "monster_anchor";
     public static ModConfigSpec.IntValue TICKS_BETWEEN_RESURRECTIONS;
     public static final String CATEGORY_SPIKE = "spike";
@@ -203,9 +202,6 @@ public class NMLConfig {
         FILLING_SPEED_MULTIPLIER = COMMON_BUILDER
                 .comment("Multiplier on how fast taps should fill up cauldrons with resin. Set to 0.0 to disable.")
                 .defineInRange("fillingSpeedMultiplier", 1.0, 0, 10);
-        TICKS_TO_FILL_CAULDRON = COMMON_BUILDER
-                .comment("The time it takes to fill a cauldron with honey using a tap.")
-                .defineInRange("ticksToFillCauldron", 80, 1, 400);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.push(CATEGORY_ANCHOR);

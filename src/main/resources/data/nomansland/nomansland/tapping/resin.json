@@ -1,25 +1,23 @@
 {
-  "sources": [
-    {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "minecraft:spruce_log",
-        "Properties": {
-          "axis": "y"
-        }
-      }
+  "source": {
+    "block": [
+      "minecraft:spruce_log",
+      "nomansland:pine_log"
+    ],
+    "properties": {
+      "axis": "y"
     },
-    {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "nomansland:pine_log",
-        "Properties": {
-          "axis": "y"
-        }
-      }
-    }
-  ],
-  "cauldron": "nomansland:resin_cauldron",
-  "rate": 1,
-  "particle": "nomansland:resin_droplet"
+    "tree": {}
+  },
+  "output": {
+    "cauldron": "nomansland:resin_cauldron"
+  },
+  "interval": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 18000,
+    "max_inclusive": 36000
+  },
+  "particle": {
+    "type": "nomansland:resin_droplet"
+  }
 }

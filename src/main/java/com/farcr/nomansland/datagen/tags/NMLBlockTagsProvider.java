@@ -10,6 +10,7 @@ import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.*;
 import net.neoforged.neoforge.common.Tags;
@@ -48,6 +49,8 @@ public class NMLBlockTagsProvider extends BlockTagsProvider {
         }
 
         tag(BlockTags.CAULDRONS).addOptional(NoMansLand.location("pot_of_witch_stew"));
+        tag(NMLTags.TREE_GROUND).addTags(BlockTags.DIRT, Tags.Blocks.SANDS).add(Blocks.MUD);
+        tag(NMLTags.CATCHES_DRIPS).addOptional(ResourceLocation.fromNamespaceAndPath("create", "basin"));
 
         for (NMLBlocks.Woodset woodset : NMLBlocks.WOODSETS) {
             tag(BlockTags.STANDING_SIGNS).add(woodset.sign().block());
