@@ -5,6 +5,7 @@
   "refmap": "nomansland.refmap.json",
   "plugin": "com.farcr.nomansland.common.mixin.plugin.NMLMixinPlugin",
   "mixins": [
+    "DirtPathBlockMixin",
     "AlterGroundDecoratorMixin",
     "BaseRailBlockMixin",
     "BaseSpawnerMixin",
