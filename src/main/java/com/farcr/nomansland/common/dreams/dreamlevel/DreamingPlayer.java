@@ -42,6 +42,7 @@ public class DreamingPlayer extends Mob {
         this.setPos(serverPlayer.position());
         serverPlayer.getSleepingPos().ifPresentOrElse(this::startSleeping,
             () -> this.startSleeping(serverPlayer.blockPosition()));
+        this.setPos(DreamLevelHandler.outOfPlot(this.level(), this.position()));
     }
 
     public DreamPlayerSnapshot getClientSnapshot() {
@@ -88,7 +89,13 @@ public class DreamingPlayer extends Mob {
             this.getSleepingPos().ifPresent(player::setSleepingPos);
             player.stopSleeping();
             // Recalculate player since old player doesn't exist anymore
-            return Optional.ofNullable(getTetheredPlayer());
+            ServerPlayer awake = getTetheredPlayer();
+            if (awake != null && awake.level() == level) {
+                Vec3 standing = DreamLevelHandler.outOfPlot(level, awake.position());
+                if (!standing.equals(awake.position()))
+                    awake.teleportTo(level, standing.x, standing.y, standing.z, Set.of(), awake.getYRot(), awake.getXRot());
+            }
+            return Optional.ofNullable(awake);
         }
         return Optional.empty();
     }
