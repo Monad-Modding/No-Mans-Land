@@ -459,5 +459,5 @@
     }
   ],
   "parent": "minecraft:block/block",
-  "render_type": "minecraft:translucent"
+  "render_type": "minecraft:cutout_mipped"
 }

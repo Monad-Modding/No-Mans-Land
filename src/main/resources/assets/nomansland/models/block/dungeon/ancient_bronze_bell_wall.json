@@ -2,7 +2,7 @@
 	"format_version": "26.3",
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
-	"render_type": "minecraft:translucent",
+	"render_type": "minecraft:cutout_mipped",
 	"textures": {
 		"0": "nomansland:block/dungeon/ancient_bronze_bell",
 		"particle": "nomansland:block/dungeon/ancient_bronze_particle"
