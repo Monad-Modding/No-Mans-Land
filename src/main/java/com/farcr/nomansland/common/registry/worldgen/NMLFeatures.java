@@ -67,6 +67,9 @@ public class NMLFeatures {
     public static final Supplier<Feature<VegetationPatchConfiguration>> SUSPICIOUS_VEGETATION_PATCH = FEATURES.register("suspicious_vegetation_patch",
             () -> new SuspiciousVegetationPatchFeature(SuspiciousVegetationPatchConfiguration.CODEC));
 
+    public static final Supplier<Feature<UndergroundPoolConfiguration>> UNDERGROUND_POOL = FEATURES.register("underground_pool",
+            () -> new UndergroundPoolFeature(UndergroundPoolConfiguration.CODEC));
+
     public static final ResourceKey<ConfiguredFeature<?, ?>> HUGE_FIELD_MUSHROOM = register("huge_field_mushroom");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> OAK_APPLE_01 = register("oak_apple_01");
