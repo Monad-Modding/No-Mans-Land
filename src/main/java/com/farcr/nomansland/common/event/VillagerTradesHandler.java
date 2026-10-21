@@ -3,11 +3,9 @@ package com.farcr.nomansland.common.event;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.registry.NMLMapDecorationTypes;
 import com.farcr.nomansland.common.registry.NMLTags;
-import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 
 @EventBusSubscriber(modid = NoMansLand.MODID)

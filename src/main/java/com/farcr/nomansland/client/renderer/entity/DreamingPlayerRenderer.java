@@ -1,11 +1,8 @@
 package com.farcr.nomansland.client.renderer.entity;
 
-import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.dreams.dreamlevel.DreamPlayerSnapshot;
 import com.farcr.nomansland.common.dreams.dreamlevel.DreamingPlayer;
-import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
@@ -15,14 +12,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.UUID;
 
 public class DreamingPlayerRenderer extends EntityRenderer<DreamingPlayer> {
     public DreamingPlayerRenderer(EntityRendererProvider.Context context) {
@@ -56,9 +48,9 @@ public class DreamingPlayerRenderer extends EntityRenderer<DreamingPlayer> {
     }
 
     @Override
-    public void render(@NotNull DreamingPlayer p_entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public void render(@NotNull DreamingPlayer dreamingPlayer, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-        RemotePlayer remotePlayer = (RemotePlayer) getRemotePlayer(p_entity);
+        RemotePlayer remotePlayer = (RemotePlayer) getRemotePlayer(dreamingPlayer);
         if (remotePlayer == null)
             return;
 

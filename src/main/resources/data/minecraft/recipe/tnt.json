@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-      "##",
-      "##"
+    "##",
+    "##"
   ],
   "key": {
-      "#": {
-          "item": "nomansland:explosive"
-      }
+    "#": {
+      "item": "nomansland:explosive"
+    }
   },
   "result": {
-      "id": "minecraft:tnt"
+    "id": "minecraft:tnt"
   }
 }

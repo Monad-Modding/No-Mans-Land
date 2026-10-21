@@ -1,0 +1,8 @@
+{
+    "condition": {
+        "type": "nomansland:item_conditional",
+        "items": "nomansland:ritual_pick"
+    },
+    "weight": 1,
+    "text": "Their first conversations with the world were through the \nimperceivable vibration of its wondrous body.\nAnd it was by aiming said message to the cosmos, that we could establish a contact.\nA day that would shape me forever. No more a mere cosmic body."
+}

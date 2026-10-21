@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "###"
+  ],
+  "key": {
+    "#": {"item": "nomansland:stellar_tiles"},
+    "L": {"item": "minecraft:iron_nugget"}
+  },
+  "result": {
+    "id": "nomansland:lunar_tiles",
+    "count": 8
+  }
+}

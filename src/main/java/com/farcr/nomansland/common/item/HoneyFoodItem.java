@@ -22,19 +22,19 @@ public class HoneyFoodItem extends Item {
         super(properties);
     }
 
-    public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving) {
-        super.finishUsingItem(pStack, pLevel, pEntityLiving);
-        if (pEntityLiving instanceof ServerPlayer serverplayer) {
-            CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, pStack);
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityLiving) {
+        super.finishUsingItem(stack, level, entityLiving);
+        if (entityLiving instanceof ServerPlayer serverplayer) {
+            CriteriaTriggers.CONSUME_ITEM.trigger(serverplayer, stack);
             serverplayer.awardStat(Stats.ITEM_USED.get(this));
         }
 
-        if (!pLevel.isClientSide) {
-            pEntityLiving.removeEffect(MobEffects.POISON);
+        if (!level.isClientSide) {
+            entityLiving.removeEffect(MobEffects.POISON);
         }
-        return pStack;
+        return stack;
     }
-    public UseAnim getUseAnimation(ItemStack pStack) {
+    public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.EAT;
     }
 
@@ -42,8 +42,8 @@ public class HoneyFoodItem extends Item {
         return SoundEvents.GENERIC_EAT;
     }
 
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pHand) {
-        return ItemUtils.startUsingInstantly(pLevel, pPlayer, pHand);
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        return ItemUtils.startUsingInstantly(level, player, hand);
     }
 }
 

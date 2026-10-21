@@ -1,6 +1,5 @@
 package com.farcr.nomansland.common.dreams;
 
-import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.client.renderer.dreams.ClientDreamRenderer;
 import com.farcr.nomansland.common.dreams.dreamlevel.DreamLevelHandler;
 import com.farcr.nomansland.common.dreams.dreamlevel.DreamServerLevel;
@@ -11,7 +10,10 @@ import com.farcr.nomansland.common.registry.NMLRegistries;
 import com.farcr.nomansland.common.registry.entities.NMLEntities;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

@@ -1,7 +1,7 @@
 package com.farcr.nomansland.client.model.moose;
 
-import com.farcr.nomansland.common.entity.variant_action.SetAntlerLayer;
 import com.farcr.nomansland.common.entity.cervidae.moose.Moose;
+import com.farcr.nomansland.common.entity.variant_action.SetAntlerLayer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.tazer.mixed_litter.VariantUtil;

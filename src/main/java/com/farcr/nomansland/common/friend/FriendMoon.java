@@ -2,6 +2,8 @@ package com.farcr.nomansland.common.friend;
 
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.blockentity.MoonlightBasinBlockEntity;
+import com.farcr.nomansland.common.integration.EtchedIntegration;
+import com.farcr.nomansland.common.integration.Mods;
 import com.farcr.nomansland.common.dreams.DreamManager;
 import com.farcr.nomansland.common.entity.buddy.Buddy;
 import com.farcr.nomansland.common.friend.condition.MoonlightContextualConditions;
@@ -9,6 +11,7 @@ import com.farcr.nomansland.common.friend.condition.MoonlightGreetingConditions;
 import com.farcr.nomansland.common.friend.condition.MoonlightLeavingConditions;
 import com.farcr.nomansland.common.friend.dialogue.DialogueLocation;
 import com.farcr.nomansland.common.friend.dialogue.DialoguePool;
+import com.farcr.nomansland.common.friend.dialogue.DialogueTracker;
 import com.farcr.nomansland.common.friend.dialogue.DialogueUtil;
 import com.farcr.nomansland.common.friend.offering.OfferingContext;
 import com.farcr.nomansland.common.friend.offering.OfferingType;
@@ -29,6 +32,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import com.farcr.nomansland.NMLConfig;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -42,6 +47,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.JukeboxBlockEntity;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.maps.MapDecorationType;
@@ -160,7 +166,8 @@ public class FriendMoon extends SavedData {
             Entity entity = offeringContext.getEntity();
             if (entity instanceof ItemEntity itemEntity) {
                 ItemStack stack = itemEntity.getItem();
-                if (stack.is(Items.FILLED_MAP) || stack.is(Items.MAP))
+                if (stack.is(Items.FILLED_MAP) || stack.is(Items.MAP)
+                || (Mods.FIELDGUIDE.isLoaded() && stack.is(Mods.FIELDGUIDE.getItem("field_guide"))))
                     return OfferingType.MAP;
                 if (stack.is(NMLItems.TRINKET))
                     return OfferingType.BAD_OMEN;
@@ -182,15 +189,16 @@ public class FriendMoon extends SavedData {
         return true;
     }
 
-    public boolean mapInteraction(Level level, Entity entity, BlockPos basinPos) {
+    public void mapInteraction(Level level, Entity entity, BlockPos basinPos) {
+        if (mapInteractionActive && mapInteractionTicks >= MAP_PARTICLE_DURATION)
+            return;
         if (!mapInteractionActive) {
             mapInteractionActive = true;
             mapInteractionTicks = 0;
-            setDirty();
-            return true;
         }
 
         mapInteractionTicks++;
+        setDirty();
         for (int i = 0; i < 2; i++) {
             double offsetX = (level.getRandom().nextDouble() - 0.5) * 0.6;
             double offsetZ = (level.getRandom().nextDouble() - 0.5) * 0.6;
@@ -201,11 +209,8 @@ public class FriendMoon extends SavedData {
             );
         }
 
-        if (mapInteractionTicks >= MAP_PARTICLE_DURATION) {
+        if (mapInteractionTicks >= MAP_PARTICLE_DURATION)
             completeMapInteraction(level, entity, basinPos);
-            return false;
-        }
-        return true;
     }
 
     private void completeMapInteraction(Level level, Entity entity, BlockPos basinPos) {
@@ -221,8 +226,6 @@ public class FriendMoon extends SavedData {
                 itemEntity.setItem(stack);
             }
         }
-        mapInteractionActive = false;
-        mapInteractionTicks = -1;
         setDirty();
     }
 
@@ -249,8 +252,12 @@ public class FriendMoon extends SavedData {
 
     private void completeJukeboxInteraction() {
         if (level != null && targetJukeboxPos != null) {
-            if (level.getBlockEntity(targetJukeboxPos) instanceof JukeboxBlockEntity jukebox)
+            BlockEntity blockEntity = level.getBlockEntity(targetJukeboxPos);
+            if (blockEntity instanceof JukeboxBlockEntity jukebox) {
                 jukebox.popOutTheItem();
+            } else if (Mods.ETCHED.isLoaded()) {
+                EtchedIntegration.ejectPlayingDisc(level, targetJukeboxPos, blockEntity);
+            }
         }
         targetJukeboxPos = null;
         jukeboxInteractionTicks = -1;
@@ -340,6 +347,10 @@ public class FriendMoon extends SavedData {
             }
         }
 
+        if (tag.contains("MeetingPointOverrideX"))
+            meetingPointOverride = new ChunkPos(tag.getInt("MeetingPointOverrideX"), tag.getInt("MeetingPointOverrideZ"));
+        else meetingPointOverride = null;
+
         return this;
     }
 
@@ -374,6 +385,11 @@ public class FriendMoon extends SavedData {
         cosmicBodyStateMap.forEach((uuid, bodyState) ->
             CosmicBodyState.CODEC.encodeStart(NbtOps.INSTANCE, bodyState).result().ifPresent(positionTag::add));
         tag.put("StoredPlayerPositions", positionTag);
+
+        if (meetingPointOverride != null) {
+            tag.putInt("MeetingPointOverrideX", meetingPointOverride.x);
+            tag.putInt("MeetingPointOverrideZ", meetingPointOverride.z);
+        }
         return tag;
     }
 
@@ -412,8 +428,27 @@ public class FriendMoon extends SavedData {
         return lastFriendshipPlayers.containsKey(player);
     }
 
+    public static boolean isFriendMoonDimension(ServerLevel candidate) {
+        MinecraftServer server = candidate.getServer();
+        if (server == null) return false;
+
+        List<? extends String> configured = NMLConfig.FRIEND_MOON_DIMENSIONS.get();
+        if (!configured.isEmpty())
+            return configured.contains(candidate.dimension().location().toString());
+
+        return candidate.dimensionTypeRegistration().equals(server.overworld().dimensionTypeRegistration());
+    }
+
     public List<ServerPlayer> getFriendshipPlayers() {
-        return level.getPlayers(this::playerHasFriendship);
+        if (level == null) return List.of();
+        MinecraftServer server = level.getServer();
+        if (server == null) return level.getPlayers(this::playerHasFriendship);
+
+        List<ServerPlayer> players = new ArrayList<>();
+        for (ServerLevel candidate : server.getAllLevels())
+            if (isFriendMoonDimension(candidate))
+                players.addAll(candidate.getPlayers(this::playerHasFriendship));
+        return players;
     }
 
     private final HashMap<ServerPlayer, Integer> lastFriendshipPlayers = new HashMap<>();
@@ -546,7 +581,11 @@ public class FriendMoon extends SavedData {
     public void updateMeetingPointInformation(ServerLevel level) {
         if (isNightTime(level)) {
             if (!updatedShadow) {
-                level.players().forEach((player) -> updatePlayerFriendShadow(player));
+                MinecraftServer server = level.getServer();
+                if (server == null) level.players().forEach((player) -> updatePlayerFriendShadow(player));
+                else for (ServerLevel candidate : server.getAllLevels())
+                    if (isFriendMoonDimension(candidate))
+                        candidate.players().forEach((player) -> updatePlayerFriendShadow(player));
                 updatedShadow = true;
             }
         } else updatedShadow = false;
@@ -556,6 +595,18 @@ public class FriendMoon extends SavedData {
         ChunkPos meetingPointChunk = level.getChunkSource().getGeneratorState().meetingPointPosition();
         if (meetingPointChunk == null) return null;
         return meetingPointChunk.getMiddleBlockPosition(0);
+    }
+
+    @Nullable private ChunkPos meetingPointOverride = null;
+
+    @Nullable
+    public ChunkPos getMeetingPointOverride() {
+        return meetingPointOverride;
+    }
+
+    public void setMeetingPointOverride(@Nullable ChunkPos pos) {
+        this.meetingPointOverride = pos;
+        setDirty();
     }
 
     public void updatePlayerFriendShadow(ServerPlayer player) {
@@ -591,7 +642,9 @@ public class FriendMoon extends SavedData {
     }
 
     public static boolean hasMetWithPlayer(ServerPlayer player) {
-        AdvancementHolder meetAdvancement = player.level().getServer().getAdvancements().get(MEET_MOON_ADVANCEMENT);
+        MinecraftServer server = player.level().getServer();
+        if (DialogueTracker.getOrDefault(server).hasHeardFrom(player.getUUID(), NMLRegistries.GREETING_DIALOGUE_KEY.location())) return true;
+        AdvancementHolder meetAdvancement = server.getAdvancements().get(MEET_MOON_ADVANCEMENT);
         return (meetAdvancement != null && player.getAdvancements().getOrStartProgress(meetAdvancement).isDone());
     }
 
@@ -667,6 +720,8 @@ public class FriendMoon extends SavedData {
                                 (registry) -> greetingFilter(registry, wokenUpBy)
                             ).setTargetPlayer(wokenUpBy).dispatch(level, getFriendshipPlayers())
                         );
+                        forFriendshipPlayers((player) ->
+                            NMLCriteriaTriggers.MEET_FRIEND_MOON.get().trigger(player));
                         getState().getMoonConsumer().accept(this);
                         // just in case I dont want it softlocking players if they log off please
                     } else if (awake) {
@@ -764,7 +819,6 @@ public class FriendMoon extends SavedData {
             if (dreamAdvancement != null && serverPlayer.getAdvancements().getOrStartProgress(dreamAdvancement).isDone())
                 filteredDialogue = MoonlightGreetingConditions.DreamGreetingConditional.DREAM_ARRAY;
         }
-        NMLCriteriaTriggers.MEET_FRIEND_MOON.get().trigger(serverPlayer);
         return DialogueUtil.getWeightedEntry(filteredDialogue, level.getRandom());
     }
 

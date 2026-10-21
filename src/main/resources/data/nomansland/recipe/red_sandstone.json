@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "red_sandstone",
+      "enabled_when": true
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:red_sand"
+    }
+  },
+  "result": {
+    "id": "minecraft:red_sandstone",
+    "count": 2
+  }
+}

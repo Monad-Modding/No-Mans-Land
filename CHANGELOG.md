@@ -1,0 +1,11 @@
+- Added bandaging animations for self and others
+- Proper look for our stone Clutter No More vertical slabs
+- Better tree detection and overhauled data driven system for taps
+- Improved ancient pot performance and gameplay
+- Bonemealing grass now also makes grass sprouts
+- Path blocks now only turn into their main block when a block is touching their top face
+- Fix potted flowers missing tags
+- Fix wooden platform step uv
+- Fix tortoise eggs not dropping with silk touch
+- Fix seashells being flipped from the bottom
+- Fix dreaming on a sublevel teleporting the player to the plotyard

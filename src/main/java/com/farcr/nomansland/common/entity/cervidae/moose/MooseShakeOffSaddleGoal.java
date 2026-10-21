@@ -1,14 +1,7 @@
 package com.farcr.nomansland.common.entity.cervidae.moose;
 
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 
-import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 

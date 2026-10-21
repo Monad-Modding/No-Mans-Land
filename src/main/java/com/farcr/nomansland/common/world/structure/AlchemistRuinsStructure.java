@@ -37,21 +37,21 @@ import java.util.Optional;
 
 public class AlchemistRuinsStructure extends Structure {
     public static final MapCodec<AlchemistRuinsStructure> CODEC = RecordCodecBuilder.mapCodec(
-        instance -> instance.group(
-            settingsCodec(instance),
-            StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(s -> s.startPool),
-            Codec.intRange(0, 20).fieldOf("size").forGetter(s -> s.maxDepth),
-            HeightProvider.CODEC.fieldOf("start_height").forGetter(s -> s.startHeight),
-            Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(s -> s.maxDistanceFromCenter),
-            Codec.BOOL.optionalFieldOf("use_expansion_hack", false).forGetter(s -> s.useExpansionHack),
-            Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(s -> s.projectStartToHeightmap),
-            DimensionPadding.CODEC.optionalFieldOf("dimension_padding", DimensionPadding.ZERO).forGetter(s -> s.dimensionPadding),
-            LiquidSettings.CODEC.optionalFieldOf("liquid_settings", LiquidSettings.APPLY_WATERLOGGING).forGetter(s -> s.liquidSettings),
-            Codec.unboundedMap(
-                BuiltInRegistries.BLOCK.byNameCodec(),
-                ResourceKey.codec(Registries.CONFIGURED_FEATURE)
-            ).optionalFieldOf("feature_placeholders", Map.of()).forGetter(s -> s.featurePlaceholders)
-        ).apply(instance, AlchemistRuinsStructure::new)
+            instance -> instance.group(
+                    settingsCodec(instance),
+                    StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(s -> s.startPool),
+                    Codec.intRange(0, 20).fieldOf("size").forGetter(s -> s.maxDepth),
+                    HeightProvider.CODEC.fieldOf("start_height").forGetter(s -> s.startHeight),
+                    Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(s -> s.maxDistanceFromCenter),
+                    Codec.BOOL.optionalFieldOf("use_expansion_hack", false).forGetter(s -> s.useExpansionHack),
+                    Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(s -> s.projectStartToHeightmap),
+                    DimensionPadding.CODEC.optionalFieldOf("dimension_padding", DimensionPadding.ZERO).forGetter(s -> s.dimensionPadding),
+                    LiquidSettings.CODEC.optionalFieldOf("liquid_settings", LiquidSettings.APPLY_WATERLOGGING).forGetter(s -> s.liquidSettings),
+                    Codec.unboundedMap(
+                            BuiltInRegistries.BLOCK.byNameCodec(),
+                            ResourceKey.codec(Registries.CONFIGURED_FEATURE)
+                    ).optionalFieldOf("feature_placeholders", Map.of()).forGetter(s -> s.featurePlaceholders)
+            ).apply(instance, AlchemistRuinsStructure::new)
     );
 
     private final Holder<StructureTemplatePool> startPool;
@@ -65,16 +65,16 @@ public class AlchemistRuinsStructure extends Structure {
     private final Map<Block, ResourceKey<ConfiguredFeature<?, ?>>> featurePlaceholders;
 
     public AlchemistRuinsStructure(
-        StructureSettings settings,
-        Holder<StructureTemplatePool> startPool,
-        int maxDepth,
-        HeightProvider startHeight,
-        int maxDistanceFromCenter,
-        boolean useExpansionHack,
-        Optional<Heightmap.Types> projectStartToHeightmap,
-        DimensionPadding dimensionPadding,
-        LiquidSettings liquidSettings,
-        Map<Block, ResourceKey<ConfiguredFeature<?, ?>>> featurePlaceholders
+            StructureSettings settings,
+            Holder<StructureTemplatePool> startPool,
+            int maxDepth,
+            HeightProvider startHeight,
+            int maxDistanceFromCenter,
+            boolean useExpansionHack,
+            Optional<Heightmap.Types> projectStartToHeightmap,
+            DimensionPadding dimensionPadding,
+            LiquidSettings liquidSettings,
+            Map<Block, ResourceKey<ConfiguredFeature<?, ?>>> featurePlaceholders
     ) {
         super(settings);
         this.startPool = startPool;
@@ -91,12 +91,19 @@ public class AlchemistRuinsStructure extends Structure {
     @Override
     protected Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
         ChunkPos chunkPos = context.chunkPos();
+        int x = chunkPos.getMiddleBlockX();
+        int z = chunkPos.getMiddleBlockZ();
         int y = startHeight.sample(context.random(), new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
-        BlockPos blockPos = new BlockPos(chunkPos.getMiddleBlockX(), y, chunkPos.getMiddleBlockZ());
+        if (projectStartToHeightmap.isPresent()) {
+            y += context.chunkGenerator().getFirstOccupiedHeight(x, z, projectStartToHeightmap.get(), context.heightAccessor(), context.randomState());
+        }
+        int surfaceY = context.chunkGenerator().getFirstOccupiedHeight(x, z, Heightmap.Types.OCEAN_FLOOR_WG, context.heightAccessor(), context.randomState());
+        y = Math.min(y, surfaceY - 5);
+        BlockPos blockPos = new BlockPos(x, y, z);
         return JigsawPlacement.addPieces(
-            context, startPool, Optional.empty(), maxDepth, blockPos,
-            useExpansionHack, projectStartToHeightmap, maxDistanceFromCenter,
-            PoolAliasLookup.EMPTY, dimensionPadding, liquidSettings
+                context, startPool, Optional.empty(), maxDepth, blockPos,
+                useExpansionHack, Optional.empty(), maxDistanceFromCenter,
+                PoolAliasLookup.EMPTY, dimensionPadding, liquidSettings
         );
     }
 

@@ -13,6 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -71,6 +72,8 @@ public class AnchorListener implements GameEventListener {
             MonsterAnchorBlockEntity monsterAnchorBlockEntity = (MonsterAnchorBlockEntity) Optional.ofNullable(level.getBlockEntity(BlockPos.containing(sourcePos))).orElseThrow();
 
             if (SableCompanion.INSTANCE.distanceSquaredWithSubLevels(level, pos, sourcePos) > Mth.square(monsterAnchorBlockEntity.range)) return false;
+
+            if (livingEntity instanceof Slime slime && slime.getSize() > 1) return false;
 
             if (!livingEntity.wasExperienceConsumed()) {
 

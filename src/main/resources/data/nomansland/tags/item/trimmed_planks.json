@@ -1,18 +1,19 @@
 {
   "values": [
-    "nomansland:trimmed_oak_planks",
-    "nomansland:trimmed_spruce_planks",
-    "nomansland:trimmed_birch_planks",
-    "nomansland:trimmed_jungle_planks",
-    "nomansland:trimmed_dark_oak_planks",
     "nomansland:trimmed_acacia_planks",
-    "nomansland:trimmed_crimson_planks",
-    "nomansland:trimmed_warped_planks",
-    "nomansland:trimmed_mangrove_planks",
-    "nomansland:trimmed_cherry_planks",
-    "nomansland:trimmed_pine_planks",
-    "nomansland:trimmed_maple_planks",
     "nomansland:trimmed_bamboo_planks",
-    "nomansland:trimmed_walnut_planks"
+    "nomansland:trimmed_birch_planks",
+    "nomansland:trimmed_cherry_planks",
+    "nomansland:trimmed_crimson_planks",
+    "nomansland:trimmed_dark_oak_planks",
+    "nomansland:trimmed_jungle_planks",
+    "nomansland:trimmed_mangrove_planks",
+    "nomansland:trimmed_maple_planks",
+    "nomansland:trimmed_oak_planks",
+    "nomansland:trimmed_pine_planks",
+    "nomansland:trimmed_spruce_planks",
+    "nomansland:trimmed_walnut_planks",
+    "nomansland:trimmed_warped_planks",
+    "nomansland:trimmed_willow_planks"
   ]
 }

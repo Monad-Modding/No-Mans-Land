@@ -1,4 +1,11 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "rabbit_stew_from_red_mushroom",
+      "enabled_when": false
+    }
+  ],
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "group": "rabbit_stew",
@@ -16,10 +23,11 @@
       "item": "minecraft:carrot"
     },
     {
-      "item": "nomansland:field_mushroom"
+      "item": "minecraft:red_mushroom"
     }
   ],
   "result": {
+    "count": 1,
     "id": "minecraft:rabbit_stew"
   }
 }

@@ -3,18 +3,13 @@ package com.farcr.nomansland.common.friend.dialogue;
 import com.farcr.nomansland.common.registry.NMLRegistries;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.random.Weight;
-import net.minecraft.util.random.WeightedEntry;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.function.Function;
 
 public class DialogueRegistry {

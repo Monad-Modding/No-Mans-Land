@@ -15,7 +15,7 @@ public class Meshes {
                                               float power) {
         BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.TRIANGLES, DefaultVertexFormat.POSITION_TEX_COLOR);
         float tMultiplier = (1.0F / resolutionTheta) * maximumTheta,
-              pMultiplier = (1.0F / resolutionPhi) * Mth.TWO_PI;
+              multiplier = (1.0F / resolutionPhi) * Mth.TWO_PI;
         // poleFan
         float poleFanRadius = Mth.sin(tMultiplier) * radius,
               poleFanY = Mth.cos(tMultiplier),
@@ -27,8 +27,8 @@ public class Meshes {
               poleFanB = Mth.lerp(poleFanFac, maxThetaB, poleB), 
               poleFanA = Mth.lerp(poleFanFac, maxThetaA, poleA);
         for (int p = 0; p < resolutionPhi; p++) {
-            float phi0 = (p + 0F) * pMultiplier,
-                  phi1 = (p + 1F) * pMultiplier;
+            float phi0 = (p + 0F) * multiplier,
+                  phi1 = (p + 1F) * multiplier;
             float x0 = Mth.sin(phi0), z0 = Mth.cos(phi0),
                   x1 = Mth.sin(phi1), z1 = Mth.cos(phi1);
 
@@ -59,8 +59,8 @@ public class Meshes {
             float r0 = Mth.lerp(fac0, maxThetaR, poleR), g0 = Mth.lerp(fac0, maxThetaG, poleG), b0 = Mth.lerp(fac0, maxThetaB, poleB), a0 = Mth.lerp(fac0, maxThetaA, poleA);
             float r1 = Mth.lerp(fac1, maxThetaR, poleR), g1 = Mth.lerp(fac1, maxThetaG, poleG), b1 = Mth.lerp(fac1, maxThetaB, poleB), a1 = Mth.lerp(fac1, maxThetaA, poleA);
             for (int p = 0; p < resolutionPhi; p++) {
-                float phi0 = (p + 0F) * pMultiplier,
-                      phi1 = (p + 1F) * pMultiplier;
+                float phi0 = (p + 0F) * multiplier,
+                      phi1 = (p + 1F) * multiplier;
                 float x0 = Mth.sin(phi0), z0 = Mth.cos(phi0);
                 float x1 = Mth.sin(phi1), z1 = Mth.cos(phi1);
 
@@ -95,7 +95,7 @@ public class Meshes {
                                                   float power, float offset) {
         BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.TRIANGLES, DefaultVertexFormat.POSITION_COLOR);
         float tMultiplier = (1.0F / resolutionTheta) * maximumTheta,
-              pMultiplier = (1.0F / resolutionPhi) * Mth.TWO_PI;
+              multiplier = (1.0F / resolutionPhi) * Mth.TWO_PI;
         // poleFan
         float poleFanRadius = Mth.sin(tMultiplier) * radius,
               poleFanY = Mth.cos(tMultiplier),
@@ -106,8 +106,8 @@ public class Meshes {
               poleFanB = Mth.lerp(poleFanFac, maxThetaB, poleB),
               poleFanA = Mth.lerp(poleFanFac, maxThetaA, poleA);
         for (int p = 0; p < resolutionPhi; p++) {
-            float phi0 = (p + 0F) * pMultiplier,
-                    phi1 = (p + 1F) * pMultiplier;
+            float phi0 = (p + 0F) * multiplier,
+                    phi1 = (p + 1F) * multiplier;
             float x0 = Mth.sin(phi0), z0 = Mth.cos(phi0),
                     x1 = Mth.sin(phi1), z1 = Mth.cos(phi1);
 
@@ -132,8 +132,8 @@ public class Meshes {
             float r0 = Mth.lerp(fac0, maxThetaR, poleR), g0 = Mth.lerp(fac0, maxThetaG, poleG), b0 = Mth.lerp(fac0, maxThetaB, poleB), a0 = Mth.lerp(fac0, maxThetaA, poleA);
             float r1 = Mth.lerp(fac1, maxThetaR, poleR), g1 = Mth.lerp(fac1, maxThetaG, poleG), b1 = Mth.lerp(fac1, maxThetaB, poleB), a1 = Mth.lerp(fac1, maxThetaA, poleA);
             for (int p = 0; p < resolutionPhi; p++) {
-                float phi0 = (p + 0F) * pMultiplier,
-                      phi1 = (p + 1F) * pMultiplier;
+                float phi0 = (p + 0F) * multiplier,
+                      phi1 = (p + 1F) * multiplier;
                 float x0 = Mth.sin(phi0), z0 = Mth.cos(phi0);
                 float x1 = Mth.sin(phi1), z1 = Mth.cos(phi1);
 

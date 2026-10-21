@@ -8,6 +8,8 @@ import com.farcr.nomansland.common.networking.dream.ClientboundDimensionSyncPack
 import com.farcr.nomansland.common.registry.NMLDreamTypes;
 import com.farcr.nomansland.common.registry.worldgen.NMLBiomes;
 import com.mojang.serialization.Lifecycle;
+import dev.ryanhcode.sable.companion.SableCompanion;
+import dev.ryanhcode.sable.companion.SubLevelAccess;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -28,6 +30,7 @@ import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.level.storage.DerivedLevelData;
 import net.minecraft.world.level.storage.LevelStorageSource.LevelStorageAccess;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.storage.WorldData;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -77,34 +80,54 @@ public class DreamLevelHandler implements AutoCloseable {
         ).findFirst();
     }
 
-    public static void playerTeleportFallback(ServerPlayer serverPlayer, boolean load) {
+    private static void logFallback(ServerPlayer serverPlayer) {
         NoMansLand.LOGGER.info(
             "Teleporting " + serverPlayer.getGameProfile().getName() +
             " from a Dream to last valid point as a last resort! Did the server crash previously?"
         );
+    }
 
+    public static Vec3 fallbackPosition(ServerPlayer serverPlayer) {
         MinecraftServer server = serverPlayer.getServer();
         PlayerExtension playerExtension = (PlayerExtension) serverPlayer;
         BlockPos respawnPosition = playerExtension.nml$getLastSleepPosition();
         if (respawnPosition == null) respawnPosition = serverPlayer.getRespawnPosition();
         if (respawnPosition == null) respawnPosition = server.overworld().getSharedSpawnPos();
+        return outOfPlot(fallbackDimension(serverPlayer), respawnPosition.getCenter());
+    }
+
+    public static Vec3 outOfPlot(Level level, Vec3 position) {
+        SubLevelAccess subLevel = SableCompanion.INSTANCE.getContaining(level, position);
+        return subLevel == null ? position : subLevel.logicalPose().transformPosition(position);
+    }
+
+    public static ServerLevel fallbackDimension(ServerPlayer serverPlayer) {
+        MinecraftServer server = serverPlayer.getServer();
+        PlayerExtension playerExtension = (PlayerExtension) serverPlayer;
 
         ServerLevel respawnDimension = server.getLevel(serverPlayer.getRespawnDimension());
         if (playerExtension.nml$getLastSleepDimension() != null) {
             ServerLevel storedRespawnDimension = server.getLevel(playerExtension.nml$getLastSleepDimension());
             if (storedRespawnDimension != null) respawnDimension = storedRespawnDimension;
         }
-        if (respawnDimension == null) respawnDimension = server.overworld();
+        if (respawnDimension == null || keyToDream(respawnDimension.dimension()).isPresent())
+            respawnDimension = server.overworld();
+        return respawnDimension;
+    }
 
-        if (load) {
-            serverPlayer.setPos(respawnPosition.getCenter());
-            return;
-        }
+    public static ServerLevel playerLoadFallback(ServerPlayer serverPlayer) {
+        logFallback(serverPlayer);
+        serverPlayer.setPos(fallbackPosition(serverPlayer));
+        return fallbackDimension(serverPlayer);
+    }
 
+    public static void playerTeleportFallback(ServerPlayer serverPlayer) {
+        logFallback(serverPlayer);
+        Vec3 respawnPosition = fallbackPosition(serverPlayer);
         serverPlayer.changeDimension(new DimensionTransition(
-            respawnDimension,
-            respawnPosition.getCenter(),
-            respawnPosition.getCenter(),
+            fallbackDimension(serverPlayer),
+            respawnPosition,
+            Vec3.ZERO,
             0, 0,
             DimensionTransition.DO_NOTHING
         ));

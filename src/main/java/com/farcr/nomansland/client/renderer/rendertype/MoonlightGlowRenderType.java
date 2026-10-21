@@ -32,7 +32,7 @@ public class MoonlightGlowRenderType {
 
                     AbstractUniform glintAlpha = MOONLIGHT_GLOW_SHADER.safeGetUniform("GlintOpacity");
                     float alpha = FriendMoonRenderer.getInstance().getFriendMoonOpacity();
-                    glintAlpha.set(alpha);
+                    glintAlpha.set(alpha * (float) ((double) Minecraft.getInstance().options.glintStrength().get()));
 
                     MOONLIGHT_GLOW_SHADER.apply();
                     return MOONLIGHT_GLOW_SHADER;
@@ -82,7 +82,7 @@ public class MoonlightGlowRenderType {
         return false;
     }
 
-    public static void addGlints(Object2ObjectLinkedOpenHashMap<RenderType, ByteBufferBuilder> map) {
+    public static void addGlint(Object2ObjectLinkedOpenHashMap<RenderType, ByteBufferBuilder> map) {
         if (!map.containsKey(MOONLIGHT_GLOW))
             map.put(MOONLIGHT_GLOW, new ByteBufferBuilder(MOONLIGHT_GLOW.bufferSize()));
     }

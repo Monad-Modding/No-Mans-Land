@@ -2,22 +2,14 @@
   "type": "minecraft:archaeology",
   "pools": [
     {
-      "bonus_rolls": 0,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "nomansland:trinket",
-          "weight": 1,
-          "functions": [],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.002
-            }
-          ]
+          "name": "nomansland:trinket"
         }
       ],
       "rolls": 1
     }
-  ]
+  ],
+  "random_sequence": "nomansland:archaeology/trinket"
 }

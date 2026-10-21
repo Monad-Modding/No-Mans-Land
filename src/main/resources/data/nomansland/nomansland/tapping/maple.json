@@ -1,16 +1,20 @@
 {
-  "sources": [
-    {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "nomansland:maple_log",
-        "Properties": {
-          "axis": "y"
-        }
-      }
-    }
-  ],
-  "cauldron": "nomansland:maple_syrup_cauldron",
-  "rate": 1,
-  "particle": "nomansland:maple_syrup_droplet"
+  "source": {
+    "block": "nomansland:maple_log",
+    "properties": {
+      "axis": "y"
+    },
+    "tree": {}
+  },
+  "output": {
+    "cauldron": "nomansland:maple_syrup_cauldron"
+  },
+  "interval": {
+    "type": "minecraft:uniform",
+    "min_inclusive": 18000,
+    "max_inclusive": 36000
+  },
+  "particle": {
+    "type": "nomansland:maple_syrup_droplet"
+  }
 }

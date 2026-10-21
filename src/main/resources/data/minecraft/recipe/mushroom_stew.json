@@ -1,4 +1,11 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "mushroom_stew",
+      "enabled_when": false
+    }
+  ],
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
@@ -6,13 +13,14 @@
       "item": "minecraft:brown_mushroom"
     },
     {
-      "item": "nomansland:field_mushroom"
+      "item": "minecraft:red_mushroom"
     },
     {
       "item": "minecraft:bowl"
     }
   ],
   "result": {
+    "count": 1,
     "id": "minecraft:mushroom_stew"
   }
 }

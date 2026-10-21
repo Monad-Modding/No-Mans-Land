@@ -26,6 +26,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Monster;
@@ -384,14 +385,13 @@ public class Frienderman extends EnderMan {
 
         @Override
         public boolean canUse() {
-            for (Player player : frienderman.level().getEntitiesOfClass(Player.class,
-                    frienderman.getBoundingBox().inflate(64.0))) {
-                if (frienderman.isPlayerLookingAtMe(player)) {
-                    staringPlayer = player;
-                    return true;
-                }
-            }
-            return false;
+            TargetingConditions conditions = TargetingConditions.forNonCombat()
+                    .range(64)
+                    .ignoreLineOfSight()
+                    .ignoreInvisibilityTesting()
+                    .selector(target -> target instanceof Player player && frienderman.isPlayerLookingAtMe(player));
+            staringPlayer = frienderman.level().getNearestPlayer(conditions, frienderman);
+            return staringPlayer != null;
         }
 
         @Override

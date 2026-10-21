@@ -12,12 +12,17 @@ on:
     branches:
       - 'main'
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Setup Java
         uses: actions/setup-java@v5
@@ -31,6 +36,21 @@ jobs:
 
       - name: Make Gradle Wrapper Executable
         run: chmod +x ./gradlew
+
+      - name: Run data generation
+        run: ./gradlew runData
+
+      - name: Commit and push generated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A src/generated/resources
+          if git diff --cached --quiet; then
+            echo "No generated data changes to commit."
+          else
+            git commit -m "Generate data [skip ci]"
+            git push origin HEAD:${{ github.head_ref || github.ref_name }}
+          fi
 
       - name: Execute Gradle build
         run: ./gradlew build

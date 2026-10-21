@@ -2,11 +2,7 @@ package com.farcr.nomansland.client.ambience.fogmodifiers;
 
 import com.farcr.nomansland.client.ambience.FogModifierHandler;
 import com.farcr.nomansland.client.renderer.FriendMoonRenderer;
-import com.farcr.nomansland.common.friend.FriendMoon;
-import com.farcr.nomansland.common.registry.entities.NMLEffects;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.FogRenderer;
-import net.minecraft.world.level.material.FogType;
 
 public class FriendMoonFogModifier extends FogModifier {
     @Override

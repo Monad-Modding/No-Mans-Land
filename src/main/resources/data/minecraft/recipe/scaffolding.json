@@ -1,17 +1,28 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-     "III",
-     "I I",
-     "I I"
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "scaffolding",
+      "enabled_when": false
+    }
   ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
-      "I": {
-        "item": "minecraft:bamboo"
-      }
+    "I": {
+      "item": "minecraft:bamboo"
+    },
+    "~": {
+      "item": "minecraft:string"
+    }
   },
+  "pattern": [
+    "I~I",
+    "I I",
+    "I I"
+  ],
   "result": {
-    "id": "minecraft:scaffolding",
-    "count": 6
+    "count": 6,
+    "id": "minecraft:scaffolding"
   }
 }

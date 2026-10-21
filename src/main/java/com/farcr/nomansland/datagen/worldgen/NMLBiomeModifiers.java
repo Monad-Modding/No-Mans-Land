@@ -579,6 +579,7 @@ public class NMLBiomeModifiers {
                 .addSpawns(
                         new SpawnerData(EntityType.FROG, 4, 3, 5)
                 )
+                .changeMusic(new Music(NMLSounds.MUSHROOM_BIOME_MUSIC, 12000, 24000, false))
                 .removeFeatures(DISK_SAND, DISK_GRAVEL, PATCH_SUGAR_CANE, PATCH_PUMPKIN)
                 .build(featureToBiomes);
 

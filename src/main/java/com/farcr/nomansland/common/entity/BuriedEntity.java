@@ -5,8 +5,8 @@ package com.farcr.nomansland.common.entity;
 //
 //    private static final EntityDataAccessor<Integer> DATA_ID_TYPE_VARIANT = SynchedEntityData.defineId(BuriedEntity.class, EntityDataSerializers.INT);
 //
-//    public BuriedEntity(EntityType<? extends BuriedEntity> pEntityType, Level pLevel) {
-//        super(pEntityType, pLevel);
+//    public BuriedEntity(EntityType<? extends BuriedEntity> entityType, Level level) {
+//        super(entityType, level);
 //    }
 //
 //    private static boolean isHoldingBow(LivingEntity livingEntity) {
@@ -49,6 +49,6 @@ package com.farcr.nomansland.common.entity;
 //    }
 //
 //    @Override
-//    public void performRangedAttack(LivingEntity pTarget, float pVelocity) {
+//    public void performRangedAttack(LivingEntity target, float velocity) {
 //    }
 //}

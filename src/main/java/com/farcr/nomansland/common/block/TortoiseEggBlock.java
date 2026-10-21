@@ -121,7 +121,6 @@ public class TortoiseEggBlock extends Block {
         return level.getRandom().nextInt(25) == 0;
     }
 
-
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity te, ItemStack stack) {
         super.playerDestroy(level, player, pos, state, te, stack);

@@ -18,6 +18,8 @@ public class NMLTags {
     public static final TagKey<Item> TORTOISE_FOOD = createItemTag("tortoise_food");
     public static final TagKey<Item> MAKES_RESIN_OIL = createItemTag("makes_resin_oil");
     public static final TagKey<Item> INK_IMMUNE = createItemTag("ink_immune");
+    public static final TagKey<Item> MAKES_PATHS = createItemTag("makes_paths");
+    public static final TagKey<Item> MAKES_FARMLAND = createItemTag("makes_farmland");
 
     public static final SharedTag MAPLE_LOGS = createSharedTag("maple_logs");
     public static final SharedTag PINE_LOGS = createSharedTag("pine_logs");
@@ -26,6 +28,11 @@ public class NMLTags {
     public static final SharedTag BOOKSHELVES = createSharedTag("bookshelves");
     public static final SharedTag TRIMMED_PLANKS = createSharedTag("trimmed_planks");
 
+    public static final TagKey<Block> INCORRECT_FOR_RITUAL_TOOL = createBlockTag("incorrect_for_ritual_tool");
+    public static final TagKey<Block> RESONATES_WITH_RITUAL_PICKAXE = createBlockTag("resonates_with_ritual_pickaxe");
+    public static final TagKey<Block> OCCLUDES_RITUAL_PICKAXE_RESONANCE = createBlockTag("occludes_ritual_pickaxe_resonance");
+    public static final TagKey<EntityType<?>> MALEVOLENT_ENTITIES = createEntityTag("malevolent");
+
     public static final TagKey<Block> ORE_VEIN_REPLACEABLE = createBlockTag("ore_vein_replaceable");
     public static final TagKey<Block> MUSHROOM_BLOCKS = createBlockTag("mushroom_blocks");
     public static final TagKey<Block> BONEMEALABLE_FLOWERS = createBlockTag("bonemealable_flowers");
@@ -33,6 +40,8 @@ public class NMLTags {
     public static final TagKey<Biome> HAS_CACTUS = createBiomeTag("has_cactus");
     public static final TagKey<Block> BOMB_EXPLODE = createBlockTag("firebomb_explode");
     public static final TagKey<Block> HEAT_SOURCES = createBlockTag("heat_sources");
+    public static final TagKey<Block> TREE_GROUND = createBlockTag("tree_ground");
+    public static final TagKey<Block> CATCHES_DRIPS = createBlockTag("catches_drips");
     public static final TagKey<EntityType<?>> ANCHOR_BLACKLIST = createEntityTag("anchor_blacklist");
     public static final TagKey<Biome> OLD_GROWTH_FOREST = createBiomeTag("old_growth_forest");
     public static final TagKey<EntityType<?>> CANNOT_BE_PACIFIED = createEntityTag("cannot_be_pacified");
@@ -47,6 +56,7 @@ public class NMLTags {
     public static final TagKey<Biome> CAVES = createBiomeTag("caves");
     public static final TagKey<DamageType> IGNITES_FLAMMABLE = createDamageTypeTag("ignites_flammable");
     public static final TagKey<Biome> SPAWNS_MUD_FROGS = createBiomeTag("entity/spawns_mud_frogs");
+    public static final TagKey<Biome> SPAWNS_BUDDY = createBiomeTag("entity/spawns_buddy");
 
     public static final TagKey<Block> SUPPORTS_ICICLE = createBlockTag("supports_icicle");
 

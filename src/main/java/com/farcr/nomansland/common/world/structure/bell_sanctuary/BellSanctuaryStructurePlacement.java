@@ -18,9 +18,9 @@ import java.util.Optional;
 public class BellSanctuaryStructurePlacement extends RandomSpreadStructurePlacement {
 
     public static final MapCodec<BellSanctuaryStructurePlacement> CODEC = RecordCodecBuilder.mapCodec(
-            p_204996_ -> placementCodec(p_204996_)
+            instance -> placementCodec(instance)
                     .and(
-                            p_204996_.group(
+                            instance.group(
                                     Codec.intRange(0, 4096).fieldOf("spacing").forGetter(RandomSpreadStructurePlacement::spacing),
                                     Codec.intRange(0, 4096).fieldOf("separation").forGetter(RandomSpreadStructurePlacement::separation),
                                     RandomSpreadType.CODEC
@@ -28,7 +28,7 @@ public class BellSanctuaryStructurePlacement extends RandomSpreadStructurePlacem
                                             .forGetter(RandomSpreadStructurePlacement::spreadType)
                             )
                     )
-                    .apply(p_204996_, BellSanctuaryStructurePlacement::new)
+                    .apply(instance, BellSanctuaryStructurePlacement::new)
     );
 
     public BellSanctuaryStructurePlacement(final Vec3i locateOffset, final FrequencyReductionMethod frequencyReductionMethod, final float frequency, final int salt, final Optional<ExclusionZone> exclusionZone, final int spacing, final int separation, final RandomSpreadType spreadType) {

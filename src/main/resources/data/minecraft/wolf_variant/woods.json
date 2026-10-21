@@ -1,11 +1,6 @@
 {
   "angry_texture": "minecraft:entity/wolf/wolf_woods_angry",
-  "biomes": [
-    "minecraft:forest",
-    "nomansland:old_growth_forest",
-    "nomansland:old_growth_forest_clearing",
-    "nomansland:old_growth_forest_edge"
-  ],
+  "biomes": "#nomansland:entity/spawns_woods_wolves",
   "tame_texture": "minecraft:entity/wolf/wolf_woods_tame",
   "wild_texture": "minecraft:entity/wolf/wolf_woods"
 }

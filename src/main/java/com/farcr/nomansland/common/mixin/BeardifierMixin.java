@@ -28,7 +28,9 @@ public abstract class BeardifierMixin implements BeardifierExtension {
     @Unique
     private static final double ALTAR_BLEND_PADDING = 16.0;
     @Unique
-    private static final double ALTAR_BLEND_STRENGTH = 1.5;
+    private static final double ALTAR_BLEND_STRENGTH = 2.0;
+    @Unique
+    private static final double ALTAR_BLEND_BAND = 2.0;
 
     @Unique
     private List<AltarBeard> nomansland$altarBeards = List.of();
@@ -120,12 +122,14 @@ public abstract class BeardifierMixin implements BeardifierExtension {
             double radialWeight = 1.0 - t * t * (3.0 - 2.0 * t);
             double depth = altar.targetY() - y;
             double verticalShape;
-            if (depth >= 1.0) {
+            if (depth >= ALTAR_BLEND_BAND) {
                 verticalShape = 1.0;
-            } else if (depth <= 0.0) {
-                verticalShape = 0.0;
+            } else if (depth <= -ALTAR_BLEND_BAND) {
+                verticalShape = -1.0;
             } else {
-                verticalShape = depth * depth * (3.0 - 2.0 * depth);
+                double s = depth / ALTAR_BLEND_BAND;
+                double a = Math.abs(s);
+                verticalShape = Math.copySign(a * a * (3.0 - 2.0 * a), s);
             }
             bias += verticalShape * radialWeight * ALTAR_BLEND_STRENGTH;
         }

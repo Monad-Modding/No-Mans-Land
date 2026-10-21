@@ -67,12 +67,13 @@ public class LivingPot extends PathfinderMob implements NeutralMob, ContainerSin
 
     @Nullable private UUID persistentAngerTarget;
 
-    protected @Nullable ResourceKey<LootTable> lootTable;
-    protected long lootTableSeed = 0L;
-    public ItemStack storedItem = ItemStack.EMPTY;
-    private PotionContents storedPotion = PotionContents.EMPTY;
-    private @Nullable ResourceLocation potionTableId;
-    private long potionTableSeed = 0L;
+    private static final String ITEM_KEY = "StoredItem";
+
+    private final PotContents contents = new PotContents();
+    @Nullable
+    private PotVariant cachedVariant;
+    @Nullable
+    private String cachedVariantKey;
 
     @Nullable private BlockPos homePos;
     private int returnTimer = 12000;
@@ -93,7 +94,6 @@ public class LivingPot extends PathfinderMob implements NeutralMob, ContainerSin
     private int wakeUpCooldownTicks = 0;
     private static final int WAKE_UP_COOLDOWN = 6000;
     private int wakeUpTicks = 0;
-    private final EnumSet<PotModifier> modifiers = EnumSet.noneOf(PotModifier.class);
     public boolean droppedSelf;
     private transient boolean inLootTableDrop = false;
 
@@ -112,11 +112,26 @@ public class LivingPot extends PathfinderMob implements NeutralMob, ContainerSin
 
     @Nullable
     public PotVariant getVariant() {
-        String key = entityData.get(VARIANT);
+        String key = this.entityData.get(VARIANT);
         if (key.isEmpty()) return null;
-        return level().registryAccess().registryOrThrow(NMLRegistries.POT_VARIANT_KEY)
-                .getOptional(ResourceKey.create(NMLRegistries.POT_VARIANT_KEY, ResourceLocation.parse(key)))
-                .orElse(null);
+        if (!key.equals(this.cachedVariantKey) || this.cachedVariant == null) {
+            this.cachedVariantKey = key;
+            this.cachedVariant = this.level().registryAccess().registryOrThrow(NMLRegistries.POT_VARIANT_KEY).getOptional(ResourceKey.create(NMLRegistries.POT_VARIANT_KEY, ResourceLocation.parse(key))).orElse(null);
+        }
+        return this.cachedVariant;
+    }
+
+    public PotContents getContents() {
+        return this.contents;
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        super.onSyncedDataUpdated(key);
+        if (VARIANT.equals(key)) {
+            this.cachedVariant = null;
+            this.refreshDimensions();
+        }
     }
 
     public BlockState getBlockState() {
@@ -201,19 +216,8 @@ public class LivingPot extends PathfinderMob implements NeutralMob, ContainerSin
         pot.setYBodyRot(yaw);
         pot.setYHeadRot(yaw);
         pot.setVariant(be.variant, be.getBlockState());
-        pot.setModifiers(be.getModifiers());
-        if (be.getPotionTableId() != null) {
-            pot.setPotionTable(be.getPotionTableId(), be.getPotionTableSeed());
-        } else if (!be.getStoredPotion().equals(PotionContents.EMPTY)) {
-            pot.setStoredPotion(be.getStoredPotion());
-        }
+        pot.contents.copyFrom(be.getContents());
         pot.setHomePos(pos);
-        if (be.getLootTable() != null) {
-            pot.setLootTable(be.getLootTable());
-            pot.setLootTableSeed(be.getLootTableSeed());
-        } else if (!be.getTheItem().isEmpty()) {
-            pot.setStoredItem(be.getTheItem());
-        }
         return pot;
     }
 
@@ -425,45 +429,31 @@ public class LivingPot extends PathfinderMob implements NeutralMob, ContainerSin
     }
 
     public Set<PotModifier> getModifiers() {
-        return modifiers;
+        return this.contents.getModifiers();
     }
 
     public boolean hasModifier(PotModifier modifier) {
-        return modifiers.contains(modifier);
+        return this.contents.hasModifier(modifier);
     }
 
-    public void setModifiers(Set<PotModifier> mods) {
-        modifiers.clear();
-        modifiers.addAll(mods);
+    public void setModifiers(Set<PotModifier> modifiers) {
+        this.contents.setModifiers(modifiers);
     }
 
     public void removeModifier(PotModifier modifier) {
-        modifiers.remove(modifier);
+        this.contents.getModifiers().remove(modifier);
     }
 
     public PotionContents getStoredPotion() {
-        unpackPotionTable();
-        return storedPotion;
+        return this.contents.getPotion(this.level());
     }
 
     public void setStoredPotion(PotionContents potion) {
-        this.storedPotion = potion;
-        this.potionTableId = null;
+        this.contents.setPotion(potion);
     }
 
     public void setPotionTable(ResourceLocation potionTableId, long seed) {
-        this.potionTableId = potionTableId;
-        this.potionTableSeed = seed;
-    }
-
-    private void unpackPotionTable() {
-        if (potionTableId != null && level() != null && !level().isClientSide) {
-            PotionContents resolved = PotionTable.resolve(level(), potionTableId, potionTableSeed);
-            if (resolved != null) {
-                storedPotion = resolved;
-            }
-            potionTableId = null;
-        }
+        this.contents.setPotionTable(potionTableId, seed);
     }
 
     public void placeAsBlock(BlockPos pos) {
@@ -473,20 +463,8 @@ public class LivingPot extends PathfinderMob implements NeutralMob, ContainerSin
         level().setBlockAndUpdate(pos, getBlockState());
         if (level().getBlockEntity(pos) instanceof PotBlockEntity be) {
             be.variant = variant;
-            for (PotModifier mod : modifiers) {
-                be.addModifier(mod);
-            }
-            if (this.potionTableId != null) {
-                be.setPotionTable(this.potionTableId, this.potionTableSeed);
-            } else if (!storedPotion.equals(PotionContents.EMPTY)) {
-                be.setStoredPotion(storedPotion);
-            }
-            if (getPotLootTable() != null) {
-                be.setLootTable(getPotLootTable());
-                be.setLootTableSeed(getLootTableSeed());
-            } else if (!storedItem.isEmpty()) {
-                be.setTheItem(storedItem);
-            }
+            be.getContents().copyFrom(this.contents);
+            be.setChanged();
         }
         if (hasModifier(PotModifier.TRAPPED) && level() instanceof ServerLevel serverLevel) {
             BlockState placed = level().getBlockState(pos);
@@ -632,7 +610,7 @@ public class LivingPot extends PathfinderMob implements NeutralMob, ContainerSin
         if (!level().isClientSide) {
             PotBlock.applyBreakEffects((ServerLevel) level(), position(),
                     getBlockState(), getVariant(), getModifiers(),
-                    getStoredPotion(), isLarge());
+                    getStoredPotion(), isLarge(), true);
             discard();
         }
     }
@@ -706,15 +684,15 @@ public class LivingPot extends PathfinderMob implements NeutralMob, ContainerSin
     }
 
     public void setStoredItem(ItemStack item) {
-        this.storedItem = item.copy();
+        this.contents.setItem(item.copy());
     }
 
     @Override
     protected void dropCustomDeathLoot(ServerLevel level, DamageSource damageSource, boolean recentlyHit) {
         this.unpackLootTable(damageSource.getEntity() instanceof Player player ? player : null);
-        if (!storedItem.isEmpty()) {
-            spawnOrThrowPotion(level, storedItem);
-            storedItem = ItemStack.EMPTY;
+        if (!this.contents.getItem().isEmpty()) {
+            this.spawnOrThrowPotion(level, this.contents.getItem());
+            this.contents.setItem(ItemStack.EMPTY);
         }
         super.dropCustomDeathLoot(level, damageSource, recentlyHit);
     }
@@ -744,34 +722,13 @@ public class LivingPot extends PathfinderMob implements NeutralMob, ContainerSin
         if (tag.contains("ReturnTimer")) {
             returnTimer = tag.getInt("ReturnTimer");
         }
-        if (!this.tryLoadLootTable(tag) && tag.contains("StoredItem")) {
-            storedItem = ItemStack.parseOptional(level().registryAccess(), tag.getCompound("StoredItem"));
-        }
+        this.contents.load(tag, this.level().registryAccess(), ITEM_KEY);
         hasWokenLargePot = tag.getBoolean("HasWokenLargePot");
         if (tag.contains("WakeUpCooldown")) {
             wakeUpCooldownTicks = tag.getInt("WakeUpCooldown");
         }
         if (tag.contains("WakeUpTicks")) {
             wakeUpTicks = tag.getInt("WakeUpTicks");
-        }
-        modifiers.clear();
-        if (tag.contains("Modifiers")) {
-            ListTag modList = tag.getList("Modifiers", Tag.TAG_STRING);
-            for (int i = 0; i < modList.size(); i++) {
-                try {
-                    modifiers.add(PotModifier.valueOf(modList.getString(i).toUpperCase()));
-                } catch (IllegalArgumentException ignored) {}
-            }
-        }
-        potionTableId = null;
-        storedPotion = PotionContents.EMPTY;
-        if (tag.contains("PotionTable")) {
-            potionTableId = ResourceLocation.parse(tag.getString("PotionTable"));
-            potionTableSeed = tag.contains("PotionTableSeed", Tag.TAG_LONG) ? tag.getLong("PotionTableSeed") : 0L;
-        } else if (tag.contains("StoredPotion")) {
-            PotionContents.CODEC.parse(
-                    level().registryAccess().createSerializationContext(NbtOps.INSTANCE), tag.get("StoredPotion"))
-                    .resultOrPartial().ifPresent(p -> storedPotion = p);
         }
     }
 
@@ -790,89 +747,76 @@ public class LivingPot extends PathfinderMob implements NeutralMob, ContainerSin
             tag.put("HomePos", NbtUtils.writeBlockPos(homePos));
         }
         tag.putInt("ReturnTimer", returnTimer);
-        if (!this.trySaveLootTable(tag) && !storedItem.isEmpty()) {
-            tag.put("StoredItem", storedItem.save(level().registryAccess()));
-        }
+        this.contents.save(tag, this.level().registryAccess(), ITEM_KEY);
         tag.putBoolean("HasWokenLargePot", hasWokenLargePot);
         tag.putInt("WakeUpCooldown", wakeUpCooldownTicks);
         tag.putInt("WakeUpTicks", wakeUpTicks);
-        if (!modifiers.isEmpty()) {
-            ListTag modList = new ListTag();
-            for (PotModifier mod : modifiers) {
-                modList.add(StringTag.valueOf(mod.getSerializedName()));
-            }
-            tag.put("Modifiers", modList);
-        }
-        if (potionTableId != null) {
-            tag.putString("PotionTable", potionTableId.toString());
-            if (potionTableSeed != 0L) tag.putLong("PotionTableSeed", potionTableSeed);
-        } else if (!storedPotion.equals(PotionContents.EMPTY)) {
-            Tag potionTag = PotionContents.CODEC.encodeStart(
-                    level().registryAccess().createSerializationContext(NbtOps.INSTANCE), storedPotion).getOrThrow();
-            tag.put("StoredPotion", potionTag);
-        }
     }
 
-    public void setLootTable(@Nullable ResourceKey<LootTable> lootTable) { this.lootTable = lootTable; }
-    public void setLootTableSeed(long seed) { this.lootTableSeed = seed; }
-    @Nullable public ResourceKey<LootTable> getPotLootTable() { return lootTable; }
-    public long getLootTableSeed() { return lootTableSeed; }
-
-    public boolean tryLoadLootTable(CompoundTag tag) {
-        if (tag.contains("LootTable", 8)) {
-            this.lootTable = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.parse(tag.getString("LootTable")));
-            this.lootTableSeed = tag.contains("LootTableSeed", 4) ? tag.getLong("LootTableSeed") : 0L;
-            return true;
-        }
-        return false;
+    public void setLootTable(@Nullable ResourceKey<LootTable> lootTable) {
+        this.contents.setLootTable(lootTable);
     }
 
-    public boolean trySaveLootTable(CompoundTag tag) {
-        if (this.lootTable == null) return false;
-        tag.putString("LootTable", this.lootTable.location().toString());
-        if (this.lootTableSeed != 0L) tag.putLong("LootTableSeed", this.lootTableSeed);
-        return true;
+    public void setLootTableSeed(long seed) {
+        this.contents.setLootTableSeed(seed);
+    }
+
+    @Nullable
+    public ResourceKey<LootTable> getPotLootTable() {
+        return this.contents.getLootTable();
+    }
+
+    public long getLootTableSeed() {
+        return this.contents.getLootTableSeed();
     }
 
     public void unpackLootTable(@Nullable Player player) {
-        if (this.lootTable != null && level() != null && level().getServer() != null) {
-            LootTable loottable = level().getServer().reloadableRegistries().getLootTable(this.lootTable);
-            this.lootTable = null;
-            LootParams.Builder builder = new LootParams.Builder((ServerLevel) level())
-                    .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockPosition()));
-            if (player != null) {
-                builder.withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player);
-            }
-            loottable.fill(this, builder.create(LootContextParamSets.CHEST), this.lootTableSeed);
+        ResourceKey<LootTable> key = this.contents.getLootTable();
+        if (key == null || this.level().getServer() == null) return;
+        LootTable table = this.level().getServer().reloadableRegistries().getLootTable(key);
+        this.contents.setLootTable(null);
+        LootParams.Builder builder = new LootParams.Builder((ServerLevel) this.level()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.blockPosition()));
+        if (player != null) {
+            builder.withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player);
         }
+        table.fill(this, builder.create(LootContextParamSets.CHEST), this.contents.getLootTableSeed());
     }
 
     @Override
     public ItemStack getTheItem() {
         this.unpackLootTable(null);
-        return this.storedItem;
+        return this.contents.getItem();
     }
 
     @Override
     public ItemStack splitTheItem(int amount) {
         this.unpackLootTable(null);
-        ItemStack itemstack = this.storedItem.split(amount);
-        if (this.storedItem.isEmpty()) this.storedItem = ItemStack.EMPTY;
-        return itemstack;
+        ItemStack split = this.contents.getItem().split(amount);
+        if (this.contents.getItem().isEmpty()) {
+            this.contents.setItem(ItemStack.EMPTY);
+        }
+        return split;
     }
 
     @Override
     public void setTheItem(ItemStack item) {
         this.unpackLootTable(null);
-        this.storedItem = item;
+        this.contents.setItem(item);
     }
 
     @Override
-    public void setChanged() {}
+    public void setChanged() {
+    }
+
     @Override
-    public boolean stillValid(Player player) { return true; }
+    public boolean stillValid(Player player) {
+        return true;
+    }
+
     @Override
-    public void clearContent() { this.storedItem = ItemStack.EMPTY; }
+    public void clearContent() {
+        this.contents.setItem(ItemStack.EMPTY);
+    }
 
     @Override
     public int getRemainingPersistentAngerTime() { return entityData.get(DATA_REMAINING_ANGER_TIME); }

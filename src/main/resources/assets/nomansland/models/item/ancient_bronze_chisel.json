@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "nomansland:item/ancient_bronze_chisel"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "nomansland:item/ancient_bronze_chisel_offhand"
+    },
+    {
+      "predicate": {
+        "nomansland:using_chisel": 1
+      },
+      "model": "nomansland:item/ancient_bronze_chisel_handheld"
+    }
+  ]
+}

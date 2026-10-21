@@ -1,0 +1,8 @@
+{
+    "condition": {
+        "type": "nomansland:entity_conditional",
+        "entity": ["minecraft:endermite"]
+    },
+    "weight": 1,
+    "text": "To think that life can exist within the seams of what is and what isn't. If our world is so harmonious, how can it be so kind to what exists within flaws in its order? \n Oh, how foolish of me... We both know that love, acceptance and harmony are all there truly is."
+}

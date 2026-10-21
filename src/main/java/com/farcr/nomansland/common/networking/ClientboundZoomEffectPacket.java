@@ -2,15 +2,10 @@ package com.farcr.nomansland.common.networking;
 
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.client.renderer.effect.AccumulateZoomRenderer;
-import com.farcr.nomansland.common.block.moonlight.MoonlightCandleBlock;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ClientboundZoomEffectPacket(int time) implements CustomPacketPayload {

@@ -56,6 +56,11 @@ public class InvertedBellBlock extends BaseEntityBlock {
         );
     }
 
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return simpleCodec(InvertedBellBlock::new);
+    }
+
     public static final VoxelShape[] BELL_NS = new VoxelShape[3 * 3 * 3];
     public static final VoxelShape[] BELL_EW = new VoxelShape[3 * 3 * 3];
 
@@ -151,7 +156,7 @@ public class InvertedBellBlock extends BaseEntityBlock {
             if (target != null && level.getBlockEntity(pos.above()) instanceof InvertedBellControllerBlockEntity ibbe) {
                 ServerLevel targetLevel = level.getServer().getLevel(target.dimension());
                 if (targetLevel != null && targetLevel.getBlockEntity(target.pos()) instanceof InvertedBellControllerBlockEntity ibbe2) {
-                    ibbe.link(ibbe2);
+                    ibbe.link(ibbe2, true);
                     if (placer != null) {
                         placer.sendSystemMessage(Component.literal("Successfully linked bell"));
                     }
@@ -192,6 +197,13 @@ public class InvertedBellBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(final BlockState state, final Level level, final BlockPos pos, final Player player, final BlockHitResult hitResult) {
         if (player.getMainHandItem().isEmpty()) {
+            final InvertedBellControllerBlockEntity controller = getControllerBE(level, pos, state);
+            if (controller != null && controller.targetBell == null) {
+                if (level instanceof ServerLevel serverLevel) {
+                    controller.attemptRecheck(serverLevel);
+                }
+                return InteractionResult.SUCCESS;
+            }
             if (this.onHit(level, state, pos, player.getLookAngle())) {
                 return InteractionResult.SUCCESS;
             }
@@ -242,11 +254,6 @@ public class InvertedBellBlock extends BaseEntityBlock {
             return createTickerHelper(blockEntityType, NMLBlockEntities.INVERTED_BELL.get(), InvertedBellControllerBlockEntity::tick);
         }
         return null;
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(InvertedBellBlock::new);
     }
 
     @Override

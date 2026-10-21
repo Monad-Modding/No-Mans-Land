@@ -1,7 +1,6 @@
 package com.farcr.nomansland.common.mixin.client;
 
 import com.farcr.nomansland.client.renderer.dreams.ClientDreamRenderer;
-import com.farcr.nomansland.common.dreams.DreamManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;

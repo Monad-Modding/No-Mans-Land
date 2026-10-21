@@ -1,4 +1,11 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "light_blue_dye_from_blue_orchid",
+      "enabled_when": false
+    }
+  ],
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "group": "light_blue_dye",
@@ -8,6 +15,7 @@
     }
   ],
   "result": {
-    "id": "minecraft:cyan_dye"
+    "count": 1,
+    "id": "minecraft:light_blue_dye"
   }
 }

@@ -1,10 +1,13 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.registry.NMLSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
@@ -40,6 +43,11 @@ public class PlatformBlock extends Block implements SimpleWaterloggedBlock {
         registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false).setValue(UP, false).setValue(UNSTABLE, false));
     }
 
+    @Override
+    public MapCodec<PlatformBlock> codec() {
+        return simpleCodec(PlatformBlock::new);
+    }
+
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (state.getValue(UP)) {
             return TOP_SHAPE;
@@ -69,17 +77,42 @@ public class PlatformBlock extends Block implements SimpleWaterloggedBlock {
 
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
+        Direction.Axis axis = context.getHorizontalDirection().getAxis();
+        BlockState against = context.getLevel().getBlockState(context.getClickedPos().relative(context.getClickedFace().getOpposite()));
+        if (against.is(this)) {
+            axis = against.getValue(HORIZONTAL_AXIS);
+        }
         return defaultBlockState()
                 .setValue(UP, Mth.frac(context.getClickLocation().y)>0.5)
-                .setValue(HORIZONTAL_AXIS, context.getHorizontalDirection().getAxis())
+                .setValue(HORIZONTAL_AXIS, axis)
                 .setValue(WATERLOGGED, fluidstate.getType() == Fluids.WATER);
     }
 
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-        if (entity.onGround() && state.getValue(UNSTABLE)) {
-            level.destroyBlock(pos, false, entity);
-            level.playSound(null, pos, NMLSounds.WOODEN_PLATFORM_BREAKS.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+        if (level instanceof ServerLevel serverLevel && entity.onGround() && state.getValue(UNSTABLE)) {
+            collapse(serverLevel, pos, level.getRandom());
         }
+    }
+
+    @Override
+    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        collapse(level, pos, random);
+    }
+
+    public static void collapse(ServerLevel level, BlockPos pos, RandomSource random) {
+        level.playSound(null, pos, NMLSounds.WOODEN_PLATFORM_BREAKS.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.destroyBlock(pos, false);
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            BlockPos neighbor = pos.relative(direction);
+            BlockState neighborState = level.getBlockState(neighbor);
+            if (isPlatform(neighborState) && neighborState.getValue(UNSTABLE) && random.nextFloat() < 0.45F) {
+                level.scheduleTick(neighbor, neighborState.getBlock(), 1);
+            }
+        }
+    }
+
+    public static boolean isPlatform(BlockState state) {
+        return state.getBlock() instanceof PlatformBlock || state.getBlock() instanceof PlatformStairsBlock || state.getBlock() instanceof PlatformStepBlock;
     }
 
     @Override

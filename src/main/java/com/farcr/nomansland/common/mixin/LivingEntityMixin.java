@@ -1,22 +1,29 @@
 package com.farcr.nomansland.common.mixin;
 
-import com.farcr.nomansland.common.dreams.DreamManager;
+import com.farcr.nomansland.common.effect.StasisEffect;
 import com.farcr.nomansland.common.extension.LivingEntityExtension;
+import com.farcr.nomansland.common.dreams.DreamManager;
 import com.farcr.nomansland.common.handler.InvertedBellServerHandler;
 import com.farcr.nomansland.common.registry.entities.NMLEffects;
+import com.farcr.nomansland.common.registry.entities.NMLEntityDataAttachments;
+import com.farcr.nomansland.common.registry.items.NMLItems;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.core.Holder;
+import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -26,8 +33,10 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import javax.annotation.Nullable;
+
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends EntityMixin implements LivingEntityExtension {
+public abstract class LivingEntityMixin extends EntityMixin implements LivingEntityExtension, IAttachmentHolder {
 
     @Shadow public abstract boolean hasEffect(Holder<MobEffect> effect);
 
@@ -40,8 +49,25 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
 
     @Shadow public boolean jumping;
 
+    @Shadow
+    @Nullable
+    public abstract MobEffectInstance getEffect(Holder<MobEffect> effect);
+
+    @Shadow
+    protected abstract void tickEffects();
+
+    @Shadow
+    protected abstract void pushEntities();
+
+    @Shadow
+    public abstract boolean isUsingItem();
+
+    @Shadow
+    protected ItemStack useItem;
     @Unique
     private boolean nomansland$skipDroppingDeathLoot = false;
+    @Unique
+    private boolean nomansland$beingResurrected = false;
     @Unique
     private int nml$bellParalysisTimer = 0;
 
@@ -66,8 +92,18 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
         this.nomansland$skipDroppingDeathLoot = true;
     }
 
+    @Override
+    public void nml$setBeingResurrected() {
+        this.nomansland$beingResurrected = true;
+    }
+
+    @Override
+    public boolean nml$isBeingResurrected() {
+        return this.nomansland$beingResurrected;
+    }
+
     @Inject(method = "dropAllDeathLoot", at = @At("HEAD"), cancellable = true)
-    private void trySkipDroppingDeathLoot(ServerLevel p_level, DamageSource damageSource, CallbackInfo ci) {
+    private void trySkipDroppingDeathLoot(ServerLevel level, DamageSource damageSource, CallbackInfo ci) {
         if (this.nomansland$skipDroppingDeathLoot) {
             ci.cancel();
         }
@@ -89,6 +125,13 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
         this.setJumping(false);
     }
 
+    @Inject(method = "isBlocking", at = @At("HEAD"), cancellable = true)
+    private void nml$wrapBlockingForOathSword(CallbackInfoReturnable<Boolean> cir) {
+        if (this.isUsingItem() && !this.useItem.isEmpty()
+        && this.useItem.is(NMLItems.ANCESTRAL_OATH_SWORD))
+            cir.setReturnValue(true);
+    }
+
     @Override
     public int nml$getBellParalysis() {
         return this.nml$bellParalysisTimer;
@@ -99,6 +142,38 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
         float outIn = (float) Math.abs((InvertedBellServerHandler.TELEPORT_ENTITY_TIME - this.nml$bellParalysisTimer))
                 / InvertedBellServerHandler.TELEPORT_ENTITY_TIME;
         return Mth.clamp(outIn* 2 - 1, 0, 1);
+    }
+
+    @Override public float nml$getVisualTickMultiplier() {
+        return this.getData(NMLEntityDataAttachments.STASIS_TICK_MULTIPLIER);
+    }
+
+    @Unique private void nml$setVisualTickMultiplier(float visualTickMultiplier) {
+        if (visualTickMultiplier == this.nml$getVisualTickMultiplier()) {
+            return;
+        }
+
+        this.setData(NMLEntityDataAttachments.STASIS_TICK_MULTIPLIER, visualTickMultiplier);
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+    private void nml$skipTick(CallbackInfo ci) {
+        if (this.getEffect(NMLEffects.STASIS) != null) {
+            nml$setVisualTickMultiplier(Math.max(nml$getVisualTickMultiplier() - (1 / 20f), 0f));
+            if (nml$getVisualTickMultiplier() <= 0f) {
+                this.tickEffects();
+                if (!nml$Self.level().isClientSide && !nml$Self.hasEffect(NMLEffects.STASIS)) {
+                    ((ServerLevel) nml$Self.level()).getChunkSource().broadcast(nml$Self,
+                        new ClientboundRemoveMobEffectPacket(nml$Self.getId(), NMLEffects.STASIS));
+                }
+                this.pushEntities();
+                // limit max speed
+                if (this.getDeltaMovement().lengthSqr() > StasisEffect.MAX_SPEED * StasisEffect.MAX_SPEED)
+                    this.setDeltaMovement(this.getDeltaMovement().normalize().scale(StasisEffect.MAX_SPEED));
+                ci.cancel();
+            }
+        } else if (this.hasData(NMLEntityDataAttachments.STASIS_TICK_MULTIPLIER))
+            nml$setVisualTickMultiplier(1f);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))

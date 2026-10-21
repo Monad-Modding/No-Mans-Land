@@ -54,6 +54,7 @@ public class MeetingPointStructure extends Structure {
     private static final double PATH_WOBBLE_AMPLITUDE = 0.18;
     private static final double PATH_WOBBLE_NOISE_SCALE = 0.04;
     private static final double MIN_DISTANCE_FROM_ALTAR = 15;
+    private static final int MENHIR_MAX_BASE_GAP = 2;
 
     private static final int SLOT_ATTEMPTS = 6000;
     private static final double FIELD_RADIUS = 128.0;
@@ -95,21 +96,20 @@ public class MeetingPointStructure extends Structure {
 
         int altarX = chunkPos.getMiddleBlockX();
         int altarZ = chunkPos.getMiddleBlockZ();
-        int altarY = context.chunkGenerator().getFirstOccupiedHeight(
-            altarX, altarZ, Heightmap.Types.WORLD_SURFACE_WG,
-            context.heightAccessor(), context.randomState()
-        );
-        BlockPos altarPos = new BlockPos(altarX, altarY - 1, altarZ);
 
         ImprovedNoise pathWobbleNoise = new ImprovedNoise(random.fork());
         RandomSource placementRandom = random.fork();
         double pathsBaseAngle = placementRandom.nextDouble() * Math.PI * 2.0;
 
+        StructurePoolElement altarElement = startPool.value().getRandomTemplate(placementRandom);
+        BoundingBox altarFootprint = altarElement.getBoundingBox(templates, new BlockPos(altarX, 0, altarZ), Rotation.NONE);
+        int altarY = sampleFootprintMaxHeight(context, altarFootprint);
+        BlockPos altarPos = new BlockPos(altarX, altarY - 1, altarZ);
+        BoundingBox altarBox = altarElement.getBoundingBox(templates, altarPos, Rotation.NONE);
+
         return Optional.of(new GenerationStub(altarPos, builder -> {
             List<BoundingBox> placedBoxes = new ArrayList<>();
 
-            StructurePoolElement altarElement = startPool.value().getRandomTemplate(placementRandom);
-            BoundingBox altarBox = altarElement.getBoundingBox(templates, altarPos, Rotation.NONE);
             builder.addPiece(new PoolElementStructurePiece(
                 templates, altarElement, altarPos, 2, Rotation.NONE, altarBox,
                 LiquidSettings.IGNORE_WATERLOGGING
@@ -163,6 +163,7 @@ public class MeetingPointStructure extends Structure {
                 BoundingBox menhirBox = unshiftedBox.moved(centeringShiftX, menhirBaseY, centeringShiftZ);
 
                 if (overlapsPlaced(menhirBox, placedBoxes)) continue;
+                if (baseOverhangsAir(context, menhirBox, menhirBaseY)) continue;
 
                 builder.addPiece(new PoolElementStructurePiece(
                     templates, menhirElement, menhirPos, 0, rotation, menhirBox,
@@ -171,6 +172,46 @@ public class MeetingPointStructure extends Structure {
                 placedBoxes.add(menhirBox);
             }
         }));
+    }
+
+    private static int sampleFootprintMaxHeight(GenerationContext context, BoundingBox footprint) {
+        ChunkGenerator generator = context.chunkGenerator();
+        int steps = 4;
+        int xSpan = footprint.getXSpan();
+        int zSpan = footprint.getZSpan();
+        int maxHeight = Integer.MIN_VALUE;
+        for (int ix = 0; ix <= steps; ix++) {
+            int sampleX = footprint.minX() + (xSpan - 1) * ix / steps;
+            for (int iz = 0; iz <= steps; iz++) {
+                int sampleZ = footprint.minZ() + (zSpan - 1) * iz / steps;
+                int height = generator.getFirstOccupiedHeight(
+                    sampleX, sampleZ, Heightmap.Types.WORLD_SURFACE_WG,
+                    context.heightAccessor(), context.randomState()
+                );
+                if (height > maxHeight) maxHeight = height;
+            }
+        }
+        return maxHeight;
+    }
+
+    private static boolean baseOverhangsAir(GenerationContext context, BoundingBox footprint, int baseY) {
+        ChunkGenerator generator = context.chunkGenerator();
+        int steps = 2;
+        int xSpan = footprint.getXSpan();
+        int zSpan = footprint.getZSpan();
+        int lowestSupported = baseY - 1 - MENHIR_MAX_BASE_GAP;
+        for (int ix = 0; ix <= steps; ix++) {
+            int sampleX = footprint.minX() + (xSpan - 1) * ix / steps;
+            for (int iz = 0; iz <= steps; iz++) {
+                int sampleZ = footprint.minZ() + (zSpan - 1) * iz / steps;
+                int groundY = generator.getFirstOccupiedHeight(
+                    sampleX, sampleZ, Heightmap.Types.OCEAN_FLOOR_WG,
+                    context.heightAccessor(), context.randomState()
+                );
+                if (groundY < lowestSupported) return true;
+            }
+        }
+        return false;
     }
 
     private static boolean overlapsPlaced(BoundingBox candidate, List<BoundingBox> placed) {

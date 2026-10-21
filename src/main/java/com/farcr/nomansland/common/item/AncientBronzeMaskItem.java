@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.item;
 
+import com.farcr.nomansland.NMLConfig;
 import com.farcr.nomansland.NoMansLand;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
@@ -30,7 +31,7 @@ public class AncientBronzeMaskItem extends ArmorItem {
         super.inventoryTick(stack, level, entity, slotId, isSelected);
 
         if (entity instanceof LivingEntity livingEntity && stack == livingEntity.getItemBySlot(EquipmentSlot.HEAD)) {
-            if (livingEntity.tickCount % 200 == 0) livingEntity.heal(1);
+            if (livingEntity.tickCount % NMLConfig.ANCIENT_BRONZE_MASK_HEAL_INTERVAL.getAsInt() == 0) livingEntity.heal(NMLConfig.ANCIENT_BRONZE_MASK_HEAL_AMOUNT.get().floatValue());
         }
     }
 

@@ -43,6 +43,7 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -67,15 +68,12 @@ import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 
 public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, Fallable {
-    public static final MapCodec<PotBlock> CODEC = RecordCodecBuilder.mapCodec(
-            (instance) -> instance.group(
-                    PotSize.CODEC.fieldOf("size").forGetter(p -> p.size),
-                    propertiesCodec()
-            ).apply(instance, PotBlock::new)
-    );
 
     private static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -89,12 +87,19 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
         registerDefaultState(stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(WATERLOGGED, false).setValue(BRITTLE, false).setValue(POWERED, false));
     }
 
-    public PotSize getSize() {
-        return size;
+    public static final MapCodec<PotBlock> CODEC = RecordCodecBuilder.mapCodec(
+            (instance) -> instance.group(
+                    PotSize.CODEC.fieldOf("size").forGetter(p -> p.size),
+                    propertiesCodec()
+            ).apply(instance, PotBlock::new)
+    );
+
+    public MapCodec<? extends PotBlock> codec() {
+        return CODEC;
     }
 
-    public MapCodec<PotBlock> codec() {
-        return CODEC;
+    public PotSize getSize() {
+        return size;
     }
 
     protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
@@ -290,6 +295,7 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
 
         level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT_FAIL, SoundSource.BLOCKS, 1, 1);
         pot.wobble(DecoratedPotBlockEntity.WobbleStyle.NEGATIVE);
+        level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
 
         if (pot.isLiving()) {
             pot.wakeUp(null);
@@ -297,7 +303,6 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
 
         return InteractionResult.SUCCESS;
     }
-
 
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
         return false;
@@ -309,20 +314,39 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
     }
 
     private static final VoxelShape SMALL_FALLBACK = Shapes.box(2.0 / 16, 0, 2.0 / 16, 14.0 / 16, 1, 14.0 / 16);
+    private static final double COLLISION_INSET = 0.02;
+    private static final Map<VoxelShape, VoxelShape> COLLISION_SHAPE_CACHE = new ConcurrentHashMap<>();
+
+    public static VoxelShape variantShapeOf(@Nullable PotBlockEntity pot, VoxelShape fallback) {
+        if (pot == null || pot.variant == null) return fallback;
+        VoxelShape variantShape = pot.variant.shape();
+        return variantShape != null && !variantShape.isEmpty() ? variantShape : fallback;
+    }
 
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (level.getBlockEntity(pos) instanceof PotBlockEntity pot && pot.variant != null) {
-            VoxelShape variantShape = pot.variant.shape();
-            if (variantShape != null && !variantShape.isEmpty()) return variantShape;
-        }
-        return SMALL_FALLBACK;
+        return variantShapeOf(level.getBlockEntity(pos) instanceof PotBlockEntity pot ? pot : null, SMALL_FALLBACK);
+    }
+
+    public static VoxelShape collisionShapeOf(VoxelShape shape) {
+        if (shape.isEmpty()) return shape;
+        return COLLISION_SHAPE_CACHE.computeIfAbsent(shape, PotBlock::insetFromBlockBounds);
+    }
+
+    private static VoxelShape insetFromBlockBounds(VoxelShape shape) {
+        VoxelShape[] holder = { Shapes.empty() };
+        shape.forAllBoxes((minX, minY, minZ, maxX, maxY, maxZ) -> holder[0] = Shapes.or(holder[0], Shapes.box(
+                minX <= 0 ? minX + COLLISION_INSET : minX,
+                minY <= 0 ? minY + COLLISION_INSET : minY,
+                minZ <= 0 ? minZ + COLLISION_INSET : minZ,
+                maxX >= 1 ? maxX - COLLISION_INSET : maxX,
+                maxY >= 1 ? maxY - COLLISION_INSET : maxY,
+                maxZ >= 1 ? maxZ - COLLISION_INSET : maxZ)));
+        return holder[0].isEmpty() ? shape : holder[0];
     }
 
     @Override
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        VoxelShape shape = getShape(state, level, pos, context);
-        if (!(level.getBlockEntity(pos) instanceof PotBlockEntity pot) || !pot.isLiving()) return shape;
-        return shape.isEmpty() ? shape : Shapes.create(shape.bounds().deflate(0.05));
+        return collisionShapeOf(getShape(state, level, pos, context));
     }
 
     @Override
@@ -344,7 +368,9 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
         if (level.getBlockEntity(pos) instanceof PotBlockEntity pot) {
             if (pot.variant == null) {
                 pot.ensureVariant(size);
-            } else if (state.getValue(BRITTLE) != pot.variant.traits().contains(PotTrait.BRITTLE)) state.setValue(BRITTLE, pot.variant.traits().contains(PotTrait.BRITTLE));
+            } else if (state.getValue(BRITTLE) != pot.variant.traits().contains(PotTrait.BRITTLE)) {
+                level.setBlock(pos, state.setValue(BRITTLE, pot.variant.traits().contains(PotTrait.BRITTLE)), Block.UPDATE_CLIENTS);
+            }
         }
 
         level.scheduleTick(pos, this, this.getDelayAfterPlace());
@@ -367,7 +393,7 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
                 if (!level.isClientSide) {
                     applyBreakEffects((ServerLevel) level, pos.getCenter(),
                             state, pot.variant, pot.getModifiers(),
-                            pot.getStoredPotion(), size == PotSize.LARGE);
+                            pot.getStoredPotion(), size == PotSize.LARGE, !pot.preventRegen);
                 }
                 level.updateNeighbourForOutputSignal(pos, state.getBlock());
             }
@@ -379,14 +405,14 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
             ServerLevel level, Vec3 pos,
             BlockState state, PotVariant variant,
             Set<PotModifier> modifiers, PotionContents storedPotion,
-            boolean isLarge
+            boolean isLarge, boolean canRegenerate
     ) {
         RandomSource random = level.getRandom();
         BlockPos blockPos = BlockPos.containing(pos);
         DifficultyInstance difficulty = level.getCurrentDifficultyAt(blockPos);
-        double x = pos.x + 0.5;
+        double x = pos.x;
         double y = pos.y;
-        double z = pos.z + 0.5;
+        double z = pos.z;
 
         if (modifiers.contains(PotModifier.INFESTED)) {
             int count = random.nextInt(2, 4);
@@ -410,7 +436,7 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
             spawnPotionCloud(level, blockPos, storedPotion);
         }
 
-        if (variant != null && variant.traits().contains(PotTrait.REGENERATES)) {
+        if (canRegenerate && variant != null && variant.traits().contains(PotTrait.REGENERATES)) {
             ResourceLocation variantKey = level.registryAccess().registryOrThrow(NMLRegistries.POT_VARIANT_KEY).getKey(variant);
             if (variantKey != null) {
                 int delay = random.nextInt(20, 40) * 20;
@@ -545,6 +571,25 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
         super.stepOn(level, pos, state, entity);
     }
 
+    @Override
+    protected void onExplosionHit(BlockState state, Level level, BlockPos pos, Explosion explosion, BiConsumer<ItemStack, BlockPos> dropConsumer) {
+        if (explosion.getBlockInteraction() != Explosion.BlockInteraction.TRIGGER_BLOCK) {
+            if (!level.isClientSide && level.getBlockEntity(pos) instanceof PotBlockEntity pot && pot.variant != null) {
+                pot.shouldDropItems = true;
+                pot.preventRegen = true;
+            }
+            state.onBlockExploded(level, pos, explosion);
+        }
+    }
+
+    @Override
+    public void onCaughtFire(BlockState state, Level level, BlockPos pos, @Nullable Direction direction, @Nullable LivingEntity igniter) {
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof PotBlockEntity pot && pot.variant != null) {
+            pot.preventRegen = true;
+        }
+        super.onCaughtFire(state, level, pos, direction, igniter);
+    }
+
     protected void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
         BlockPos blockpos = hit.getBlockPos();
         if (!level.isClientSide && projectile.mayInteract(level, blockpos) && projectile.mayBreak(level)) {
@@ -554,7 +599,7 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
                 if (level.getBlockEntity(blockpos) instanceof PotBlockEntity pot) {
                     pot.shouldDropItems = true;
                 }
-                level.destroyBlock(blockpos, true, projectile);
+                level.destroyBlock(blockpos, false, projectile);
             }
         }
     }

@@ -1,13 +1,8 @@
 package com.farcr.nomansland.common.friend;
 
-import com.farcr.nomansland.common.dreams.dreamlevel.DreamPlayerSnapshot;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
 
 import java.util.UUID;
 

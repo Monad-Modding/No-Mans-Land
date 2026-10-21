@@ -1,7 +1,6 @@
 package com.farcr.nomansland.common.friend;
 
 import com.farcr.nomansland.common.friend.dialogue.DialoguePool;
-import com.farcr.nomansland.common.friend.dialogue.DialogueRegistry;
 import com.farcr.nomansland.common.registry.NMLRegistries;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;

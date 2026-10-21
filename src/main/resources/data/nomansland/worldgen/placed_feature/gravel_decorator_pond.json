@@ -13,6 +13,11 @@
       "heightmap": "MOTION_BLOCKING_NO_LEAVES"
     },
     {
+      "type": "nomansland:height_filter",
+      "height_min": 60,
+      "height_max": 72
+    },
+    {
       "type": "minecraft:environment_scan",
       "direction_of_search": "down",
       "max_steps": 1,

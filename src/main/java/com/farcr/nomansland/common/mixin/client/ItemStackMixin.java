@@ -1,17 +1,12 @@
 package com.farcr.nomansland.common.mixin.client;
 
-import com.farcr.nomansland.client.renderer.dreams.ClientDreamRenderer;
 import com.farcr.nomansland.client.renderer.rendertype.MoonlightGlowRenderType;
-import com.farcr.nomansland.common.dreams.DreamManager;
 import com.farcr.nomansland.common.friend.dialogue.DialogueUtil;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

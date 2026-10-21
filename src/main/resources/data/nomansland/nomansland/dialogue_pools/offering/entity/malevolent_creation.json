@@ -1,0 +1,8 @@
+{
+    "condition": {
+        "type": "nomansland:entity_conditional",
+        "entity": ["minecraft:ravager"]
+    },
+    "weight": 1,
+    "text": "Legacies stained, promises broken. Fear, doubt, hatred, and the misshapen children of said curse... \n Nature /has /never /birthed /evil... and somehow, our teachings could not prevent its invention. \n Even with my fellows gone, our sour disappointment permeates my essence."
+}

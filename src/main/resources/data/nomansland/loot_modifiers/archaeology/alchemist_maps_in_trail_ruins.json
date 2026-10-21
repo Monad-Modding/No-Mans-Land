@@ -1,9 +1,9 @@
 {
-  "type": "neoforge:add_table",
+  "type": "nomansland:add_treasure",
   "conditions": [
     {
     "condition": "minecraft:any_of",
-    "terms": [   
+    "terms": [
     {
       "condition": "neoforge:loot_table_id",
       "loot_table_id": "minecraft:archaeology/trail_ruins_rare"
@@ -15,5 +15,9 @@
     ]
 }
   ],
-  "table": "nomansland:archaeology/alchemist_maps"
+  "entry": {
+    "type": "minecraft:loot_table",
+    "value": "nomansland:archaeology/alchemist_maps"
+  },
+  "chance": 0.05
 }

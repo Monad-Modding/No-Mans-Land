@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "smoker",
+      "enabled_when": true
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#G#",
+    "GFG",
+    "#G#"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:logs"
+    },
+    "G": {
+      "item": "nomansland:resin"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "id": "minecraft:smoker"
+  }
+}

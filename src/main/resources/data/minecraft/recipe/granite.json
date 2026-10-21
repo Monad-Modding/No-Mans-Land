@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "building",
-  "pattern": [
-    "#C",
-    "C#"
-  ],
-  "key": {
-    "#": {
-      "item": "minecraft:quartz"
-    },
-    "C": {
-      "item": "minecraft:diorite"
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "granite",
+      "enabled_when": false
     }
-  },
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:diorite"
+    },
+    {
+      "item": "minecraft:quartz"
+    }
+  ],
   "result": {
-    "id": "minecraft:granite",
-    "count": 3
+    "count": 1,
+    "id": "minecraft:granite"
   }
 }

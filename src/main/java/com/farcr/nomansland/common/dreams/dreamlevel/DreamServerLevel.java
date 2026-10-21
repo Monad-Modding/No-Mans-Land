@@ -2,8 +2,6 @@ package com.farcr.nomansland.common.dreams.dreamlevel;
 
 import com.farcr.nomansland.common.dreams.DreamManager;
 import com.farcr.nomansland.common.dreams.DreamType;
-import com.farcr.nomansland.common.networking.dream.ClientboundDreamPacket;
-import com.farcr.nomansland.common.registry.NMLRegistries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -16,15 +14,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.LevelStem;
-import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.ServerLevelData;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.function.BooleanSupplier;
 
@@ -81,7 +76,7 @@ public class DreamServerLevel extends ServerLevel {
                 dreamingPlayer.debug = false;
                 dreamingPlayer.discardTether();
             }
-            else DreamLevelHandler.playerTeleportFallback(player, false);
+            else DreamLevelHandler.playerTeleportFallback(player);
 
             if (success) manager.setDreamExperienced(dreamType, player);
             dreamType.onDreamEnd(player, success);

@@ -9,7 +9,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.TicketType;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -43,6 +42,7 @@ public class DreamingPlayer extends Mob {
         this.setPos(serverPlayer.position());
         serverPlayer.getSleepingPos().ifPresentOrElse(this::startSleeping,
             () -> this.startSleeping(serverPlayer.blockPosition()));
+        this.setPos(DreamLevelHandler.outOfPlot(this.level(), this.position()));
     }
 
     public DreamPlayerSnapshot getClientSnapshot() {
@@ -75,16 +75,27 @@ public class DreamingPlayer extends Mob {
     }
 
     public Optional<Player> discardTether() {
+        return discardTether(true);
+    }
+
+    public Optional<Player> discardTether(boolean returnPlayerToBody) {
         if (this.level() instanceof ServerLevel level) {
             if (getTetheredPlayer() == null)
                 return Optional.empty();
             Player player = getTetheredPlayer();
             this.remove(RemovalReason.DISCARDED);
-            player.teleportTo(level, this.getX(), this.getY(), this.getZ(), Set.of(), player.getXRot(), player.getYRot());
+            if (returnPlayerToBody)
+                player.teleportTo(level, this.getX(), this.getY(), this.getZ(), Set.of(), player.getXRot(), player.getYRot());
             this.getSleepingPos().ifPresent(player::setSleepingPos);
             player.stopSleeping();
             // Recalculate player since old player doesn't exist anymore
-            return Optional.ofNullable(getTetheredPlayer());
+            ServerPlayer awake = getTetheredPlayer();
+            if (awake != null && awake.level() == level) {
+                Vec3 standing = DreamLevelHandler.outOfPlot(level, awake.position());
+                if (!standing.equals(awake.position()))
+                    awake.teleportTo(level, standing.x, standing.y, standing.z, Set.of(), awake.getYRot(), awake.getXRot());
+            }
+            return Optional.ofNullable(awake);
         }
         return Optional.empty();
     }

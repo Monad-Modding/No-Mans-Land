@@ -1,6 +1,9 @@
 package com.farcr.nomansland.common.event;
 
+import net.minecraft.world.level.gameevent.GameEvent;
+import com.farcr.nomansland.NMLConfig;
 import com.farcr.nomansland.NoMansLand;
+import com.farcr.nomansland.common.registry.NMLTags;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.BlockPos;
@@ -10,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -28,16 +32,36 @@ import static net.minecraft.world.level.block.SnowyDirtBlock.SNOWY;
 @EventBusSubscriber(modid = NoMansLand.MODID)
 public class PathMakingEvents {
 
+    /**
+     * Verifies that the Path/Farmland Tweak can proceed. In order to proceed:
+     *  - The player may not be a spectator
+     *  - The stack needs to be nomansland:makes_paths or nomansland:makes_farmland
+     *  - The item needs to have the till or flatten ability
+     * @param event The original RightClickBlock event
+     * @return True/False based on the above
+     */
+    private static boolean canContinue(PlayerInteractEvent.RightClickBlock event) {
+        ItemStack stack = event.getItemStack();
+        Item item = stack.getItem();
+
+        if (event.getEntity().isSpectator()) return false;
+
+        if (!(stack.is(NMLTags.MAKES_PATHS) || stack.is(NMLTags.MAKES_FARMLAND))) return false;
+
+        return item.canPerformAction(stack, ItemAbilities.HOE_TILL) || item.canPerformAction(stack, ItemAbilities.SHOVEL_FLATTEN);
+    }
+
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        if (!NMLConfig.PATH_TWEAKS.get() || !canContinue(event)) return;
+
         Level level = event.getLevel();
         BlockPos pos = event.getPos();
         BlockState state = level.getBlockState(pos);
         Player player = event.getEntity();
         ItemStack stack = event.getItemStack();
 
-
-        if ((stack.getItem().canPerformAction(stack, ItemAbilities.HOE_TILL) || stack.getItem().canPerformAction(stack, ItemAbilities.SHOVEL_FLATTEN)) && !player.isSpectator() && state.canBeReplaced()) {
+        if (state.canBeReplaced()) {
             pos = pos.below();
             state = level.getBlockState(pos);
         }
@@ -84,8 +108,10 @@ public class PathMakingEvents {
                         Map.entry(NMLBlocks.SILT.get(), NMLBlocks.SILT_PATH)
                 ).get(state.getBlock()).value().defaultBlockState();
 
-                if ((state.is(Blocks.DIRT) || state.is(Blocks.COARSE_DIRT) || state.is(Blocks.ROOTED_DIRT) || state.is(Blocks.GRASS_BLOCK)) && level.getBlockState(pos.above()).is(Blocks.SNOW)) level.setBlockAndUpdate(pos, NMLBlocks.SNOWY_GRASS_PATH.get().defaultBlockState());
-                else level.setBlockAndUpdate(pos, pathState);
+                BlockState flattened = (state.is(Blocks.DIRT) || state.is(Blocks.COARSE_DIRT) || state.is(Blocks.ROOTED_DIRT) || state.is(Blocks.GRASS_BLOCK)) && level.getBlockState(pos.above()).is(Blocks.SNOW)
+                        ? NMLBlocks.SNOWY_GRASS_PATH.get().defaultBlockState() : pathState;
+                level.setBlockAndUpdate(pos, flattened);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, flattened));
             }
 
             event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));

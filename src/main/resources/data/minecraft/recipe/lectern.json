@@ -1,9 +1,16 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "lectern",
+      "enabled_when": false
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
     "B": {
-      "tag": "c:bookshelves"
+      "item": "minecraft:bookshelf"
     },
     "S": {
       "tag": "minecraft:wooden_slabs"
@@ -15,7 +22,7 @@
     " S "
   ],
   "result": {
+    "count": 1,
     "id": "minecraft:lectern"
-  },
-  "show_notification": true
+  }
 }

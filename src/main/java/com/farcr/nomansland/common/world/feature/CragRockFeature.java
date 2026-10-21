@@ -2,6 +2,7 @@ package com.farcr.nomansland.common.world.feature;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -143,8 +144,11 @@ public class CragRockFeature extends Feature<CragRockFeatureConfiguration> {
                     if (radiusFac * radiusStrength + noiseFac * noiseStrength > 0) {
                         // conditions for whether the surface should be placed
                         if ((yDist > maxYDistance * 0.75 || yDist < 2) && surfaceDepth == 0 && yDist > 0) placingSurface = true;
-                        level.setBlock(pos, getBlockState(config, pos, level, random, surfaceDepth, soilDepth, placingSurface), 2);
-                        placedBlock = true;
+                        BlockState existing = level.getBlockState(pos);
+                        if (existing.isAir() || existing.liquid() || existing.canBeReplaced() || existing.is(BlockTags.OVERWORLD_CARVER_REPLACEABLES)) {
+                            level.setBlock(pos, getBlockState(config, pos, level, random, surfaceDepth, soilDepth, placingSurface), 2);
+                            placedBlock = true;
+                        }
                         surfaceDepth++;
                     } else {
                         placingSurface = false;

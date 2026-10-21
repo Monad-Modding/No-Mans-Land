@@ -1,14 +1,11 @@
 package com.farcr.nomansland.common.dreams;
 
-import com.farcr.nomansland.common.registry.NMLRegistries;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.Keyable;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.level.levelgen.GenerationStep;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Optional;
 
 /*
 * Generalized Class to allow for mutation & other things

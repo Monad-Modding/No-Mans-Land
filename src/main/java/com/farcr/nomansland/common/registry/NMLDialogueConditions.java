@@ -1,10 +1,14 @@
 package com.farcr.nomansland.common.registry;
 
 import com.farcr.nomansland.NoMansLand;
-import com.farcr.nomansland.common.friend.condition.MoonlightContextualConditions.*;
-import com.farcr.nomansland.common.friend.condition.MoonlightGreetingConditions.*;
-import com.farcr.nomansland.common.friend.condition.MoonlightLeavingConditions.*;
-import com.farcr.nomansland.common.friend.condition.MoonlightOfferingConditions.*;
+import com.farcr.nomansland.common.friend.condition.MoonlightContextualConditions.EffectContextualCondition;
+import com.farcr.nomansland.common.friend.condition.MoonlightContextualConditions.EquipmentContextualConditional;
+import com.farcr.nomansland.common.friend.condition.MoonlightGreetingConditions.AdditionToCommuneConditional;
+import com.farcr.nomansland.common.friend.condition.MoonlightGreetingConditions.DreamGreetingConditional;
+import com.farcr.nomansland.common.friend.condition.MoonlightGreetingConditions.FirstTimeGreetingConditional;
+import com.farcr.nomansland.common.friend.condition.MoonlightLeavingConditions.OnDeathConditional;
+import com.farcr.nomansland.common.friend.condition.MoonlightOfferingConditions.EntityOfferingConditional;
+import com.farcr.nomansland.common.friend.condition.MoonlightOfferingConditions.ItemOfferingConditional;
 import com.farcr.nomansland.common.friend.dialogue.DialogueRegistry;
 import com.mojang.serialization.MapCodec;
 import net.neoforged.neoforge.registries.DeferredHolder;

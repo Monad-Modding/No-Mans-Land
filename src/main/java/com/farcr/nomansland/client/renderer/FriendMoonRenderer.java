@@ -25,6 +25,7 @@ import com.mojang.math.Axis;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -71,7 +72,18 @@ public class FriendMoonRenderer implements AutoCloseable {
     private static final int COOLDOWN_TICKS = 5;
 
     public void tickClientState() {
-        if (Minecraft.getInstance().isPaused()) return;
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.isPaused()) return;
+        if (mc.level == null || mc.level.effects().skyType() != DimensionSpecialEffects.SkyType.NORMAL) {
+            friendMoonOpacity = 0f;
+            friendMoonDarkneningOpacity = 0f;
+            friendShadowOpacity = 0f;
+            friendShadowFaceOpacity = 0f;
+            fogOpacity = 0f;
+            animationProgress = 0f;
+            badOmenWaitTime = 0f;
+            return;
+        }
         if (++ticksSinceMoonUpdate <= COOLDOWN_TICKS) return;
 
         float fadeSpeed = 1f / 25f;
@@ -145,14 +157,10 @@ public class FriendMoonRenderer implements AutoCloseable {
         return ambientLight * darkeningAmount;
     }
     public void modifySkyLightColor(Vector3f color, int skyLightLevel) {
-        float darkeningAmount = 1 - this.friendMoonDarkneningOpacity;
-        color.set(
-                color.x * darkeningAmount,
-                color.x * darkeningAmount,
-                color.x * darkeningAmount
-        );
+        color.mul(1 - this.friendMoonDarkneningOpacity);
     }
     public void modifyBlockLightColor(Vector3f color, int blockLightLevel) {
+        if (this.friendMoonDarkneningOpacity <= 0) return;
         if (blockLightLevel < MoonlightCandleBlock.LIGHT_LEVEL) {
             float factor = Mth.map(blockLightLevel, 0, MoonlightCandleBlock.LIGHT_LEVEL, 0, 1);
             factor = (float) Math.pow(factor, Mth.lerp(this.friendMoonDarkneningOpacity, 1, 5));

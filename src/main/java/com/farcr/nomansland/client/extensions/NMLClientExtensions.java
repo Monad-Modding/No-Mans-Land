@@ -26,6 +26,7 @@ public class NMLClientExtensions {
 
         event.registerItem(new LodestoneArmorClientItemExtensions(()->NMLArmorModels.ANCIENT_BRONZE_MASK), NMLItems.ANCIENT_BRONZE_MASK.get());
         event.registerItem(new LodestoneArmorClientItemExtensions(()->NMLArmorModels.TORTOISE_SHELL), NMLItems.TORTOISE_SHELL.get());
+        event.registerItem(new AncestralOathSwordClientExtensions(), NMLItems.ANCESTRAL_OATH_SWORD.get());
         event.registerItem(new PotClientItemExtensions(), NMLItems.ANCIENT_POT.get());
         event.registerItem(new PotClientItemExtensions(), NMLItems.LARGE_ANCIENT_POT.get());
         event.registerItem(new BandageClientItemExtensions(), NMLItems.BANDAGE.get());

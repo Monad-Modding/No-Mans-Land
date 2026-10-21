@@ -9,9 +9,11 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
+import org.jetbrains.annotations.Nullable;
 
 public class MeetingPointCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -26,11 +28,6 @@ public class MeetingPointCommand {
         );
     }
 
-    private static ChunkGeneratorStructureStateExtension extension(CommandSourceStack source) {
-        ChunkGeneratorStructureState state = source.getLevel().getChunkSource().getGeneratorState();
-        return (ChunkGeneratorStructureStateExtension) state;
-    }
-
     private static int query(CommandContext<CommandSourceStack> context) {
         BlockPos current = FriendMoon.getMeetingPointPosition(context.getSource().getLevel());
         if (current == null) {
@@ -43,27 +40,43 @@ public class MeetingPointCommand {
     }
 
     private static int set(CommandContext<CommandSourceStack> context, BlockPos pos) {
-        CommandSourceStack source = context.getSource();
         ChunkPos chunkPos = new ChunkPos(pos);
-        extension(source).nomansland$setMeetingPointPosition(chunkPos);
-        refreshClients(source.getLevel());
+        apply(context.getSource().getServer(), chunkPos);
 
         BlockPos center = chunkPos.getMiddleBlockPosition(0);
-        source.sendSuccess(() -> Component.literal(
+        context.getSource().sendSuccess(() -> Component.literal(
             "Meeting point moved to " + center.getX() + ", " + center.getZ()), true);
         return 1;
     }
 
     private static int reset(CommandContext<CommandSourceStack> context) {
-        CommandSourceStack source = context.getSource();
-        extension(source).nomansland$setMeetingPointPosition(null);
-        refreshClients(source.getLevel());
-        source.sendSuccess(() -> Component.literal("Meeting point reset to its generated position"), true);
+        apply(context.getSource().getServer(), null);
+        context.getSource().sendSuccess(() -> Component.literal("Meeting point reset to its generated position"), true);
         return 1;
     }
 
-    private static void refreshClients(ServerLevel level) {
-        FriendMoon friendMoon = FriendMoon.getOrDefault(level.getServer().overworld());
-        level.players().forEach(friendMoon::playerSendShadowPacket);
+    private static void apply(MinecraftServer server, @Nullable ChunkPos pos) {
+        ServerLevel overworld = server.overworld();
+        FriendMoon.getOrDefault(overworld).setMeetingPointOverride(pos);
+        extension(overworld).nomansland$setMeetingPointPosition(pos);
+        refreshClients(overworld);
+    }
+
+    public static void applyPersistedOverride(MinecraftServer server) {
+        ServerLevel overworld = server.overworld();
+        ChunkPos override = FriendMoon.getOrDefault(overworld).getMeetingPointOverride();
+        if (override != null) {
+            extension(overworld).nomansland$setMeetingPointPosition(override);
+        }
+    }
+
+    private static ChunkGeneratorStructureStateExtension extension(ServerLevel level) {
+        ChunkGeneratorStructureState state = level.getChunkSource().getGeneratorState();
+        return (ChunkGeneratorStructureStateExtension) state;
+    }
+
+    private static void refreshClients(ServerLevel overworld) {
+        FriendMoon friendMoon = FriendMoon.getOrDefault(overworld);
+        overworld.players().forEach(friendMoon::playerSendShadowPacket);
     }
 }

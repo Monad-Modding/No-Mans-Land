@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.farcr.nomansland.NMLConfig;
 import com.farcr.nomansland.common.blockentity.WardingEffigyBlockEntity;
 import com.farcr.nomansland.common.world.saved_data.WardedSpacesData;
 import com.mojang.serialization.MapCodec;
@@ -36,7 +37,6 @@ public class WardingEffigyBlock extends BaseEntityBlock {
     protected static final VoxelShape X_TWO_AABB = Block.box(5.5, 0, 1.5, 10.5, 10, 14.5);
     protected static final VoxelShape X_FULL_AABB = Block.box(1.5, 0, 1.5, 14.5, 10, 14.5);
 
-
     public WardingEffigyBlock(final Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(EFFIGIES, 1));
@@ -71,7 +71,7 @@ public class WardingEffigyBlock extends BaseEntityBlock {
 
     public static int getRange(final BlockState state) {
         final int i = state.getValue(EFFIGIES);
-        return 24+20*(i-1)-2*(i-1)*(i-2);
+        return NMLConfig.WARDING_EFFIGY_BASE_RANGE.getAsInt()+NMLConfig.WARDING_EFFIGY_RANGE_PER_EFFIGY.getAsInt()*(i-1)-2*(i-1)*(i-2);
     }
 
     protected boolean mayPlaceOn(final BlockState state, final BlockGetter level, final BlockPos pos) {

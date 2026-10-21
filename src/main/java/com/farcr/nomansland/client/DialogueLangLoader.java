@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class DialogueLangLoader extends SimplePreparableReloadListener<Map<Strin
 
     @Override
     protected Map<String, Map<String, String>> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
-        String langCode = Minecraft.getInstance().getLanguageManager().getSelected();
+        String langCode = Minecraft.getInstance().getLanguageManager().getSelected().toLowerCase(Locale.ROOT);
         Map<String, Map<String, String>> result = new HashMap<>();
 
         for (ResourceKey<Registry<DialoguePool>> registryKey : DialogueConditionCompiler.REGISTRIES) {

@@ -303,6 +303,7 @@ public class MoonlightBasinBlockEntity extends BlockEntity {
             blockEntity.trackedCandles = 0;
             blockEntity.setInspectionContext(null, friendMoon);
             if (!level.isClientSide()) {
+                friendMoon.abortAscension();
                 ArrayList<BlockPos> candleList = getCandles(level, pos);
                 candleList.forEach((blockPos) -> {
                     BlockState blockState = level.getBlockState(blockPos);
@@ -360,8 +361,8 @@ public class MoonlightBasinBlockEntity extends BlockEntity {
                                     break;
                                 }
                                 case MAP: {
-                                    if (!friendMoon.mapInteraction(level, entity, pos))
-                                        blockEntity.setInspectionContext(null, friendMoon);
+                                    if (friendMoon.getDialogueTicks() >= 0 && friendMoon.getDialogueTicks() <= FriendMoon.MAP_PARTICLE_DURATION)
+                                        friendMoon.mapInteraction(level, entity, pos);
                                     break;
                                 }
                                 case BAD_OMEN: {
@@ -384,7 +385,8 @@ public class MoonlightBasinBlockEntity extends BlockEntity {
             if (blockEntity.inspectionContext == null) {
                 OfferingContext context = getOfferingAbove(pos, level);
                 if (context != null && context.isValid()
-                && (context.getEntity().onGround() || context.getEntity() instanceof FlyingMob))
+                && (context.getEntity().onGround() || context.getEntity() instanceof FlyingMob
+                || context.getEntity().getDeltaMovement().lengthSqr() < 1.0E-3))
                     blockEntity.setInspectionContext(context, friendMoon);
             }
 

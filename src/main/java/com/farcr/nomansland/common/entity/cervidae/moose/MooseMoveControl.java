@@ -12,8 +12,6 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableDouble;
 import org.joml.Vector3d;
 
-import javax.annotation.Nonnull;
-
 /**
  * Copy of Malum's CultistMoveControl, which is a copy of Cappin's MoveControl.
  * Offers better movement interpolation and more precise body look control.

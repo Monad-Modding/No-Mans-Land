@@ -2,7 +2,6 @@
   "type": "minecraft:archaeology",
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -54,16 +53,11 @@
               "target": "item_name"
             }
           ],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.05
-            }
-          ],
           "name": "minecraft:map"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
-  ]
+  ],
+  "random_sequence": "nomansland:archaeology/alchemist_maps"
 }

@@ -1,0 +1,23 @@
+{
+  "values": [
+    "#nomansland:caves",
+    "nomansland:autumnal_forest",
+    "nomansland:bayou",
+    "nomansland:bog",
+    "nomansland:dark_swamp",
+    "nomansland:dark_taiga",
+    "nomansland:boreal_forest",
+    "nomansland:maple_forest",
+    "nomansland:maple_grove",
+    "nomansland:frozen_woods",
+    "nomansland:prairie",
+    "nomansland:lavender_field",
+    "nomansland:lush_river",
+    "nomansland:blackwater_river",
+    "nomansland:desert_river",
+    "nomansland:mud_beach",
+    "nomansland:frozen_shore",
+    "nomansland:tropical_beach",
+    "#nomansland:old_growth_forest"
+  ]
+}

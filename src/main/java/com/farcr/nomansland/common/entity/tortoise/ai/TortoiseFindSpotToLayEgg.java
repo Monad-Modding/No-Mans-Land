@@ -19,6 +19,7 @@ public class TortoiseFindSpotToLayEgg extends Goal {
     private final Level level;
     private boolean failedAttempt = false;
     private int ticksGoalRan;
+    private int nextStartTick;
     private Path path;
 
     public TortoiseFindSpotToLayEgg(Tortoise mob, double speedModifier) {
@@ -30,12 +31,27 @@ public class TortoiseFindSpotToLayEgg extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.tortoise.hasEgg() && !this.tortoise.inShell() && this.getHomePos() != null && !this.tortoise.isLayingEgg();
+        if (!this.tortoise.hasEgg() || this.tortoise.inShell() || this.tortoise.isLayingEgg())
+            return false;
+        if (this.nextStartTick > 0) {
+            this.nextStartTick--;
+            return false;
+        }
+        if (this.getHomePos() != null)
+            return true;
+        this.nextStartTick = this.adjustedTickDelay(200 + this.tortoise.getRandom().nextInt(200));
+        return false;
     }
 
     @Override
     public boolean canContinueToUse() {
         return this.tortoise.hasEgg() && !this.tortoise.inShell() && !this.failedAttempt && this.path != null && !this.tortoise.isLayingEgg();
+    }
+
+    @Override
+    public void start() {
+        this.failedAttempt = false;
+        this.ticksGoalRan = 0;
     }
 
     @Override
@@ -61,8 +77,7 @@ public class TortoiseFindSpotToLayEgg extends Goal {
         super.stop();
         if (this.failedAttempt)
             this.tortoise.setHasEgg(false);
-        if (ticksGoalRan >= 600)
-            this.ticksGoalRan = 0;
+        this.path = null;
     }
 
     @Nullable
@@ -70,7 +85,7 @@ public class TortoiseFindSpotToLayEgg extends Goal {
         if (!tortoise.hasEgg())
             return null;
         // Borrowed from TryToFindWaterGoal, modified to have a longer range and accommodate the Tortoise's larger hitbox
-        Iterable<BlockPos> iterable = BlockPos.betweenClosed(Mth.floor(tortoise.getX() - 20), Mth.floor(tortoise.getY() - 10), Mth.floor(tortoise.getZ() - 20), Mth.floor(tortoise.getX() + 20), Mth.floor(tortoise.getY() + 10), Mth.floor(tortoise.getZ() + 20));
+        Iterable<BlockPos> iterable = BlockPos.betweenClosed(Mth.floor(tortoise.getX() - 12), Mth.floor(tortoise.getY() - 6), Mth.floor(tortoise.getZ() - 12), Mth.floor(tortoise.getX() + 12), Mth.floor(tortoise.getY() + 6), Mth.floor(tortoise.getZ() + 12));
         BlockPos blockToGo = null;
         for (BlockPos newPos : iterable) {
             for (Direction direction : Direction.Plane.HORIZONTAL) {

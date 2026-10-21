@@ -1,6 +1,5 @@
 package com.farcr.nomansland.client.particle;
 
-import com.farcr.nomansland.NoMansLand;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;

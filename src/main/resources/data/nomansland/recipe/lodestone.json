@@ -1,23 +1,29 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "lodestone",
+      "enabled_when": true
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "SRS",
-    "AAA",
-    "   "
+    "#S#",
+    "SCS",
+    "#S#"
   ],
   "key": {
-    "R": {
-      "item": "nomansland:resin_oil_bottle"
+    "#": {
+      "item": "minecraft:chiseled_stone_bricks"
     },
     "S": {
-      "item": "minecraft:string"
+      "item": "nomansland:polished_stone"
     },
-    "A": {
-      "item": "minecraft:arrow"
+    "C": {
+      "item": "minecraft:compass"
     }
   },
   "result": {
-    "id": "nomansland:incendiary_arrow",
-    "count": 3
+    "id": "minecraft:lodestone"
   }
 }

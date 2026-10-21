@@ -136,6 +136,7 @@ public class MonsterAnchorBlockEntity extends BlockEntity implements GameEventLi
                         // Resurrect the entity
                         resurrectedEntity.setHealth(resurrectedEntity.getMaxHealth());
                         resurrectedEntity.setDeltaMovement(Vec3.ZERO);
+                        resurrectedEntity.nml$setBeingResurrected();
 
                         level.addFreshEntity(resurrectedEntity);
                         resurrectedEntity.playSound(NMLSounds.MONSTER_ANCHOR_SPAWN.get(), 1, 1F);

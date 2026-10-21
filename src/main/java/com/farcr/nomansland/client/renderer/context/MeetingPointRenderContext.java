@@ -1,9 +1,6 @@
 package com.farcr.nomansland.client.renderer.context;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 
 /*
 * Stores information about the meeting point for the renderer

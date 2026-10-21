@@ -11,10 +11,7 @@ import com.farcr.nomansland.common.registry.*;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import com.farcr.nomansland.common.registry.blocks.NMLExtinguishables;
 import com.farcr.nomansland.common.registry.entities.*;
-import com.farcr.nomansland.common.registry.items.NMLArmorMaterials;
-import com.farcr.nomansland.common.registry.items.NMLCreativeTabs;
-import com.farcr.nomansland.common.registry.items.NMLDataComponents;
-import com.farcr.nomansland.common.registry.items.NMLItems;
+import com.farcr.nomansland.common.registry.items.*;
 import com.farcr.nomansland.common.registry.worldgen.*;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -37,6 +34,7 @@ public class NoMansLand {
         NMLBlocks.BLOCKS.register(bus);
         NMLExtinguishables.EXTINGUISHABLES.register(bus);
         NMLEntityDataSerializers.ENTITY_DATA_SERIALIZERS.register(bus);
+        NMLEntityDataAttachments.DATA_ATTACHMENTS.register(bus);
         NMLEntities.ENTITIES.register(bus);
         NMLSensors.SENSORS.register(bus);
         NMLMemoryModules.MEMORY_MODULES.register(bus);
@@ -44,6 +42,7 @@ public class NoMansLand {
         NMLFoliagePlacerTypes.FOLIAGE_PLACER_TYPES.register(bus);
         NMLTrunkPlacerTypes.TRUNK_PLACER_TYPES.register(bus);
         NMLSounds.SOUND_EVENTS.register(bus);
+        NMLPotions.POTION_REGISTRY.register(bus);
         NMLCreativeTabs.CREATIVE_TABS.register(bus);
         NMLParticleTypes.PARTICLE_TYPES.register(bus);
         NMLBlockEntities.BLOCK_ENTITIES.register(bus);
@@ -56,12 +55,14 @@ public class NoMansLand {
         NMLContextualMusic.CONTEXTUAL_MUSIC_REGISTRY.register(bus);
         NMLDreamTypes.DREAM_TYPES_REGISTRY.register(bus);
         NMLFogModifiers.FOG_MODIFIERS.register(bus);
+        NMLCarvingTypes.CARVING_TYPES.register(bus);
         NMLMobVariants.FROG_VARIANTS.register(bus);
         NMLEffects.MOB_EFFECTS.register(bus);
         NMLStructureProcessorTypes.STRUCTURE_PROCESSOR_TYPES.register(bus);
         NMLCriteriaTriggers.TRIGGERS.register(bus);
         NMLRecipeSerializers.RECIPE_SERIALIZERS.register(bus);
         NMLRecipeSerializers.RECIPE_TYPES.register(bus);
+        NMLConditions.CONDITION_CODECS.register(bus);
         NMLFluids.FLUID_TYPES.register(bus);
         NMLFluids.FLUIDS.register(bus);
         NMLBiomeModifiers.BIOME_MODIFIERS.register(bus);
@@ -77,6 +78,7 @@ public class NoMansLand {
         NMLBlockStateProviderTypes.BLOCKSTATE_PROVIDER_TYPES.register(bus);
         NMLStructureElementTypes.STRUCTURE_ELEMENTS.register(bus);
         NMLMapDecorationTypes.MAP_DECORATION_TYPES.register(bus);
+        NMLAttachmentTypes.ATTACHMENT_TYPES.register(bus);
 
         if (Mods.FARMERSDELIGHT.isLoaded()) {
             FDIntegration.register();

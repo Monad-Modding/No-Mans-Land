@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "diorite",
+      "enabled_when": true
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "#C",
+    "C#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:quartz"
+    },
+    "C": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "id": "minecraft:diorite",
+    "count": 3
+  }
+}

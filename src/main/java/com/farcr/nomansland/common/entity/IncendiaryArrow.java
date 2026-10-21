@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.entity;
 
+import com.farcr.nomansland.NMLConfig;
 import com.farcr.nomansland.common.registry.entities.NMLEntities;
 import com.farcr.nomansland.common.registry.items.NMLItems;
 import net.minecraft.core.BlockPos;
@@ -9,6 +10,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerPlayer;
+import com.farcr.nomansland.common.registry.entities.NMLEffects;
+import com.farcr.nomansland.common.registry.NMLCriteriaTriggers;
+import com.farcr.nomansland.common.effect.FlammableEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -43,6 +48,12 @@ public class IncendiaryArrow extends AbstractArrow {
 
         Entity entity = result.getEntity();
         entity.igniteForSeconds(30);
+
+        if (!level().isClientSide() && entity instanceof LivingEntity living && living.hasEffect(NMLEffects.FLAMMABLE)) {
+            if (getOwner() instanceof ServerPlayer serverPlayer)
+                NMLCriteriaTriggers.IGNITE_FLAMMABLE_ENTITY.get().trigger(serverPlayer, living, damageSources().onFire());
+            FlammableEffect.igniteFlammable(living);
+        }
     }
 
     @Override
@@ -79,7 +90,7 @@ public class IncendiaryArrow extends AbstractArrow {
         if (level instanceof ServerLevel serverLevel) {
             boolean ignitedFire = false;
 
-            if (isOnFire()) {
+            if (isOnFire() && NMLConfig.INCENDIARY_ARROW_PLACES_FIRE.get()) {
                 if (level.getBlockState(neighbourPos).is(Blocks.FIRE)) {
                     BlockPos.withinManhattan(neighbourPos, 1, 0, 1).forEach(firePos -> {
                         if ((BaseFireBlock.canBePlacedAt(level, firePos, direction)
@@ -115,8 +126,10 @@ public class IncendiaryArrow extends AbstractArrow {
                 serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, position().x, position().y, position().z, 4, 0, 0, 0, 0.01);
                 level.playSound(null, blockPosition(), SoundEvents.FLINTANDSTEEL_USE, SoundSource.PLAYERS, 0.6F, 1.2F);
                 serverLevel.sendParticles(ParticleTypes.LAVA, position().x, position().y, position().z, 4, 0, -0.05, 0, 0.01);
-                Ember ember = new Ember(level, getX(), getY(), getZ());
-                level.addFreshEntity(ember);
+                if (NMLConfig.INCENDIARY_ARROW_PLACES_FIRE.get()) {
+                    Ember ember = new Ember(level, getX(), getY(), getZ());
+                    level.addFreshEntity(ember);
+                }
                 clearFire();
             }
 

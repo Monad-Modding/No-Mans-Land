@@ -90,7 +90,7 @@ public class AncestralCarvingBlock extends DirectionalBlock {
                 .setValue(ROTATION, rotation);
     }
 
-    protected int getRotationForPlayer(BlockPlaceContext context, Direction facing) {
+    public int getRotationForPlayer(BlockPlaceContext context, Direction facing) {
         if (context.getPlayer() == null) return 0;
         if (facing == Direction.DOWN) {
             return switch (context.getHorizontalDirection()) {

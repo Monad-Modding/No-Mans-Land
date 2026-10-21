@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#L#",
+    "###"
+  ],
+  "key": {
+    "#": {"item": "minecraft:polished_deepslate"},
+    "L": {"item": "minecraft:lapis_lazuli"}
+  },
+  "result": {
+    "id": "nomansland:large_stellar_tile",
+    "count": 8
+  }
+}

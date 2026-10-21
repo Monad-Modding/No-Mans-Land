@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tile_slab",
+  "key": {
+    "#": {
+      "item": "nomansland:lunar_tiles"
+    }
+  },
+  "pattern": [
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "nomansland:lunar_tile_slab"
+  },
+  "show_notification": true
+}

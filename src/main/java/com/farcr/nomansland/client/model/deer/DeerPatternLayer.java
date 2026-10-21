@@ -1,7 +1,7 @@
 package com.farcr.nomansland.client.model.deer;
 
-import com.farcr.nomansland.common.entity.variant_action.SetPatternLayer;
 import com.farcr.nomansland.common.entity.cervidae.deer.Deer;
+import com.farcr.nomansland.common.entity.variant_action.SetPatternLayer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.tazer.mixed_litter.VariantUtil;

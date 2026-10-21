@@ -1,0 +1,10 @@
+{
+  "type": "nomansland:change_music",
+  "biomes": "minecraft:mushroom_fields",
+  "music": {
+    "max_delay": 24000,
+    "min_delay": 12000,
+    "replace_current_music": false,
+    "sound": "nomansland:music.overworld.mushroom_biome"
+  }
+}

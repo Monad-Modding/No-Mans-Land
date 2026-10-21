@@ -2,8 +2,10 @@ package com.farcr.nomansland.common.networking.dialogue;
 
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.client.renderer.DialogueRenderer;
-import com.farcr.nomansland.common.friend.FriendMoon;
-import com.farcr.nomansland.common.friend.dialogue.*;
+import com.farcr.nomansland.common.friend.dialogue.DialogueContainer;
+import com.farcr.nomansland.common.friend.dialogue.DialoguePool;
+import com.farcr.nomansland.common.friend.dialogue.DialogueState;
+import com.farcr.nomansland.common.friend.dialogue.DialogueUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Registry;
 import net.minecraft.core.UUIDUtil;

@@ -1,16 +1,13 @@
 package com.farcr.nomansland.common.effect;
 
-import com.farcr.nomansland.common.registry.NMLCriteriaTriggers;
 import com.farcr.nomansland.common.registry.NMLDamageTypes;
 import com.farcr.nomansland.common.registry.NMLParticleTypes;
-import com.farcr.nomansland.common.registry.NMLTags;
 import com.farcr.nomansland.common.registry.entities.NMLEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -33,33 +30,22 @@ public class FlammableEffect extends MobEffect {
         this.particleFactory = mobEffectInstance -> NMLParticleTypes.OIL.get();
     }
 
-    @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
-        return true;
-    }
-
-    @Override
-    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+    public static void dampenWhenWet(LivingEntity livingEntity) {
+        if (!(livingEntity instanceof ServerPlayer)) return;
         MobEffectInstance flammableEffectInstance = livingEntity.getEffect(NMLEffects.FLAMMABLE);
-        if (flammableEffectInstance != null) {
-            if (livingEntity.isInWaterOrRain() && livingEntity instanceof ServerPlayer) {
-                livingEntity.removeEffect(NMLEffects.FLAMMABLE);
-                int durationLost = livingEntity.isUnderWater() ? 4 : 2;
-                if (flammableEffectInstance.getDuration() > durationLost) livingEntity.addEffect(new MobEffectInstance(NMLEffects.FLAMMABLE, flammableEffectInstance.getDuration() - durationLost, flammableEffectInstance.getAmplifier()));
-            }
+        if (flammableEffectInstance != null && livingEntity.isInWaterOrRain()) {
+            livingEntity.removeEffect(NMLEffects.FLAMMABLE);
+            int durationLost = livingEntity.isUnderWater() ? 4 : 2;
+            if (flammableEffectInstance.getDuration() > durationLost) livingEntity.addEffect(new MobEffectInstance(NMLEffects.FLAMMABLE, flammableEffectInstance.getDuration() - durationLost, flammableEffectInstance.getAmplifier()));
         }
-
-        return super.applyEffectTick(livingEntity, amplifier);
     }
 
-    @Override
-    public void onMobHurt(LivingEntity livingEntity, int amplifier, DamageSource damageSource, float amount) {
+    public static void igniteFlammable(LivingEntity livingEntity) {
         Level level = livingEntity.level();
 
         MobEffectInstance flammableEffectInstance = livingEntity.getEffect(NMLEffects.FLAMMABLE);
-        if (flammableEffectInstance != null && (damageSource.is(NMLTags.IGNITES_FLAMMABLE) || (damageSource.getWeaponItem() != null && damageSource.getWeaponItem().is(NMLTags.FIRESTARTERS)))) {
-            if (damageSource.getEntity() instanceof ServerPlayer serverPlayer) NMLCriteriaTriggers.IGNITE_FLAMMABLE_ENTITY.get().trigger(serverPlayer, livingEntity, damageSource);
-
+        if (flammableEffectInstance != null) {
+            int amplifier = flammableEffectInstance.getAmplifier();
             livingEntity.hurt(NMLDamageTypes.getSimpleDamageSource(level, NMLDamageTypes.COMBUST), 6 + amplifier*4);
             livingEntity.setRemainingFireTicks(livingEntity.getRemainingFireTicks() + flammableEffectInstance.getDuration());
             livingEntity.removeEffect(NMLEffects.FLAMMABLE);
@@ -100,7 +86,5 @@ public class FlammableEffect extends MobEffect {
                 level.playSound(null, livingEntity.blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS);
             }
         }
-
-        super.onMobHurt(livingEntity, amplifier, damageSource, amount);
     }
 }

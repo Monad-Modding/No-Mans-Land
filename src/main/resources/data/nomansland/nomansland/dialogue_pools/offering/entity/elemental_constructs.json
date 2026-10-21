@@ -1,0 +1,8 @@
+{
+    "condition": {
+        "type": "nomansland:entity_conditional",
+        "entity": ["minecraft:blaze", "minecraft:breeze"]
+    },
+    "weight": 1,
+    "text": "An artificial being, created to embody one of nature's many raw aspects. \n The wonders of creativity will never leave me bored... \n Perhaps it is in your nature// to keep creating."
+}

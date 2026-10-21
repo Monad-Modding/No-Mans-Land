@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.registry.NMLTags;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import com.google.common.collect.ImmutableMap;
@@ -24,6 +25,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.Map;
 
 public class ShelfMushroomBlock extends BaseCoralWallFanBlock implements BonemealableBlock {
+
     private static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(
             Direction.NORTH, Block.box(4, 6, 9, 12, 9, 16.0),
             Direction.SOUTH, Block.box(4, 6, 0, 12, 9, 7),
@@ -33,6 +35,11 @@ public class ShelfMushroomBlock extends BaseCoralWallFanBlock implements Bonemea
     public ShelfMushroomBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.valueOf(false)));
+    }
+
+    @Override
+    public MapCodec<ShelfMushroomBlock> codec() {
+        return simpleCodec(ShelfMushroomBlock::new);
     }
 
     public boolean canSurvivePublic(BlockState state, LevelReader level, BlockPos pos) {

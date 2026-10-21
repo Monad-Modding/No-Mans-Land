@@ -1,20 +1,23 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "building",
-  "pattern": [
-    "#C",
-    "C#"
-  ],
-  "key": {
-    "#": {
-      "item": "minecraft:cobblestone"
-    },
-    "C": {
-      "item": "minecraft:diorite"
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "andesite",
+      "enabled_when": false
     }
-  },
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:diorite"
+    },
+    {
+      "item": "minecraft:cobblestone"
+    }
+  ],
   "result": {
-    "id": "minecraft:andesite",
-    "count": 4
+    "count": 2,
+    "id": "minecraft:andesite"
   }
 }

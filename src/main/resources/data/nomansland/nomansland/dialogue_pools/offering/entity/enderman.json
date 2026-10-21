@@ -1,0 +1,8 @@
+{
+    "condition": {
+        "type": "nomansland:entity_conditional",
+        "entity": ["minecraft:enderman", "nomansland:frienderman"]
+    },
+    "weight": 1,
+    "text": "Oh travel from beyond, if only your boundless curiosity could meet my eagerness to fulfill it. \n But alas, we both exist on transcendental planes, incapable of intersection. \n Sorry, Friend... I hope you do not think the same of me."
+}

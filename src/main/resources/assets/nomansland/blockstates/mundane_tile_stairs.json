@@ -38,7 +38,8 @@
     "facing=east,half=top,shape=outer_right": {
       "model": "nomansland:block/building/mundane_tile_stairs_outer_alt",
       "uvlock": true,
-      "x": 180
+      "x": 180,
+      "y": 180
     },
     "facing=east,half=top,shape=straight": {
       "model": "nomansland:block/building/mundane_tile_stairs",

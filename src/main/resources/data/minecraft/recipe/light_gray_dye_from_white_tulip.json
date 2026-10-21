@@ -1,13 +1,21 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "light_gray_dye_from_white_tulip",
+      "enabled_when": false
+    }
+  ],
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "group": "white_dye",
+  "group": "light_gray_dye",
   "ingredients": [
     {
       "item": "minecraft:white_tulip"
     }
   ],
   "result": {
-    "id": "minecraft:white_dye"
+    "count": 1,
+    "id": "minecraft:light_gray_dye"
   }
 }

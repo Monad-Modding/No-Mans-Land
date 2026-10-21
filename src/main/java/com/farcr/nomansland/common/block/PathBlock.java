@@ -1,4 +1,8 @@
 package com.farcr.nomansland.common.block;
+import net.minecraft.core.registries.BuiltInRegistries;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,7 +20,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 
 import javax.annotation.Nullable;
 
-
 public class PathBlock extends DirtPathBlock {
     public final Block mainBlock;
     public final boolean hasGravity;
@@ -27,39 +30,49 @@ public class PathBlock extends DirtPathBlock {
         this.hasGravity = hasGravity;
     }
 
+    public static final MapCodec<DirtPathBlock> CODEC = RecordCodecBuilder.<PathBlock>mapCodec(instance -> instance.group(
+            propertiesCodec(),
+            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("main_block").forGetter(block -> block.mainBlock),
+            Codec.BOOL.fieldOf("has_gravity").forGetter(block -> block.hasGravity)
+    ).apply(instance, PathBlock::new)).xmap(block -> (DirtPathBlock) block, block -> (PathBlock) block);
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return !this.defaultBlockState().canSurvive(pContext.getLevel(), pContext.getClickedPos()) ? Block.pushEntitiesUp(this.defaultBlockState(), mainBlock.defaultBlockState(), pContext.getLevel(), pContext.getClickedPos()) : super.getStateForPlacement(pContext);
-    }
-
-    public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving) {
-        if (this.hasGravity && FallingBlock.isFree(pLevel.getBlockState(pPos.below()))) {
-            pLevel.scheduleTick(pPos, this, 2);
-        }
-    }
-
-    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
-        if (pFacing == Direction.UP && !pState.canSurvive(pLevel, pCurrentPos)) {
-            pLevel.scheduleTick(pCurrentPos, this, 1);
-        }
-
-        if (this.hasGravity && FallingBlock.isFree(pLevel.getBlockState(pCurrentPos.below()))) {
-            pLevel.scheduleTick(pCurrentPos, this, 2);
-        }
-
-        return super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
+    public MapCodec<DirtPathBlock> codec() {
+        return CODEC;
     }
 
     @Override
-    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pSource) {
-        turnToBlock(null, pState, pLevel, pPos);
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? Block.pushEntitiesUp(this.defaultBlockState(), mainBlock.defaultBlockState(), context.getLevel(), context.getClickedPos()) : super.getStateForPlacement(context);
     }
 
-    public void turnToBlock(@Nullable Entity pEntity, BlockState pState, Level pLevel, BlockPos pPos) {
-        BlockState blockstate = pushEntitiesUp(pState, mainBlock.defaultBlockState(), pLevel, pPos);
-        pLevel.setBlockAndUpdate(pPos, blockstate);
-        pLevel.gameEvent(GameEvent.BLOCK_CHANGE, pPos, GameEvent.Context.of(pEntity, blockstate));
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
+        if (this.hasGravity && FallingBlock.isFree(level.getBlockState(pos.below()))) {
+            level.scheduleTick(pos, this, 2);
+        }
+    }
+
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+        if (facing == Direction.UP && !state.canSurvive(level, currentPos)) {
+            level.scheduleTick(currentPos, this, 1);
+        }
+
+        if (this.hasGravity && FallingBlock.isFree(level.getBlockState(currentPos.below()))) {
+            level.scheduleTick(currentPos, this, 2);
+        }
+
+        return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+    }
+
+    @Override
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource source) {
+        turnToBlock(null, state, level, pos);
+    }
+
+    public void turnToBlock(@Nullable Entity entity, BlockState state, Level level, BlockPos pos) {
+        BlockState blockstate = pushEntitiesUp(state, mainBlock.defaultBlockState(), level, pos);
+        level.setBlockAndUpdate(pos, blockstate);
+        level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(entity, blockstate));
     }
 
 }

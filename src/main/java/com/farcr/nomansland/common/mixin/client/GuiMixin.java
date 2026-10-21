@@ -4,7 +4,6 @@ import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.client.NMLMooseChargeAttackHandler;
 import com.farcr.nomansland.client.renderer.DialogueRenderer;
 import com.farcr.nomansland.client.renderer.dreams.ClientDreamRenderer;
-import com.farcr.nomansland.common.dreams.DreamManager;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.DeltaTracker;

@@ -1,6 +1,5 @@
 package com.farcr.nomansland.common.friend.condition;
 
-import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.friend.dialogue.DialoguePool;
 import com.farcr.nomansland.common.friend.dialogue.DialogueRegistry;
 import com.farcr.nomansland.common.registry.NMLRegistries;

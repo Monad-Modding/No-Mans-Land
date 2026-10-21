@@ -11,6 +11,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Climate;
 import net.neoforged.neoforge.common.Tags;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -21,7 +22,7 @@ public class DimensionBiomePlacementMixin {
     private void addCaveReplacement(int x, int y, int z, Climate.TargetPoint noisePoint, BiolithFittestNodes<Holder<Biome>> fittestNodes, CallbackInfoReturnable<Holder<Biome>> cir, @Local(name = "biomeEntry") Holder<Biome> biomeEntry) {
         if ((DimensionBiomePlacement)(Object)this instanceof OverworldBiomePlacement) {
             if (NMLConfig.CAVES_BIOMES.get()) {
-                if (!biomeEntry.is(Tags.Biomes.IS_UNDERGROUND)) {
+                if (!biomeEntry.is(Tags.Biomes.IS_UNDERGROUND) && !nml$likelyUnderground(fittestNodes, noisePoint.depth())) {
                     if (y < 0) {
                         cir.setReturnValue(NMLBiomes.CAVE_DEPTHS_HOLDER);
                     } else if (noisePoint.depth() > 0.1F * 10000) {
@@ -30,5 +31,14 @@ public class DimensionBiomePlacementMixin {
                 }
             }
         }
+    }
+
+    @Unique
+    private static boolean nml$likelyUnderground(BiolithFittestNodes<Holder<Biome>> fittestNodes, long depth) {
+        if (fittestNodes == null || fittestNodes.ultimate() == null) return false;
+        Climate.Parameter[] parameterSpace = ((ClimateRTreeNodeAccessor) (Object) fittestNodes.ultimate()).nml$getParameterSpace();
+        if (parameterSpace == null || parameterSpace.length <= 4) return false;
+        Climate.Parameter depthParameter = parameterSpace[4];
+        return depth >= depthParameter.min() && depth <= depthParameter.max();
     }
 }

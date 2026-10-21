@@ -3,7 +3,6 @@ package com.farcr.nomansland.common.entity.buddy;
 import com.farcr.nomansland.common.networking.buddy.ClientboundBuddyCrouchPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;

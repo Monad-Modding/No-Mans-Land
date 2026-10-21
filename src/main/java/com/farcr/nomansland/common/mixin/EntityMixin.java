@@ -2,6 +2,7 @@ package com.farcr.nomansland.common.mixin;
 
 import com.farcr.nomansland.common.extension.EntityExtension;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
+import com.farcr.nomansland.common.registry.entities.NMLEffects;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,6 +21,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -69,6 +71,14 @@ public abstract class EntityMixin implements EntityExtension {
 
     @Shadow public abstract float getYRot();
 
+    @Shadow public abstract float getXRot();
+
+    @Shadow
+    public abstract void setDeltaMovement(Vec3 deltaMovement);
+
+    @Shadow
+    public abstract Vec3 getDeltaMovement();
+
     @Unique private boolean NML$offering = false;
     @Unique private boolean NML$previouslyInspected = false;
     @Unique private float NML$inspectionFade = 0f;
@@ -77,6 +87,16 @@ public abstract class EntityMixin implements EntityExtension {
         NML$offering = isInspecting;
         if (isInspecting)
             NML$previouslyInspected = true;
+    }
+
+    @ModifyVariable(method = "move", at = @At("HEAD"), argsOnly = true)
+    private Vec3 nml$setDeltaMovement(Vec3 deltaMovement) {
+        return deltaMovement.multiply(nml$getVisualTickMultiplier(), nml$getVisualTickMultiplier(), nml$getVisualTickMultiplier());
+    }
+
+    @Inject(method = "getGravity", at = @At("RETURN"), cancellable = true)
+    private void nml$getGravity(CallbackInfoReturnable<Double> cir) {
+        if (nml$getVisualTickMultiplier() < 1f) cir.setReturnValue(cir.getReturnValue() * (double) nml$getVisualTickMultiplier());
     }
 
     public boolean NML$isBeingInspected() {
@@ -94,6 +114,31 @@ public abstract class EntityMixin implements EntityExtension {
     @Inject(method = "getGravity", at = @At("RETURN"), cancellable = true)
     private void NML$getGravity(CallbackInfoReturnable<Double> cir) {
         if (NML$isBeingInspected()) cir.setReturnValue(0.0d);
+    }
+
+    @ModifyVariable(method = "turn", at = @At("HEAD"), argsOnly = true, ordinal = 0)
+    private double nml$rotX(double rotX) {
+        return rotX * nml$getVisualTickMultiplier();
+    }
+
+    @ModifyVariable(method = "turn", at = @At("HEAD"), argsOnly = true, ordinal = 1)
+    private double nml$rotY(double rotY) {
+        return rotY * nml$getVisualTickMultiplier();
+    }
+
+
+    @Inject(method = "isNoGravity", at = @At("RETURN"), cancellable = true)
+    private void NML$isNoGravity(CallbackInfoReturnable<Boolean> cir) {
+        if (NML$isBeingInspected()) cir.setReturnValue(true);
+    }
+
+    @ModifyVariable(method = "setXRot", at = @At("HEAD"), argsOnly = true)
+    private float NML$slowInspectionSpin(float xRot) {
+        if (NML$isBeingInspected()) {
+            float current = getXRot();
+            return current + (xRot - current) * 0.3f;
+        }
+        return xRot;
     }
 
     @Unique @Nullable
@@ -136,5 +181,13 @@ public abstract class EntityMixin implements EntityExtension {
         if (fallDistance > 0.0F && startingToFallPosition == null) {
             startingToFallPosition = position();
         }
+    }
+
+    @Unique private Entity nml$Self = (Entity) (Object) this;
+
+    @Inject(method = "push(DDD)V", at = @At("HEAD"), cancellable = true)
+    private void nml$stasisAvoidPush(double x, double y, double z, CallbackInfo ci) {
+        if (nml$Self instanceof LivingEntity livingEntity
+        && livingEntity.hasEffect(NMLEffects.STASIS)) ci.cancel();
     }
 }

@@ -1,22 +1,28 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "#S#",
-    "SCS",
-    "#S#"
+  "neoforge:conditions": [
+    {
+      "type": "nomansland:boolean_config",
+      "option": "lodestone",
+      "enabled_when": false
+    }
   ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "#": {
-      "item": "minecraft:chiseled_stone_bricks"
+      "item": "minecraft:netherite_ingot"
     },
     "S": {
-      "item": "nomansland:polished_stone"
-    },
-    "C": {
-      "item": "minecraft:compass"
+      "item": "minecraft:chiseled_stone_bricks"
     }
   },
+  "pattern": [
+    "SSS",
+    "S#S",
+    "SSS"
+  ],
   "result": {
+    "count": 1,
     "id": "minecraft:lodestone"
   }
 }

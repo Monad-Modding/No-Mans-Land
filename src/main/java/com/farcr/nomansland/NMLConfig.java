@@ -1,17 +1,32 @@
 package com.farcr.nomansland;
 
+import com.farcr.nomansland.common.condition.BooleanConfigCondition;
 import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class NMLConfig {
 
     public static ModConfigSpec COMMON_CONFIG;
     public static final String CATEGORY_OVERRIDES = "overrides";
+    public static final String CATEGORY_RECIPES = "recipe_tweaks";
+    public static final List<String> VANILLA_RECIPE_TWEAKS = List.of(
+            "andesite", "diorite", "granite", "lectern",
+            "light_blue_dye_from_blue_orchid", "light_gray_dye_from_white_tulip", "lodestone",
+            "mushroom_stew", "rabbit_stew_from_red_mushroom",
+            "red_dye_from_rose_bush", "red_sandstone", "sandstone", "scaffolding",
+            "smoker"
+    );
+    public static final Map<String, ModConfigSpec.BooleanValue> RECIPE_TWEAKS = new HashMap<>();
     public static ModConfigSpec.BooleanValue MYCELIUM_SPREADS;
     public static ModConfigSpec.BooleanValue GRASS_SPREADS;
     public static ModConfigSpec.BooleanValue MALEVOLENT_SPAWNER;
     public static ModConfigSpec.BooleanValue TRAMPLING;
     public static ModConfigSpec.BooleanValue TORCH_EXTINGUISHING;
     public static ModConfigSpec.BooleanValue GRASS_FROSTING;
+    public static ModConfigSpec.BooleanValue PATH_TWEAKS;
     public static final String CATEGORY_BIOMES = "biomes";
     public static ModConfigSpec.BooleanValue BIOMES;
     public static ModConfigSpec.BooleanValue CAVES_BIOMES;
@@ -34,7 +49,6 @@ public class NMLConfig {
     public static ModConfigSpec.BooleanValue TROPICAL_BEACH;
     public static final String CATEGORY_TAP = "tap";
     public static ModConfigSpec.DoubleValue FILLING_SPEED_MULTIPLIER;
-    public static ModConfigSpec.IntValue TICKS_TO_FILL_CAULDRON;
     public static final String CATEGORY_ANCHOR = "monster_anchor";
     public static ModConfigSpec.IntValue TICKS_BETWEEN_RESURRECTIONS;
     public static final String CATEGORY_SPIKE = "spike";
@@ -45,6 +59,16 @@ public class NMLConfig {
     public static final String CATEGORY_BOMBS = "bombs";
     public static ModConfigSpec.DoubleValue EXPLOSIVE_STRENGTH;
     public static ModConfigSpec.DoubleValue FIREBOMB_STRENGTH;
+    public static ModConfigSpec.BooleanValue INCENDIARY_ARROW_PLACES_FIRE;
+    public static final String CATEGORY_BANDAGE = "bandage";
+    public static ModConfigSpec.IntValue BANDAGE_COOLDOWN;
+    public static ModConfigSpec.DoubleValue BANDAGE_HEAL_AMOUNT;
+    public static final String CATEGORY_ANCIENT_BRONZE_MASK = "ancient_bronze_mask";
+    public static ModConfigSpec.IntValue ANCIENT_BRONZE_MASK_HEAL_INTERVAL;
+    public static ModConfigSpec.DoubleValue ANCIENT_BRONZE_MASK_HEAL_AMOUNT;
+    public static final String CATEGORY_WARDING_EFFIGY = "warding_effigy";
+    public static ModConfigSpec.IntValue WARDING_EFFIGY_BASE_RANGE;
+    public static ModConfigSpec.IntValue WARDING_EFFIGY_RANGE_PER_EFFIGY;
     public static final String CATEGORY_BULK_PLACEMENT = "bulk_placement";
     public static ModConfigSpec.IntValue MAX_LADDER_PLACEMENT_LENGTH;
     public static ModConfigSpec.IntValue MAX_RAIL_PLACMENT_LENGTH;
@@ -52,16 +76,15 @@ public class NMLConfig {
     public static final String CATEGORY_MEETING_POINT = "meeting_point";
     public static ModConfigSpec.IntValue MIN_MEETING_POINT_DISTANCE;
     public static ModConfigSpec.IntValue MAX_MEETING_POINT_DISTANCE;
+    public static ModConfigSpec.ConfigValue<List<? extends String>> FRIEND_MOON_DIMENSIONS;
 
     public static final String BELL_SANCTUARIES = "bell_sanctuaries";
     public static ModConfigSpec.IntValue MIN_BELL_SANCTUARY_PAIR_DISTANCE_CHUNKS;
     public static ModConfigSpec.IntValue MAX_BELL_SANCTUARY_PAIR_DISTANCE_CHUNKS;
     public static ModConfigSpec.IntValue BELL_CELL_SIZE_CHUNKS;
-//    public static ModConfigSpec.
 
     public static final String CATEGORY_MISC = "miscellaneous";
     public static ModConfigSpec.DoubleValue BURIED_SPAWNING_CHANCE;
-    public static ModConfigSpec.BooleanValue WALK_THROUGH_LEAVES;
     public static ModConfigSpec.BooleanValue WITCHES_EAT_STEW;
 
     public static ModConfigSpec CLIENT_CONFIG;
@@ -70,6 +93,8 @@ public class NMLConfig {
     public static ModConfigSpec.BooleanValue CAVE_BIOME_FOG_MODIFIER;
     public static ModConfigSpec.BooleanValue DEEP_DARK_FOG_MODIFIER;
     public static ModConfigSpec.BooleanValue FOGGY_BIOME_FOG_MODIFIER;
+    public static ModConfigSpec.BooleanValue SURFACE_FOG_MODIFIER;
+    public static ModConfigSpec.DoubleValue SURFACE_FOG_INTENSITY;
 
     public static final String INVERTED_BELL_CLIENT = "inverted_bell_client";
     public static ModConfigSpec.BooleanValue INVERTED_BELL_BLUR;
@@ -89,6 +114,9 @@ public class NMLConfig {
         COMMON_BUILDER.comment("For configuring the mob remodels, go to the mixed litter startup config!");
 
         COMMON_BUILDER.push(CATEGORY_OVERRIDES);
+        PATH_TWEAKS = COMMON_BUILDER
+                .comment("If using a hoe/shovel on plants tills/paths the blocks below it")
+                .define("farmlandPathTweaks", true);
         GRASS_SPREADS = COMMON_BUILDER
                 .comment("If grass or mycelium spread to nearby dirt.")
                 .define("grassSpreads", true);
@@ -174,9 +202,6 @@ public class NMLConfig {
         FILLING_SPEED_MULTIPLIER = COMMON_BUILDER
                 .comment("Multiplier on how fast taps should fill up cauldrons with resin. Set to 0.0 to disable.")
                 .defineInRange("fillingSpeedMultiplier", 1.0, 0, 10);
-        TICKS_TO_FILL_CAULDRON = COMMON_BUILDER
-                .comment("The time it takes to fill a cauldron with honey using a tap.")
-                .defineInRange("ticksToFillCauldron", 80, 1, 400);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.push(CATEGORY_ANCHOR);
@@ -208,6 +233,37 @@ public class NMLConfig {
         FIREBOMB_STRENGTH = COMMON_BUILDER
                 .comment("The radius of firebombs' explosion.")
                 .defineInRange("firebombExplosionRadius", 2.0, 0, Integer.MAX_VALUE);
+        INCENDIARY_ARROW_PLACES_FIRE = COMMON_BUILDER
+                .comment("If incendiary arrows place fire blocks where they land.")
+                .define("incendiaryArrowPlacesFire", true);
+        COMMON_BUILDER.pop();
+
+        COMMON_BUILDER.push(CATEGORY_BANDAGE);
+        BANDAGE_COOLDOWN = COMMON_BUILDER
+                .comment("The cooldown applied to all bandages after one is used. Time is calculated in ticks. 20 ticks make 1 second.")
+                .defineInRange("bandageCooldown", 140, 0, Integer.MAX_VALUE);
+        BANDAGE_HEAL_AMOUNT = COMMON_BUILDER
+                .comment("The amount of health a bandage restores when applied. Healing is in hit points. 2 hit points make 1 heart.")
+                .defineInRange("bandageHealAmount", 4.0, 0, Integer.MAX_VALUE);
+        COMMON_BUILDER.pop();
+
+        COMMON_BUILDER.push(CATEGORY_ANCIENT_BRONZE_MASK);
+        COMMON_BUILDER.comment("Time is calculated in ticks. 20 ticks make 1 second. Healing is in hit points. 2 hit points make 1 heart.");
+        ANCIENT_BRONZE_MASK_HEAL_INTERVAL = COMMON_BUILDER
+                .comment("How often the Ancient Bronze Mask heals its wearer while worn on the head.")
+                .defineInRange("ancientBronzeMaskHealInterval", 200, 1, Integer.MAX_VALUE);
+        ANCIENT_BRONZE_MASK_HEAL_AMOUNT = COMMON_BUILDER
+                .comment("The amount of health the Ancient Bronze Mask restores each interval.")
+                .defineInRange("ancientBronzeMaskHealAmount", 1.0, 0, Integer.MAX_VALUE);
+        COMMON_BUILDER.pop();
+
+        COMMON_BUILDER.push(CATEGORY_WARDING_EFFIGY);
+        WARDING_EFFIGY_BASE_RANGE = COMMON_BUILDER
+                .comment("The warding range, in blocks, of a single Warding Effigy. Stacking additional effigies in the same block increases the range beyond this base value.")
+                .defineInRange("wardingEffigyBaseRange", 24, 0, Integer.MAX_VALUE);
+        WARDING_EFFIGY_RANGE_PER_EFFIGY = COMMON_BUILDER
+                .comment("How many extra blocks of warding range each additional Warding Effigy stacked in the same block adds. Diminishing returns still apply as more are stacked.")
+                .defineInRange("wardingEffigyRangePerEffigy", 20, 0, Integer.MAX_VALUE);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.push(CATEGORY_BULK_PLACEMENT);
@@ -230,6 +286,9 @@ public class NMLConfig {
         MAX_MEETING_POINT_DISTANCE = COMMON_BUILDER
                 .comment("The maximum distance, from the center of the world, the Meeting Point should spawn at.")
                 .defineInRange("maxMeetingPointDistance", 2500, 0, Integer.MAX_VALUE);
+        FRIEND_MOON_DIMENSIONS = COMMON_BUILDER
+                .comment("Dimensions the Friend Moon watches over, as full dimension ids such as \"minecraft:overworld\". Leave empty to use every dimension that shares the overworld's dimension type, which covers most custom overworld-like dimensions.")
+                .defineListAllowEmpty("friendMoonDimensions", List.of(), () -> "", (entry) -> entry instanceof String);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.push(BELL_SANCTUARIES);
@@ -250,15 +309,21 @@ public class NMLConfig {
                 .comment("The chance a buried is spawned upon brushing a remains block.")
                 .comment("This chance is multiplied by 4 when the block is broken and by 10 when the block falls.")
                 .defineInRange("buriedSpawningChance", 0.05, 0, 1);
-//        WALK_THROUGH_LEAVES = COMMON_BUILDER
-//                .comment("If leaves can be walked through slowly")
-//                .define("walkThroughLeaves", true);
         WITCHES_EAT_STEW = COMMON_BUILDER
                 .comment("Witches use bowls to drain cauldrons of witch stew.")
                 .define("witchesEatStew", true);
         COMMON_BUILDER.pop();
 
+        COMMON_BUILDER.push(CATEGORY_RECIPES);
+        COMMON_BUILDER.comment("Toggle changes to vanilla crafting recipes.");
+        for (String recipe : VANILLA_RECIPE_TWEAKS) {
+            RECIPE_TWEAKS.put(recipe, COMMON_BUILDER.define(recipe, true));
+        }
+        COMMON_BUILDER.pop();
+
         COMMON_CONFIG = COMMON_BUILDER.build();
+
+        VANILLA_RECIPE_TWEAKS.forEach(recipe -> BooleanConfigCondition.OPTIONS.put(recipe, () -> RECIPE_TWEAKS.get(recipe).get()));
 
         final ModConfigSpec.Builder CLIENT_BUILDER = new ModConfigSpec.Builder();
 
@@ -275,6 +340,12 @@ public class NMLConfig {
         FOGGY_BIOME_FOG_MODIFIER = CLIENT_BUILDER
                 .comment("If the foggy biome fog modifier is enabled")
                 .define("foggyBiomeFogModifier", true);
+        SURFACE_FOG_MODIFIER = CLIENT_BUILDER
+                .comment("If the general fog modifier applied everywhere, is enabled")
+                .define("surfaceFogModifier", true);
+        SURFACE_FOG_INTENSITY = CLIENT_BUILDER
+                .comment("How strongly the general fog modifier pulls fog towards the camera; 0 disables it entirely, 1 is the default look")
+                .defineInRange("surfaceFogIntensity", 1.0, 0.1, 1.0);
         CLIENT_BUILDER.pop();
 
         CLIENT_BUILDER.push(INVERTED_BELL_CLIENT);

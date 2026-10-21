@@ -11,6 +11,7 @@ import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
@@ -57,11 +58,13 @@ public class CypressTrunkPlacer extends TrunkPlacer {
                 for (int i = 0; i < height; ++i) {
                     this.placeLog(level, blockSetter, random, pos.offset(x, i, z), config);
                 }
+                this.fillRootToGround(level, blockSetter, random, pos.offset(x, 0, z), config);
             }
         }
 
         // Trunk
         BlockPos trunkPos = maxRootHeight > 0 ? pos.offset(random.nextInt(2), 0, random.nextInt(2)) : pos;
+        this.fillRootToGround(level, blockSetter, random, trunkPos, config);
         for (int i = 0; i < freeTreeHeight; ++i) {
             this.placeLog(level, blockSetter, random, trunkPos.above(i), config);
         }
@@ -90,6 +93,18 @@ public class CypressTrunkPlacer extends TrunkPlacer {
         }
 
         return list;
+    }
+
+    private void fillRootToGround(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random, BlockPos base, TreeConfiguration config) {
+        if (config.rootPlacer.isPresent()) return;
+        BlockPos.MutableBlockPos mut = base.mutable().move(Direction.DOWN);
+        int drop = 0;
+        while (drop < 2 && TreeFeature.isAirOrLeaves(level, mut)) {
+            this.placeLog(level, blockSetter, random, mut, config);
+            mut.move(Direction.DOWN);
+            drop++;
+        }
+        setDirtAt(level, blockSetter, random, mut, config);
     }
 
     private BlockPos makeLimb(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> blockSetter, RandomSource random, BlockPos basePos, int steps, Direction dir, TreeConfiguration config) {

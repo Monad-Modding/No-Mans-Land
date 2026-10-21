@@ -4,14 +4,8 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 
 public class MoonlightSparkParticle extends TextureSheetParticle {
     private final SpriteSet spriteSet;
@@ -21,10 +15,10 @@ public class MoonlightSparkParticle extends TextureSheetParticle {
     private Vec3 targetPosition;
 
     public MoonlightSparkParticle(
-        ClientLevel level, double pX, double pY, double pZ,
-        double pXSpeed, double pYSpeed, double pZSpeed, SpriteSet spriteSet
+        ClientLevel level, double x, double y, double z,
+        double xSpeed, double ySpeed, double zSpeed, SpriteSet spriteSet
     ) {
-        super(level, pX, pY, pZ, 0f, 0f, 0f);
+        super(level, x, y, z, 0f, 0f, 0f);
         this.spriteSet = spriteSet;
         this.lifetime = 45;
 

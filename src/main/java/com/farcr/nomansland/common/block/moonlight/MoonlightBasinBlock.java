@@ -1,8 +1,6 @@
 package com.farcr.nomansland.common.block.moonlight;
 
-import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.blockentity.MoonlightBasinBlockEntity;
-import com.farcr.nomansland.common.friend.FriendMoon;
 import com.farcr.nomansland.common.registry.NMLBlockEntities;
 import com.mojang.math.OctahedralGroup;
 import com.mojang.serialization.MapCodec;
@@ -35,19 +33,13 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.joml.*;
+import org.joml.Matrix3f;
+import org.joml.Vector3f;
 
-import java.lang.Math;
 import java.util.List;
-import java.util.function.ToIntFunction;
 
 public class MoonlightBasinBlock extends BaseEntityBlock implements SimpleWaterloggedBlock
 {
-	public static final MapCodec<MoonlightBasinBlock> CODEC = simpleCodec(MoonlightBasinBlock::new);
-	@Override
-	protected MapCodec<? extends BaseEntityBlock> codec() {
-		return CODEC;
-	}
 
 	@Nullable @Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
@@ -122,6 +114,11 @@ public class MoonlightBasinBlock extends BaseEntityBlock implements SimpleWaterl
                     .setValue(WATERLOGGED, false)
                     .setValue(MoonlightCandleBlock.CANDLE_LIT, false)
 		);
+	}
+	public static final MapCodec<MoonlightBasinBlock> CODEC = simpleCodec(MoonlightBasinBlock::new);
+	@Override
+	protected MapCodec<? extends BaseEntityBlock> codec() {
+		return CODEC;
 	}
 
 	@Nullable

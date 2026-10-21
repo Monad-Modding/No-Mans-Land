@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -29,6 +31,11 @@ public class BeardMossBlock extends Block implements BonemealableBlock {
     public BeardMossBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.getStateDefinition().getOwner().defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER));
+    }
+
+    @Override
+    public MapCodec<BeardMossBlock> codec() {
+        return simpleCodec(BeardMossBlock::new);
     }
 
     @Override
@@ -62,8 +69,9 @@ public class BeardMossBlock extends Block implements BonemealableBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        Vec3 offset = state.getOffset(level, pos);
+        return SHAPE.move(offset.x, offset.y, offset.z);
     }
 
     @Override

@@ -40,21 +40,21 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
 public class Tortoise extends Animal {
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final EntityDataAccessor<Optional<BlockPos>> HOME_POS = SynchedEntityData.defineId(Tortoise.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
-    private static final EntityDataAccessor<Boolean> HAS_EGG = SynchedEntityData.defineId(Tortoise.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> LAYING_EGG = SynchedEntityData.defineId(Tortoise.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> GOING_HOME = SynchedEntityData.defineId(Tortoise.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IN_SHELL = SynchedEntityData.defineId(Tortoise.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> SEARCHING = SynchedEntityData.defineId(Tortoise.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Long> HURT_WHEN = SynchedEntityData.defineId(Tortoise.class, EntityDataSerializers.LONG);
     @Nullable
     private UUID lastHurtByUUID;
+    @Nullable
+    private BlockPos homePos;
+    private boolean hasEgg;
+    private boolean goingHome;
+    private boolean searching;
+    private long hurtWhen;
     private static final float BABY_SCALE = 0.3F;
     private static final Supplier<EntityDimensions> BABY_DIMENSIONS = Suppliers.memoize(() -> NMLEntities.TORTOISE.get().getDimensions()
             .withAttachments(EntityAttachments.builder()
@@ -114,13 +114,8 @@ public class Tortoise extends Animal {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
-        builder.define(Tortoise.HOME_POS, Optional.empty());
-        builder.define(Tortoise.HAS_EGG, false);
         builder.define(Tortoise.LAYING_EGG, false);
-        builder.define(Tortoise.GOING_HOME, false);
         builder.define(Tortoise.IN_SHELL, false);
-        builder.define(Tortoise.SEARCHING, false);
-        builder.define(Tortoise.HURT_WHEN, 0L);
     }
 
     @Override
@@ -144,8 +139,8 @@ public class Tortoise extends Animal {
     @Override
     public void tick() {
         super.tick();
-        long gameTime = this.level().getGameTime();
-        if ((gameTime - this.getHurtWhen() > 600L) && this.inShell() && this.getLastHurtByUUID() != null) {
+        if (!this.level().isClientSide && this.lastHurtByUUID != null && this.inShell()
+                && this.level().getGameTime() - this.hurtWhen > 600L) {
             this.setSearching(true);
         }
     }
@@ -159,7 +154,7 @@ public class Tortoise extends Animal {
         compound.putBoolean("Searching", this.isSearching());
         compound.putBoolean("InShell", this.inShell());
         compound.putLong("HurtWhen", this.getHurtWhen());
-        compound.putLong("EggCount", this.getLayEggCounter());
+        compound.putInt("EggCount", this.getLayEggCounter());
         compound.putInt("TimesFed", this.getTimesFedWhenBaby());
         if (this.lastHurtByUUID != null)
             compound.putUUID("HurtByUUID", this.lastHurtByUUID);
@@ -172,10 +167,9 @@ public class Tortoise extends Animal {
         this.setSearching(compound.getBoolean("Searching"));
         this.retreatShell(compound.getBoolean("InShell"));
         this.setHasEgg(compound.getBoolean("HasEgg"));
-        this.setHurtWhen(compound.getInt("HurtWhen"));
+        this.setHurtWhen(compound.getLong("HurtWhen"));
         this.setLayEggCounter(compound.getInt("EggCount"));
-        if (this.lastHurtByUUID != null)
-            this.lastHurtByUUID = compound.getUUID("HurtByUUID");
+        if (compound.hasUUID("HurtByUUID")) this.lastHurtByUUID = compound.getUUID("HurtByUUID");
         this.setTimesFedWhenBaby(compound.getInt("TimesFed"));
     }
 
@@ -222,14 +216,6 @@ public class Tortoise extends Animal {
         return InteractionResult.PASS;
     }
 
-    private void spawnItemParticles(ItemStack stack, int amount) {
-    }
-
-    /**
-     * Set whether this mob is a child.
-     *
-     * @param baby
-     */
     @Override
     public void setBaby(boolean baby) {
         this.setAge(baby ? -432000 : 0);
@@ -324,7 +310,7 @@ public class Tortoise extends Animal {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (this.isAlive() && this.isLayingEgg() && this.layEggCounter >= 1 && this.layEggCounter % 5 == 0) {
+        if (!this.level().isClientSide && this.isAlive() && this.isLayingEgg() && this.layEggCounter >= 1 && this.layEggCounter % 5 == 0) {
             BlockPos blockpos = this.blockPosition();
             BlockState blockstate = this.level().getBlockState(blockpos.below());
             if (blockstate.getRenderShape() != RenderShape.INVISIBLE) {
@@ -373,20 +359,21 @@ public class Tortoise extends Animal {
         return this.isBaby() ? BABY_DIMENSIONS.get() : super.getDefaultDimensions(pose);
     }
 
-    public void setHomePos(BlockPos homePos) {
-        this.entityData.set(HOME_POS, Optional.ofNullable(homePos));
+    public void setHomePos(@Nullable BlockPos homePos) {
+        this.homePos = homePos;
     }
 
+    @Nullable
     public BlockPos getHomePos() {
-        return this.entityData.get(HOME_POS).orElse(null);
+        return this.homePos;
     }
 
     public boolean hasEgg() {
-        return this.entityData.get(HAS_EGG);
+        return this.hasEgg;
     }
 
     public void setHasEgg(boolean hasEgg) {
-        this.entityData.set(HAS_EGG, hasEgg);
+        this.hasEgg = hasEgg;
     }
 
     public boolean isLayingEgg() {
@@ -403,11 +390,11 @@ public class Tortoise extends Animal {
     }
 
     public boolean isSearching() {
-        return this.entityData.get(SEARCHING);
+        return this.searching;
     }
 
     public void setSearching(boolean searching) {
-        this.entityData.set(SEARCHING, searching);
+        this.searching = searching;
     }
 
     public void setLayingEgg(boolean isLayingEgg) {
@@ -416,19 +403,19 @@ public class Tortoise extends Animal {
     }
 
     public boolean isGoingHome() {
-        return this.entityData.get(GOING_HOME);
+        return this.goingHome;
     }
 
     public void setGoingHome(boolean isGoingHome) {
-        this.entityData.set(GOING_HOME, isGoingHome);
+        this.goingHome = isGoingHome;
     }
 
     public long getHurtWhen() {
-        return this.entityData.get(HURT_WHEN);
+        return this.hurtWhen;
     }
 
     public void setHurtWhen(long hurtWhen) {
-        this.entityData.set(HURT_WHEN, hurtWhen);
+        this.hurtWhen = hurtWhen;
     }
 
     @Nullable

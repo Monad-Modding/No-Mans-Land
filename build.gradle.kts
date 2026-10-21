@@ -150,15 +150,17 @@ dependencies {
     compileOnly("maven.modrinth:supplementaries:1.21-3.5.27-neoforge")
     implementation("maven.modrinth:vanity-core:5.0.2")
     compileOnly("maven.modrinth:snow-real-magic:12.1.2+neoforge")
+    compileOnly("maven.modrinth:etched:h6eJfwiW")
+    compileOnly("maven.modrinth:stellarview:QD13LaRR")
+    implementation("maven.modrinth:appleskin:3.0.5+mc1.21")
 
     compileOnly("mezz.jei:jei-${mc["version"]}-common-api:${deps["jei"]}")
     compileOnly("mezz.jei:jei-${mc["version"]}-neoforge-api:${deps["jei"]}")
     localRuntime("mezz.jei:jei-${mc["version"]}-neoforge:${deps["jei"]}")
 
 //    localRuntime "maven.modrinth:xaeros-world-map:1.38.9_NeoForge_1.21"
-    localRuntime("maven.modrinth:appleskin:3.0.5+mc1.21")
     localRuntime("maven.modrinth:worldedit:7.3.6")
-    localRuntime("maven.modrinth:sodium:mc1.21.1-0.6.13-neoforge")
+    localRuntime("maven.modrinth:sodium:mc1.21.1-0.8.12-beta.1-neoforge")
     //localRuntime "maven.modrinth:cyanide:v4LiMGGH"
 
 //    implementation "maven.modrinth:DistantHorizonsApi:$distant_horizons_api_version"
@@ -201,7 +203,7 @@ idea {
 publishMods {
     type = STABLE
     file = tasks.jar.map { it.archiveFile.get() }
-    changelog = provider { rootProject.file("changelog.md").readText() }
+    changelog = provider { rootProject.file("CHANGELOG.md").readText() }
 
     version = mod["version"]
     displayName = "${mod["name"]} ${mod["version"]}"

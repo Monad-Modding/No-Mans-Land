@@ -2,13 +2,12 @@ package com.farcr.nomansland.common.friend.dialogue;
 
 import com.farcr.nomansland.common.networking.dialogue.ClientboundDialoguePacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -52,6 +51,7 @@ public class DialogueLocation {
         if (dialogueLocation == null) return 0;
         ClientboundDialoguePacket clientPacket = createPacket();
         PacketDistributor.sendToPlayer(player, clientPacket);
+        markHeard(level, player);
         return clientPacket.getDialogueLengthTicks(level);
     }
 
@@ -59,8 +59,15 @@ public class DialogueLocation {
         if (dialogueLocation == null)
             return 0;
         ClientboundDialoguePacket clientPacket = createPacket();
-        for (ServerPlayer player : playerList)
+        for (ServerPlayer player : playerList) {
             PacketDistributor.sendToPlayer(player, clientPacket);
+            markHeard(level, player);
+        }
         return clientPacket.getDialogueLengthTicks(level);
+    }
+
+    private void markHeard(Level level, ServerPlayer player) {
+        if (level instanceof ServerLevel serverLevel)
+            DialogueTracker.getOrDefault(serverLevel.getServer()).markDialogueHeard(player, registryLocation, dialogueLocation);
     }
 }

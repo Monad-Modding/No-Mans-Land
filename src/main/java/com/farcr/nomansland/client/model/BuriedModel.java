@@ -58,7 +58,7 @@ public class BuriedModel<T extends Entity> extends EntityModel<T> {
 
 
     @Override
-    public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
+    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
         if (head.yRot != 0) {
             body.yRot = (head.yRot / 10);
@@ -68,8 +68,8 @@ public class BuriedModel<T extends Entity> extends EntityModel<T> {
         }
 
         if (head != null) {
-            head.xRot = (pHeadPitch * ((float) Math.PI / 180F));
-            head.yRot = (pNetHeadYaw * ((float) Math.PI / 180F));
+            head.xRot = (headPitch * ((float) Math.PI / 180F));
+            head.yRot = (netHeadYaw * ((float) Math.PI / 180F));
         }
 
     }

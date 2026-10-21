@@ -22,7 +22,7 @@
       "max_delay": 24000,
       "min_delay": 12000,
       "replace_current_music": true,
-      "sound": "nomansland:music.overworld.cave_depths"
+      "sound": "nomansland:music.overworld.alchemist_ruins"
     },
     "particle": {
       "options": {

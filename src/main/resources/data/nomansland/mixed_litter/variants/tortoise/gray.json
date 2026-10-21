@@ -4,11 +4,7 @@
   "conditions": {
     "entity_predicate": {
       "location": {
-        "biomes": [
-          "nomansland:caves",
-          "nomansland:cave_depths",
-          "minecraft:dripstone_caves"
-        ]
+        "biomes": "#nomansland:entity/spawns_gray_tortoises"
       }
     }
   },

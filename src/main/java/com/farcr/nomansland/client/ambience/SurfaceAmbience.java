@@ -16,6 +16,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import org.joml.Vector3f;
 
 public class SurfaceAmbience {
+    private static final String SURFACE_AMBIENCE_PROFILER = NoMansLand.MODID + ".surfaceAmbienceTick";
+
     private final Minecraft minecraft;
     private float aboveGroundFactor, prevAboveGroundFactor = 1.0F;
 
@@ -26,7 +28,7 @@ public class SurfaceAmbience {
     private final BlockPos.MutableBlockPos samplePos = new BlockPos.MutableBlockPos();
     private final BlockPos.MutableBlockPos iteratorPos = new BlockPos.MutableBlockPos();
     public void tick(boolean shouldUpdate) {
-        minecraft.getProfiler().push(NoMansLand.MODID + ".surfaceAmbienceTick");
+        minecraft.getProfiler().push(SURFACE_AMBIENCE_PROFILER);
 
         prevAboveGroundFactor = aboveGroundFactor;
         if (!shouldUpdate) return;
