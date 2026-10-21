@@ -75,6 +75,7 @@
     "integration.VanillaFluidTargetsMixin"
   ],
   "client": [
+    "client.ClientHooksMixin",
     "ItemInHandLayerMixin",
     "ItemInHandRendererMixin",
     "ParticleEngineMixin",
