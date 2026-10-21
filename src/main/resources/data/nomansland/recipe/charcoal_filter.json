@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": {
+      "item": "minecraft:charcoal"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "R": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "GGG",
+    "RRR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "nomansland:charcoal_filter"
+  }
+}

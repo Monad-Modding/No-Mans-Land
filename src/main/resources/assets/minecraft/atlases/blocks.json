@@ -6,6 +6,10 @@
     },
     {
       "type": "single",
+      "resource": "nomansland:entity/bombs/acrid_bomb"
+    },
+    {
+      "type": "single",
       "resource": "nomansland:entity/bombs/ink_bomb"
     },
     {

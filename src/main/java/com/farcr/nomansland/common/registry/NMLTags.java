@@ -20,6 +20,7 @@ public class NMLTags {
     public static final TagKey<Item> INK_IMMUNE = createItemTag("ink_immune");
     public static final TagKey<Item> MAKES_PATHS = createItemTag("makes_paths");
     public static final TagKey<Item> MAKES_FARMLAND = createItemTag("makes_farmland");
+    public static final TagKey<Item> DOES_NOT_CORRODE = createItemTag("does_not_corrode");
 
     public static final SharedTag MAPLE_LOGS = createSharedTag("maple_logs");
     public static final SharedTag PINE_LOGS = createSharedTag("pine_logs");

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "misc",
+  "cookingtime": 600,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "nomansland:sulfur"
+  },
+  "result": {
+    "id": "nomansland:sulfur"
+  }
+}

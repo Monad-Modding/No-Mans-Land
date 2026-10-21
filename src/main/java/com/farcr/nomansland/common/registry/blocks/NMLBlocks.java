@@ -401,6 +401,81 @@ public class NMLBlocks {
     public static final BlockDefinition<WallBlock> MOSSY_COBBLESTONE_BRICK_WALL = register("mossy_cobblestone_brick_wall",
             () -> new WallBlock(ofFullCopy(NMLBlocks.MOSSY_COBBLESTONE_BRICKS.get())), BlockProperties.stoneLikeWall());
 
+    //Limestone
+
+    public static final BlockDefinition<Block> LIMESTONE = register("limestone",
+            () -> new Block(ofFullCopy(Blocks.STONE).sound(NMLSounds.SILTSTONE)), BlockProperties.stoneLike());
+    public static final BlockDefinition<StairBlock> LIMESTONE_STAIRS = register("limestone_stairs",
+            () -> new StairBlock(LIMESTONE.get().defaultBlockState(), ofFullCopy(NMLBlocks.LIMESTONE.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> LIMESTONE_SLAB = register("limestone_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.LIMESTONE.get())), BlockProperties.stoneLikeSlab());
+    public static final BlockDefinition<WallBlock> LIMESTONE_WALL = register("limestone_wall",
+            () -> new WallBlock(ofFullCopy(NMLBlocks.LIMESTONE.get())), BlockProperties.stoneLikeWall());
+    public static final BlockDefinition<Block> POLISHED_LIMESTONE = register("polished_limestone",
+            () -> new Block(ofFullCopy(NMLBlocks.LIMESTONE.get())), BlockProperties.stoneLike());
+    public static final BlockDefinition<StairBlock> POLISHED_LIMESTONE_STAIRS = register("polished_limestone_stairs",
+            () -> new StairBlock(POLISHED_LIMESTONE.get().defaultBlockState(), ofFullCopy(NMLBlocks.POLISHED_LIMESTONE.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> POLISHED_LIMESTONE_SLAB = register("polished_limestone_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.POLISHED_LIMESTONE.get())), BlockProperties.stoneLikeSlab());
+    public static final BlockDefinition<Block> LIMESTONE_BRICKS = register("limestone_bricks",
+            () -> new Block(ofFullCopy(Blocks.STONE_BRICKS)), BlockProperties.stoneLike());
+    public static final BlockDefinition<StairBlock> LIMESTONE_BRICK_STAIRS = register("limestone_brick_stairs",
+            () -> new StairBlock(LIMESTONE_BRICKS.get().defaultBlockState(), ofFullCopy(NMLBlocks.LIMESTONE_BRICKS.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> LIMESTONE_BRICK_SLAB = register("limestone_brick_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.LIMESTONE_BRICKS.get())), BlockProperties.stoneLikeSlab());
+    public static final BlockDefinition<WallBlock> LIMESTONE_BRICK_WALL = register("limestone_brick_wall",
+            () -> new WallBlock(ofFullCopy(Blocks.STONE_BRICK_WALL)), BlockProperties.stoneLikeWall());
+    public static final BlockDefinition<Block> CHISELED_LIMESTONE = register("chiseled_limestone",
+            () -> new Block(ofFullCopy(NMLBlocks.LIMESTONE.get())), BlockProperties.stoneLike());
+
+    public static final BlockDefinition<Block> IVORY_LIMESTONE = register("ivory_limestone",
+            () -> new Block(ofFullCopy(Blocks.STONE).sound(NMLSounds.SILTSTONE)), BlockProperties.stoneLike());
+    public static final BlockDefinition<StairBlock> IVORY_LIMESTONE_STAIRS = register("ivory_limestone_stairs",
+            () -> new StairBlock(IVORY_LIMESTONE.get().defaultBlockState(), ofFullCopy(NMLBlocks.IVORY_LIMESTONE.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> IVORY_LIMESTONE_SLAB = register("ivory_limestone_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.IVORY_LIMESTONE.get())), BlockProperties.stoneLikeSlab());
+    public static final BlockDefinition<WallBlock> IVORY_LIMESTONE_WALL = register("ivory_limestone_wall",
+            () -> new WallBlock(ofFullCopy(NMLBlocks.IVORY_LIMESTONE.get())), BlockProperties.stoneLikeWall());
+    public static final BlockDefinition<Block> POLISHED_IVORY_LIMESTONE = register("polished_ivory_limestone",
+            () -> new Block(ofFullCopy(NMLBlocks.IVORY_LIMESTONE.get())), BlockProperties.stoneLike());
+    public static final BlockDefinition<StairBlock> POLISHED_IVORY_LIMESTONE_STAIRS = register("polished_ivory_limestone_stairs",
+            () -> new StairBlock(POLISHED_IVORY_LIMESTONE.get().defaultBlockState(), ofFullCopy(NMLBlocks.POLISHED_IVORY_LIMESTONE.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> POLISHED_IVORY_LIMESTONE_SLAB = register("polished_ivory_limestone_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.POLISHED_IVORY_LIMESTONE.get())), BlockProperties.stoneLikeSlab());
+    public static final BlockDefinition<Block> IVORY_LIMESTONE_BRICKS = register("ivory_limestone_bricks",
+            () -> new Block(ofFullCopy(Blocks.STONE_BRICKS)), BlockProperties.stoneLike());
+    public static final BlockDefinition<StairBlock> IVORY_LIMESTONE_BRICK_STAIRS = register("ivory_limestone_brick_stairs",
+            () -> new StairBlock(LIMESTONE_BRICKS.get().defaultBlockState(), ofFullCopy(NMLBlocks.IVORY_LIMESTONE_BRICKS.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> IVORY_LIMESTONE_BRICK_SLAB = register("ivory_limestone_brick_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.IVORY_LIMESTONE_BRICKS.get())), BlockProperties.stoneLikeSlab());
+    public static final BlockDefinition<WallBlock> IVORY_LIMESTONE_BRICK_WALL = register("ivory_limestone_brick_wall",
+            () -> new WallBlock(ofFullCopy(Blocks.STONE_BRICK_WALL)), BlockProperties.stoneLikeWall());
+    public static final BlockDefinition<Block> CHISELED_IVORY_LIMESTONE = register("chiseled_ivory_limestone",
+            () -> new Block(ofFullCopy(NMLBlocks.IVORY_LIMESTONE.get())), BlockProperties.stoneLike());
+
+    public static final BlockDefinition<SulfurOreBlock> SULFUR_ORE = register("sulfur_ore",
+            () -> new SulfurOreBlock(ofFullCopy(Blocks.STONE).strength(3.0F, 3.0F).requiresCorrectToolForDrops()),
+            new BlockProperties(new OreBlockLootType(NMLItems.SULFUR::get, 2.0F, 4.0F, NMLItems.ORPIMENT, 0.04F), false));
+    public static final BlockDefinition<SulfurOreBlock> DEEPSLATE_SULFUR_ORE = register("deepslate_sulfur_ore",
+            () -> new SulfurOreBlock(ofFullCopy(Blocks.DEEPSLATE).strength(4.5F, 3.0F).requiresCorrectToolForDrops()),
+            new BlockProperties(new OreBlockLootType(NMLItems.SULFUR::get, 2.0F, 4.0F, NMLItems.ORPIMENT, 0.05F), false));
+    public static final BlockDefinition<Block> SULFUR_BLOCK = register("sulfur_block",
+            () -> new Block(ofFullCopy(Blocks.STONE).mapColor(MapColor.COLOR_YELLOW).strength(3.0F, 3.0F).requiresCorrectToolForDrops().sound(SoundType.STONE)),
+            BlockProperties.stoneLike());
+    public static final BlockDefinition<ToxicGasBlock> TOXIC_GAS = registerNoItem("toxic_gas",
+            () -> new ToxicGasBlock(of().replaceable().noCollission().noLootTable().instabreak().noOcclusion().pushReaction(PushReaction.DESTROY).sound(SoundType.WOOL)));
+    public static final BlockDefinition<ThermalVentBlock> THERMAL_VENT = register("thermal_vent",
+            () -> new ThermalVentBlock(ofFullCopy(Blocks.BASALT).mapColor(MapColor.DEEPSLATE).strength(2.0F, 4.2F).requiresCorrectToolForDrops().noOcclusion()),
+            BlockProperties.custom(false));
+    public static final BlockDefinition<SulfuricFumaroleBlock> SULFURIC_FUMAROLE = register("sulfuric_fumarole",
+            () -> new SulfuricFumaroleBlock(ofFullCopy(Blocks.BASALT).mapColor(MapColor.COLOR_YELLOW).strength(2.0F, 4.2F).requiresCorrectToolForDrops().noOcclusion()),
+            BlockProperties.custom(false));
+    public static final BlockDefinition<MinersGillBlock> MINERS_GILL = register("miners_gill",
+            () -> new MinersGillBlock(of().mapColor(MapColor.COLOR_GREEN).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY).offsetType(OffsetType.XZ)),
+            new BlockProperties(new ShearsBlockLootType(), true));
+    public static final BlockDefinition<PottedMinersGillBlock> POTTED_MINERS_GILL = registerNoItem("potted_miners_gill",
+            () -> new PottedMinersGillBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), MINERS_GILL, ofFullCopy(Blocks.POTTED_RED_MUSHROOM).randomTicks().noOcclusion()),
+            BlockProperties.flowerPot(MINERS_GILL));
 
     public static final BlockDefinition<Block> SILTSTONE = register("siltstone",
             () -> new Block(ofFullCopy(Blocks.STONE).sound(NMLSounds.SILTSTONE)), BlockProperties.stoneLike());

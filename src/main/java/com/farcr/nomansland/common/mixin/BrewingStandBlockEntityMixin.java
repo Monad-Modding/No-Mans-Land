@@ -1,6 +1,8 @@
 package com.farcr.nomansland.common.mixin;
 
 import com.farcr.nomansland.common.registry.items.NMLItems;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
@@ -8,6 +10,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
@@ -83,6 +86,12 @@ public class BrewingStandBlockEntityMixin {
         if (!stack.is(Items.POTION)) return false;
         PotionContents contents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
         return contents.potion().map(holder -> holder.is(Potions.WATER)).orElse(false);
+    }
+
+    @WrapOperation(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z"))
+    private static boolean nml$sulfurBrewingFuel(ItemStack stack, Item item, Operation<Boolean> original) {
+        if (item == Items.BLAZE_POWDER && stack.is(NMLItems.SULFUR)) return true;
+        return original.call(stack, item);
     }
 
     @Inject(method = "isBrewable", at = @At("HEAD"), cancellable = true)

@@ -4,6 +4,7 @@ import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.definitions.ItemDefinition;
 import com.farcr.nomansland.common.definitions.PotionDefinition;
 import com.farcr.nomansland.common.registry.entities.NMLEffects;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -32,4 +33,8 @@ public class NMLPotions {
         () -> new MobEffectInstance(NMLEffects.STASIS, 300, 0));
     public static final PotionDefinition LONG_STASIS = register("long_stasis",
         () -> new MobEffectInstance(NMLEffects.STASIS, 600, 0));
+    public static final PotionDefinition CORROSION = register("corrosion",
+            () -> new MobEffectInstance(NMLEffects.CORROSION, 160, 0));
+    public static final PotionDefinition STRONG_CORROSION = register("strong_corrosion",
+            () -> new MobEffectInstance(NMLEffects.CORROSION, 280, 1));
 }

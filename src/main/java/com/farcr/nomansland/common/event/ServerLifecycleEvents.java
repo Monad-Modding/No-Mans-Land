@@ -8,6 +8,7 @@ import com.farcr.nomansland.common.commands.SunDogCommand;
 import com.farcr.nomansland.common.dreams.DreamManager;
 import com.farcr.nomansland.common.dreams.dreamlevel.DreamingPlayer;
 import com.farcr.nomansland.common.entity.buddy.BuddyChunkAnchor;
+import com.farcr.nomansland.common.entity.ai.SoakInThermalWaterGoal;
 import com.farcr.nomansland.common.friend.FriendMoon;
 import com.farcr.nomansland.common.friend.condition.DialogueConditionCompiler;
 import com.farcr.nomansland.common.friend.dialogue.DialogueTracker;
@@ -23,6 +24,7 @@ import com.farcr.nomansland.common.worldevent.SunDog;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -102,6 +104,10 @@ public class ServerLifecycleEvents {
 
     @SubscribeEvent
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
+        if (!event.getLevel().isClientSide() && event.getEntity() instanceof Animal animal) {
+            animal.goalSelector.addGoal(6, new SoakInThermalWaterGoal(animal, 1.0));
+        }
+
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
             PacketDistributor.sendToPlayer(serverPlayer, new ClientboundDimensionSyncPacket(serverPlayer.server.levelKeys()));
             SunDog.getOrDefault(serverPlayer.serverLevel()).informPlayerOfSunDogState(serverPlayer);
@@ -110,6 +116,7 @@ public class ServerLifecycleEvents {
             DreamManager.getOrDefault(serverPlayer.getServer()).notifyClient(serverPlayer);
         }
     }
+
 
     @SubscribeEvent
     public static void onPlayerLogOut(PlayerEvent.PlayerLoggedOutEvent event) {

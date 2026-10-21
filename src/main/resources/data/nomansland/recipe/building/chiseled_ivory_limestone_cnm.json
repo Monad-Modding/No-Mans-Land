@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "clutternomore"
+    }
+  ],
+     "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " # ",
+        "# #",
+        " # "
+    ],
+    "key": {
+        "#": {
+            "item": "nomansland:polished_ivory_limestone"
+        }
+    },
+    "result": {
+        "id": "nomansland:chiseled_ivory_limestone",
+        "count": 4
+    }
+}

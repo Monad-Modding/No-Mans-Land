@@ -4,18 +4,23 @@ import com.farcr.nomansland.common.definitions.BlockDefinition;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import com.farcr.nomansland.datagen.loot.*;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.loot.CanItemPerformAbility;
 import org.jetbrains.annotations.NotNull;
@@ -68,6 +73,19 @@ public class NMLBlockLootSubProvider extends BlockLootSubProvider {
                 add(block, createPotFlowerItemTable(flowerPotBlockLootType.getPlant()));
             else if (lootType instanceof BookshelfBlockLootType)
                 add(block, createSelfDropDispatchTable(block, hasSilkTouch(), this.applyExplosionDecay(block, LootItem.lootTableItem(Items.BOOK).apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0f))))));
+            else if (lootType instanceof OreBlockLootType ore) {
+                LootTable.Builder table = this.createSilkTouchDispatchTable(block, this.applyExplosionDecay(block,
+                        LootItem.lootTableItem(ore.getDrop())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(ore.getMin(), ore.getMax())))
+                                .apply(ApplyBonusCount.addOreBonusCount(this.registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE)))));
+                if (ore.getRareDrop() != null) {
+                    table.withPool(LootPool.lootPool()
+                            .add(LootItem.lootTableItem(ore.getRareDrop()))
+                            .when(this.hasSilkTouch().invert())
+                            .when(LootItemRandomChanceCondition.randomChance(ore.getRareChance())));
+                }
+                add(block, table);
+            }
         }
     }
 }

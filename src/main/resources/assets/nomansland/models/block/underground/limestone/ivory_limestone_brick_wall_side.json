@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side",
+  "textures": {
+    "wall": "nomansland:block/underground/ivory_limestone_bricks_0"
+  }
+}

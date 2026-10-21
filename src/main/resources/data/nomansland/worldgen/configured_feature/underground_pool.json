@@ -1,0 +1,32 @@
+{
+  "type": "nomansland:underground_pool",
+  "config": {
+    "cavern_diameter": {
+      "type": "uniform",
+      "min_inclusive": 15,
+      "max_inclusive": 30
+    },
+    "cavern_height": {
+      "type": "uniform",
+      "min_inclusive": 11,
+      "max_inclusive": 16
+    },
+    "lake_depth": {
+      "type": "uniform",
+      "min_inclusive": 3,
+      "max_inclusive": 7
+    },
+    "water_height": {
+      "type": "uniform",
+      "min_inclusive": 2,
+      "max_inclusive": 6
+    },
+    "max_gas_layers": 3,
+    "vein_count": {
+      "type": "uniform",
+      "min_inclusive": 8,
+      "max_inclusive": 14
+    },
+    "vein_feature": "nomansland:pool_sulfur_vein"
+  }
+}

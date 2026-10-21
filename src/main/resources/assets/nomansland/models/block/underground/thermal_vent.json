@@ -1,0 +1,38 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made by Farcr",
+	"parent": "block/block",
+	"textures": {
+		"0": "nomansland:block/underground/thermal_vent_top",
+		"1": "nomansland:block/underground/thermal_vent_side",
+		"2": "minecraft:block/stone",
+		"particle": "#2"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 2],
+			"to": [14, 8, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
+			"faces": {
+				"north": {"uv": [2, 8, 14, 16], "texture": "#1"},
+				"east": {"uv": [2, 8, 14, 16], "texture": "#1"},
+				"south": {"uv": [2, 8, 14, 16], "texture": "#1"},
+				"west": {"uv": [2, 8, 14, 16], "texture": "#1"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#0"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#2"}
+			}
+		},
+		{
+			"from": [4, 8, 4],
+			"to": [12, 16, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 8, 4]},
+			"faces": {
+				"north": {"uv": [4, 0, 12, 8], "texture": "#1"},
+				"east": {"uv": [4, 0, 12, 8], "texture": "#1"},
+				"south": {"uv": [4, 0, 12, 8], "texture": "#1"},
+				"west": {"uv": [4, 0, 12, 8], "texture": "#1"},
+				"up": {"uv": [4, 4, 12, 12], "texture": "#0"}
+			}
+		}
+	]
+}

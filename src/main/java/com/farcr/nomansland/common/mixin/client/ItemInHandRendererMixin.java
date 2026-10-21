@@ -54,4 +54,22 @@ public class ItemInHandRendererMixin {
             return ItemStack.EMPTY;
         return stack;
     }
+
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/neoforged/neoforge/client/ClientHooks;shouldCauseReequipAnimation(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;I)Z"))
+    private boolean nml$noReequipOnDamageChange(ItemStack from, ItemStack to, int slot, Operation<Boolean> original) {
+        if (nml$onlyDamageDiffers(from, to)) return false;
+        return original.call(from, to, slot);
+    }
+
+    private static boolean nml$onlyDamageDiffers(ItemStack from, ItemStack to) {
+        if (from.isEmpty() || to.isEmpty()) return false;
+        if (!ItemStack.isSameItem(from, to)) return false;
+        if (from.getCount() != to.getCount()) return false;
+        if (from.getDamageValue() == to.getDamageValue()) return false;
+        ItemStack a = from.copy();
+        ItemStack b = to.copy();
+        a.setDamageValue(0);
+        b.setDamageValue(0);
+        return ItemStack.matches(a, b);
+    }
 }

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "nomansland:block/underground/limestone_bricks_1",
+    "side": "nomansland:block/underground/limestone_bricks_1",
+    "top": "nomansland:block/underground/limestone_bricks_1"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "nomansland:ivory_limestone"
+  },
+  "result": {
+    "count": 1,
+    "id": "nomansland:ivory_limestone_stairs"
+  }
+}

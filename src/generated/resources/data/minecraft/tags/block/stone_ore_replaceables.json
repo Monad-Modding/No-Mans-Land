@@ -1,5 +1,7 @@
 {
   "values": [
-    "nomansland:siltstone"
+    "nomansland:siltstone",
+    "nomansland:limestone",
+    "nomansland:ivory_limestone"
   ]
 }

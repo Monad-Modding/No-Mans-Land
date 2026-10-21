@@ -179,12 +179,17 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("death.attack.nomansland.spike_skewer.player", "%1$s was skewered by a spike trap while fighting %2$s");
         add("death.attack.nomansland.combust", "%1$s faced immolation");
         add("death.attack.nomansland.combust.player", "%1$s was immolated by %2$s");
+        add("death.attack.nomansland.corrosion", "%1$s corroded away");
+        add("death.attack.nomansland.corrosion.player", "%1$s corroded away while fighting %2$s");
         add("entity.nomansland.explosive", "Explosive");
         add("entity.nomansland.firebomb", "Firebomb");
+        add("entity.nomansland.acrid_bomb", "Acrid Bomb");
+        add("entity.nomansland.aqua_regia", "Aqua Regia");
         add("effect.nomansland.flammable", "Flammable");
         add("effect.nomansland.friendship", "Friendship");
         add("effect.nomansland.happiness", "Happiness");
         add("effect.nomansland.stasis", "Stasis");
+        add("block.nomansland.miners_gill", "Miner's Gill");
         add("item.nomansland.bandage.with_effect", "%s Bandage");
         add("item.nomansland.bandage.effect.harming", "Harming Bandage");
         add("item.nomansland.bandage.effect.healing", "Healing Bandage");

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=up": { "model": "nomansland:block/underground/sulfuric_fumarole" },
+    "facing=down": { "model": "nomansland:block/underground/sulfuric_fumarole", "x": 180 },
+    "facing=north": { "model": "nomansland:block/underground/sulfuric_fumarole", "x": 90 },
+    "facing=south": { "model": "nomansland:block/underground/sulfuric_fumarole", "x": 90, "y": 180 },
+    "facing=east": { "model": "nomansland:block/underground/sulfuric_fumarole", "x": 90, "y": 90 },
+    "facing=west": { "model": "nomansland:block/underground/sulfuric_fumarole", "x": 90, "y": 270 }
+  }
+}

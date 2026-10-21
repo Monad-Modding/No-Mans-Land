@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "nomansland:block/underground/limestone_bricks_0"
+  }
+}

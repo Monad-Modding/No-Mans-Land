@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "age=0": { "model": "nomansland:block/miners_gill" },
+    "age=1": { "model": "nomansland:block/miners_gill_mature" },
+    "age=2": { "model": "nomansland:block/miners_gill_colony" },
+    "age=3": { "model": "nomansland:block/miners_gill_colony" }
+  }
+}

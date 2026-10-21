@@ -19,6 +19,9 @@ public class NMLFeatures {
     public static final Supplier<Feature<SpreadPatchConfiguration>> SPREAD_PATCH = FEATURES.register("spread_patch",
             () -> new SpreadPatchFeature(SpreadPatchConfiguration.CODEC));
 
+    public static final Supplier<Feature<StringOreConfiguration>> STRING_ORE = FEATURES.register("string_ore",
+            () -> new StringOreFeature(StringOreConfiguration.CODEC));
+
     public static final Supplier<Feature<MultiSpreadPatchConfiguration>> MULTISPREAD_PATCH = FEATURES.register("multispread_patch",
             () -> new MultiSpreadPatchFeature(MultiSpreadPatchConfiguration.CODEC));
 

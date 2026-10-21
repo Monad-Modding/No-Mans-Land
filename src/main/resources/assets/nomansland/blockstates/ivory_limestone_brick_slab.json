@@ -1,0 +1,91 @@
+{
+  "variants": {
+    "type=bottom": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_0"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_1"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_2"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_3"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_4"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_5"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_6"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_7"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_8"
+      }
+    ],
+    "type=double": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_bricks_0"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_bricks_1"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_bricks_2"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_bricks_3"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_bricks_4"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_bricks_5"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_bricks_6"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_bricks_7"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_bricks_8"
+      }
+    ],
+    "type=top": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_top_0"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_top_1"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_top_2"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_top_3"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_top_4"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_top_5"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_top_6"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_top_7"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_slab_top_8"
+      }
+    ]
+  }
+}

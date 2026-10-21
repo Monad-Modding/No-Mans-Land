@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "nomansland:block/underground/limestone/limestone_slab"
+    },
+    "type=double": {
+      "model": "nomansland:block/underground/limestone/limestone"
+    },
+    "type=top": {
+      "model": "nomansland:block/underground/limestone/limestone_slab_top"
+    }
+  }
+}

@@ -77,6 +77,12 @@ public class NMLParticleTypes {
     public static final Supplier<SimpleParticleType> RITUAL_PICK_DUST = register("ritual_pick_dust");
     public static final Supplier<SimpleParticleType> LIVING_URN_SHARD_FACE = register("living_urn_shard_face");
 
+    public static final Supplier<SimpleParticleType> TOXIC_GAS = register("toxic_gas");
+
+    public static final Supplier<SimpleParticleType> VENT_BUBBLE = register("vent_bubble");
+    public static final Supplier<SimpleParticleType> VENT_BUBBLE_POP = register("vent_bubble_pop");
+    public static final Supplier<SimpleParticleType> SULFURIC_FUMAROLE = register("sulfuric_fumarole");
+
     private static <T extends ParticleOptions> Supplier<ParticleType<T>> register(String name, boolean overrideLimitter, final Function<ParticleType<T>, MapCodec<T>> codecGetter, final Function<ParticleType<T>, StreamCodec<? super RegistryFriendlyByteBuf, T>> streamCodecGetter) {
         return PARTICLE_TYPES.register(name, () -> new ParticleType<T>(overrideLimitter) {
             public MapCodec<T> codec() {

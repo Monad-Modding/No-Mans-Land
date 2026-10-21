@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "nomansland:block/underground/limestone_bricks_3"
+  }
+}

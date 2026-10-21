@@ -2,6 +2,7 @@ package com.farcr.nomansland.common.mixin.client;
 
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.client.NMLMooseChargeAttackHandler;
+import com.farcr.nomansland.client.ToxicGasOverlay;
 import com.farcr.nomansland.client.renderer.DialogueRenderer;
 import com.farcr.nomansland.client.renderer.dreams.ClientDreamRenderer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -12,6 +13,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.InBedChatScreen;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.PlayerRideableJumping;
 import net.neoforged.neoforge.client.gui.GuiLayerManager;
 import org.spongepowered.asm.mixin.Final;
@@ -36,6 +38,11 @@ public class GuiMixin {
             ClientDreamRenderer.renderOverlay(guiGraphics, deltaTracker);
             ci.cancel();
         }
+    }
+
+    @Inject(method = "renderVignette", at = @At("TAIL"))
+    private void nml$toxicGasVignette(GuiGraphics guiGraphics, Entity entity, CallbackInfo ci) {
+        ToxicGasOverlay.render(guiGraphics);
     }
 
     @WrapOperation(method = "renderJumpMeter", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getJumpRidingScale()F"))

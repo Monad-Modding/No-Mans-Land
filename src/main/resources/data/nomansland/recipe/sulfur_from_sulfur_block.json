@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "nomansland:sulfur_block"
+    }
+  ],
+  "result": {
+    "id": "nomansland:sulfur",
+    "count": 9
+  }
+}

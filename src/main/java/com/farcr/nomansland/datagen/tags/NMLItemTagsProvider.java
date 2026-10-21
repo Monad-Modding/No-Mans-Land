@@ -14,6 +14,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BoatItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.*;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -95,6 +96,14 @@ public class NMLItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.CHEST_ARMOR).add(NMLItems.TORTOISE_SHELL.get());
         tag(ItemTags.CHEST_ARMOR_ENCHANTABLE).add(NMLItems.TORTOISE_SHELL.get());
         tag(ItemTags.FISHES).add(NMLItems.COOKED_BILLHOOK_BASS.get(), NMLItems.BILLHOOK_BASS.get());
+
+        tag(NMLTags.DOES_NOT_CORRODE).add(
+                Items.NETHERITE_SWORD, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE,
+                Items.NETHERITE_HELMET, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS, Items.ELYTRA);
+        tag(NMLTags.DOES_NOT_CORRODE).add(NMLItems.GAS_MASK.get());
+        tag(ItemTags.HEAD_ARMOR).add(NMLItems.GAS_MASK.get());
+        tag(Tags.Items.ORES).add(NMLBlocks.SULFUR_ORE.item(), NMLBlocks.DEEPSLATE_SULFUR_ORE.item());
+        tag(Tags.Items.STORAGE_BLOCKS).add(NMLBlocks.SULFUR_BLOCK.item());
 
         addToTags(NMLTags.BOOKSHELVES.itemTag(), Tags.Items.BOOKSHELVES, BlueprintIntegration.woodenBookshelves().itemTag());
         tag(ItemTags.PLANKS).addTag(NMLTags.TRIMMED_PLANKS.itemTag());

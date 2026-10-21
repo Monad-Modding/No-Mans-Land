@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "nomansland:polished_limestone"
+  },
+  "result": {
+    "id": "nomansland:polished_limestone_stairs"
+  }
+}

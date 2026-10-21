@@ -81,8 +81,17 @@ public class NMLItems {
             () -> new Item(new Properties()));
     public static final ItemDefinition<Item> STURDY_SCUTE = register("sturdy_scute",
             () -> new Item(new Properties()));
-//    public static final ItemDefinition<Item> SULFUR = register("sulfur",
-//            () -> new Item(new Properties()));
+    public static final ItemDefinition<SulfurItem> SULFUR = register("sulfur",
+            () -> new SulfurItem(new Properties()));
+    public static final ItemDefinition<Item> ORPIMENT = register("orpiment",
+            () -> new Item(new Properties()));
+    public static final ItemDefinition<Item> BILE_SAC = register("bile_sac",
+            () -> new Item(new Properties()));
+    public static final ItemDefinition<Item> CHARCOAL_FILTER = register("charcoal_filter",
+            () -> new Item(new Properties()));
+    public static final ItemDefinition<GasMaskItem> GAS_MASK = register("gas_mask",
+            () -> new GasMaskItem(NMLArmorMaterials.GAS_MASK, new Properties().stacksTo(1)
+                    .component(NMLDataComponents.GAS_MASK_DURATION, GasMaskItem.CRAFT_DURATION)));
 
     public static final ItemDefinition<Item> RESIN_OIL_BOTTLE = register("resin_oil_bottle",
             () -> new ResinOilBottleItem(new Properties()
@@ -119,6 +128,10 @@ public class NMLItems {
             () -> new InkBombItem(new Properties().stacksTo(8)));
     public static final ItemDefinition<Item> EXPLOSIVE = register("explosive",
             () -> new ExplosiveItem(new Properties().stacksTo(8)));
+    public static final ItemDefinition<Item> ACRID_BOMB = register("acrid_bomb",
+            () -> new AcridBombItem(new Properties().stacksTo(8)));
+    public static final ItemDefinition<AquaRegiaItem> AQUA_REGIA = register("aqua_regia",
+            () -> new AquaRegiaItem(new Properties().stacksTo(16)));
     public static final ItemDefinition<Item> LIVING_URN = register("living_urn",
             () -> new LivingUrnItem(new Properties().stacksTo(8).rarity(Rarity.UNCOMMON)));
     public static final ItemDefinition<Item> INCENDIARY_ARROW = register("incendiary_arrow",
@@ -256,8 +269,9 @@ public class NMLItems {
 
     public static final ItemDefinition<CuringBandageItem> ANTIDOTE_BANDAGE = register("antidote_bandage",
             () -> new CuringBandageItem(new Properties().stacksTo(16), List.of(
-                    MobEffects.POISON
-                    // Add Corrosion & Decay when they're implemented
+                    MobEffects.POISON,
+                    NMLEffects.CORROSION
+                    // Add Decay when it's implemented
             )));
 
     public static final ItemDefinition<CuringBandageItem> MEDICINAL_BANDAGE = register("medicinal_bandage",

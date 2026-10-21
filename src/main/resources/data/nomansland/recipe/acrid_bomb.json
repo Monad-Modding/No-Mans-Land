@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "R": { "item": "minecraft:string" },
+    "G": { "item": "minecraft:gunpowder" },
+    "P": { "item": "nomansland:sulfur" }
+  },
+  "pattern": [
+    "  R",
+    "GP ",
+    "GG "
+  ],
+  "result": {
+    "count": 2,
+    "id": "nomansland:acrid_bomb"
+  }
+}

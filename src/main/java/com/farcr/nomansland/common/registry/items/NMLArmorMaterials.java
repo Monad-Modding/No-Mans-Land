@@ -7,8 +7,10 @@ import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -43,9 +45,21 @@ public class NMLArmorMaterials {
             () -> 0F
     );
 
-    public static Holder<ArmorMaterial> register(String name, ArmorItem.Type armorType, Supplier<Integer> armorValue, int enchantmnetValue, Holder<SoundEvent> soundEvent, Supplier<Ingredient> repairIngredient, String armorLayer, Supplier<Float> toughness, Supplier<Float> knockbackResistance) {
+    public static final Holder<ArmorMaterial> GAS_MASK = register(
+            "gas_mask",
+            ArmorItem.Type.HELMET,
+            () -> 1,
+            7,
+            SoundEvents.ARMOR_EQUIP_LEATHER,
+            () -> Ingredient.of(Items.LEATHER),
+            "gas_mask",
+            () -> 0F,
+            () -> 0F
+    );
+
+    public static Holder<ArmorMaterial> register(String name, ArmorItem.Type armorType, Supplier<Integer> armorValue, int enchantmentValue, Holder<SoundEvent> soundEvent, Supplier<Ingredient> repairIngredient, String armorLayer, Supplier<Float> toughness, Supplier<Float> knockbackResistance) {
         return register(name, () -> new ArmorMaterial(
-                Util.make(new EnumMap<>(ArmorItem.Type.class), map -> map.put(armorType, armorValue.get())), enchantmnetValue, soundEvent, repairIngredient,
+                Util.make(new EnumMap<>(ArmorItem.Type.class), map -> map.put(armorType, armorValue.get())), enchantmentValue, soundEvent, repairIngredient,
                 List.of(
                         new ArmorMaterial.Layer(NoMansLand.location(armorLayer)),
                         new ArmorMaterial.Layer(NoMansLand.location(armorLayer), "_overlay", false)

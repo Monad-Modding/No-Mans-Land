@@ -147,6 +147,32 @@ public class NMLBlockTagsProvider extends BlockTagsProvider {
                 BlockTags.STONE_ORE_REPLACEABLES,
                 BlockTags.DRIPSTONE_REPLACEABLE
         );
+        addToTags(NMLBlocks.LIMESTONE.block(),
+                BlockTags.OVERWORLD_CARVER_REPLACEABLES,
+                BlockTags.LUSH_GROUND_REPLACEABLE,
+                BlockTags.MOSS_REPLACEABLE,
+                BlockTags.SCULK_REPLACEABLE,
+                BlockTags.SCULK_REPLACEABLE_WORLD_GEN,
+                BlockTags.SNAPS_GOAT_HORN,
+                BlockTags.BASE_STONE_OVERWORLD,
+                BlockTags.GOATS_SPAWNABLE_ON,
+                BlockTags.AZALEA_ROOT_REPLACEABLE,
+                BlockTags.STONE_ORE_REPLACEABLES,
+                BlockTags.DRIPSTONE_REPLACEABLE
+        );
+        addToTags(NMLBlocks.IVORY_LIMESTONE.block(),
+                BlockTags.OVERWORLD_CARVER_REPLACEABLES,
+                BlockTags.LUSH_GROUND_REPLACEABLE,
+                BlockTags.MOSS_REPLACEABLE,
+                BlockTags.SCULK_REPLACEABLE,
+                BlockTags.SCULK_REPLACEABLE_WORLD_GEN,
+                BlockTags.SNAPS_GOAT_HORN,
+                BlockTags.BASE_STONE_OVERWORLD,
+                BlockTags.GOATS_SPAWNABLE_ON,
+                BlockTags.AZALEA_ROOT_REPLACEABLE,
+                BlockTags.STONE_ORE_REPLACEABLES,
+                BlockTags.DRIPSTONE_REPLACEABLE
+        );
 
         addToTags(NMLBlocks.CRUDE_DOOR.block(),
                 BlockTags.WOODEN_DOORS
@@ -164,8 +190,16 @@ public class NMLBlockTagsProvider extends BlockTagsProvider {
         addToTags(NMLBlocks.SEASHELLS.get(), BlockTags.COMBINATION_STEP_SOUND_BLOCKS);
         addToTags(NMLBlocks.SMALL_QUARTZITE_BUD.get(), BlockTags.INSIDE_STEP_SOUND_BLOCKS);
 
+        addToTags(NMLBlocks.SULFUR_ORE.block(), BlockTags.NEEDS_STONE_TOOL);
+        addToTags(NMLBlocks.DEEPSLATE_SULFUR_ORE.block(), BlockTags.NEEDS_STONE_TOOL);
+        addToTags(NMLBlocks.SULFUR_BLOCK.block(), BlockTags.NEEDS_STONE_TOOL);
+        addToTags(NMLBlocks.THERMAL_VENT.block(), BlockTags.NEEDS_STONE_TOOL);
+        addToTags(NMLBlocks.SULFURIC_FUMAROLE.block(), BlockTags.NEEDS_STONE_TOOL);
+        tag(Tags.Blocks.ORES).add(NMLBlocks.SULFUR_ORE.block(), NMLBlocks.DEEPSLATE_SULFUR_ORE.block());
+        tag(Tags.Blocks.STORAGE_BLOCKS).add(NMLBlocks.SULFUR_BLOCK.block());
+
         tag(NMLTags.ORE_VEIN_REPLACEABLE).add(Blocks.STONE, Blocks.DEEPSLATE, Blocks.STONE_STAIRS, Blocks.STONE_SLAB);
-        tag(BlockTags.OVERWORLD_CARVER_REPLACEABLES).add(Blocks.COAL_BLOCK, Blocks.RAW_GOLD_BLOCK, NMLBlocks.SILTSTONE.get(), NMLBlocks.QUARTZITE.get(), Blocks.TUFF, Blocks.COAL_ORE, Blocks.SMOOTH_BASALT, Blocks.BASALT);
+        tag(BlockTags.OVERWORLD_CARVER_REPLACEABLES).add(Blocks.COAL_BLOCK, Blocks.RAW_GOLD_BLOCK, NMLBlocks.SILTSTONE.get(), NMLBlocks.LIMESTONE.get(), NMLBlocks.IVORY_LIMESTONE.get(), NMLBlocks.QUARTZITE.get(), Blocks.TUFF, Blocks.COAL_ORE, Blocks.SMOOTH_BASALT, Blocks.BASALT);
 
         tag(NMLTags.INCORRECT_FOR_RITUAL_TOOL).addTag(BlockTags.INCORRECT_FOR_STONE_TOOL);
         tag(NMLTags.RESONATES_WITH_RITUAL_PICKAXE).addTag(Tags.Blocks.ORES);

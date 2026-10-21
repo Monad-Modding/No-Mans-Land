@@ -1,0 +1,24 @@
+{
+  "type": "nomansland:string_ore",
+  "config": {
+    "state": {
+      "type": "nomansland:vertical_gradient_state_provider",
+      "above_state": {
+        "type": "minecraft:simple_state_provider",
+        "state": { "Name": "nomansland:sulfur_ore" }
+      },
+      "below_state": {
+        "type": "minecraft:simple_state_provider",
+        "state": { "Name": "nomansland:deepslate_sulfur_ore" }
+      },
+      "gradient_top_height": 8,
+      "gradient_bottom_height": 0
+    },
+    "length": {
+      "type": "uniform",
+      "min_inclusive": 8,
+      "max_inclusive": 18
+    },
+    "thicken_chance": 0.25
+  }
+}

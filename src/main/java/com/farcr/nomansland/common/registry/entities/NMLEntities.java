@@ -4,6 +4,7 @@ import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.dreams.dreamlevel.DreamingPlayer;
 import com.farcr.nomansland.common.entity.*;
 import com.farcr.nomansland.common.entity.billhook_bass.BillhookBass;
+import com.farcr.nomansland.common.entity.bombs.AcridBomb;
 import com.farcr.nomansland.common.entity.bombs.Explosive;
 import com.farcr.nomansland.common.entity.bombs.Firebomb;
 import com.farcr.nomansland.common.entity.bombs.InkBomb;
@@ -45,6 +46,14 @@ public class NMLEntities {
     public static final Supplier<EntityType<Explosive>> EXPLOSIVE =
             ENTITIES.register("explosive", () -> EntityType.Builder.<Explosive>of(Explosive::new, MobCategory.MISC)
                     .sized(0.3F, 0.3F).clientTrackingRange(4).updateInterval(20).build("explosive"));
+
+    public static final Supplier<EntityType<AcridBomb>> ACRID_BOMB =
+            ENTITIES.register("acrid_bomb", () -> EntityType.Builder.<AcridBomb>of(AcridBomb::new, MobCategory.MISC)
+                    .sized(0.375F, 0.375F).clientTrackingRange(4).updateInterval(20).build("acrid_bomb"));
+
+    public static final Supplier<EntityType<ThrownAquaRegiaBottle>> AQUA_REGIA =
+            ENTITIES.register("aqua_regia", () -> EntityType.Builder.<ThrownAquaRegiaBottle>of(ThrownAquaRegiaBottle::new, MobCategory.MISC)
+                    .sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10).build("aqua_regia"));
 
     public static final Supplier<EntityType<LivingUrn>> LIVING_URN =
             ENTITIES.register("living_urn", () -> EntityType.Builder.<LivingUrn>of(LivingUrn::new, MobCategory.MISC)

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "nomansland:block/underground/limestone_bricks_2",
+    "side": "nomansland:block/underground/limestone_bricks_2",
+    "top": "nomansland:block/underground/limestone_bricks_2"
+  }
+}

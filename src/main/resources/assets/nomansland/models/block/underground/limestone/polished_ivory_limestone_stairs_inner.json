@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "nomansland:block/underground/polished_ivory_limestone",
+    "side": "nomansland:block/underground/polished_ivory_limestone",
+    "top": "nomansland:block/underground/polished_ivory_limestone"
+  }
+}

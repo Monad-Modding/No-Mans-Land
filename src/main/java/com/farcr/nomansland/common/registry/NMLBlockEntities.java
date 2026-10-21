@@ -51,6 +51,10 @@ public class NMLBlockEntities {
         BLOCK_ENTITIES.register("moon_carving", () ->
             BlockEntityType.Builder.of(MoonCarvingBlockEntity::new, NMLBlocks.MOON_CARVING.get()).build(null));
 
+    public static final Supplier<BlockEntityType<VentBlockEntity>> VENT =
+        BLOCK_ENTITIES.register("vent", () ->
+            BlockEntityType.Builder.of(VentBlockEntity::new, NMLBlocks.THERMAL_VENT.get(), NMLBlocks.SULFURIC_FUMAROLE.get()).build(null));
+
     public static void addBlockEntities(final BlockEntityTypeAddBlocksEvent event) {
         event.modify(
                 BlockEntityType.SIGN,

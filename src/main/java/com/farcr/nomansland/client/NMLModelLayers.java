@@ -5,6 +5,7 @@ import com.farcr.nomansland.client.model.BillhookBassModel;
 import com.farcr.nomansland.client.model.BuddyModel;
 import com.farcr.nomansland.client.model.BuriedModel;
 import com.farcr.nomansland.client.model.armor.AncientBronzeMaskModel;
+import com.farcr.nomansland.client.model.armor.GasMaskModel;
 import com.farcr.nomansland.client.model.deer.DeerModel;
 import com.farcr.nomansland.client.model.frienderman.FriendermanModel;
 import com.farcr.nomansland.client.model.goose.GooseModel;
@@ -31,6 +32,7 @@ public class NMLModelLayers {
     //Armor
     public static final ModelLayerLocation ANCIENT_BRONZE_MASK_LAYER = new ModelLayerLocation(NoMansLand.location("ancient_bronze_mask"), "main");
     public static final ModelLayerLocation TORTOISE_SHELL_LAYER = new ModelLayerLocation(NoMansLand.location("tortoise_shell"), "main");
+    public static final ModelLayerLocation GAS_MASK_LAYER = new ModelLayerLocation(NoMansLand.location("gas_mask"), "main");
 
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(NMLModelLayers.LIVING_POT_LAYER, LivingPotModel::createBodyLayer);
@@ -45,5 +47,6 @@ public class NMLModelLayers {
 
         event.registerLayerDefinition(NMLModelLayers.ANCIENT_BRONZE_MASK_LAYER, AncientBronzeMaskModel::createBodyLayer);
         event.registerLayerDefinition(NMLModelLayers.TORTOISE_SHELL_LAYER, TortoiseShellModel::createBodyLayer);
+        event.registerLayerDefinition(NMLModelLayers.GAS_MASK_LAYER, GasMaskModel::createBodyLayer);
     }
 }

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "nomansland:block/underground/polished_limestone",
+    "side": "nomansland:block/underground/polished_limestone",
+    "top": "nomansland:block/underground/polished_limestone"
+  }
+}

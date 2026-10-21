@@ -1,0 +1,1929 @@
+{
+  "variants": {
+    "facing=east,half=bottom,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "y": 270
+      }
+    ],
+    "facing=east,half=bottom,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8"
+      }
+    ],
+    "facing=east,half=bottom,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "y": 270
+      }
+    ],
+    "facing=east,half=bottom,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8"
+      }
+    ],
+    "facing=east,half=bottom,shape=straight": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_0"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_1"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_2"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_3"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_4"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_5"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_6"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_7"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_8"
+      }
+    ],
+    "facing=east,half=top,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "x": 180
+      }
+    ],
+    "facing=east,half=top,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      }
+    ],
+    "facing=east,half=top,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "x": 180
+      }
+    ],
+    "facing=east,half=top,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      }
+    ],
+    "facing=east,half=top,shape=straight": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_0",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_1",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_2",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_3",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_4",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_5",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_6",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_7",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_8",
+        "uvlock": true,
+        "x": 180
+      }
+    ],
+    "facing=north,half=bottom,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "y": 180
+      }
+    ],
+    "facing=north,half=bottom,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "y": 270
+      }
+    ],
+    "facing=north,half=bottom,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "y": 180
+      }
+    ],
+    "facing=north,half=bottom,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "y": 270
+      }
+    ],
+    "facing=north,half=bottom,shape=straight": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_0",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_1",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_2",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_3",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_4",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_5",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_6",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_7",
+        "uvlock": true,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_8",
+        "uvlock": true,
+        "y": 270
+      }
+    ],
+    "facing=north,half=top,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      }
+    ],
+    "facing=north,half=top,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "x": 180
+      }
+    ],
+    "facing=north,half=top,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      }
+    ],
+    "facing=north,half=top,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "x": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "x": 180
+      }
+    ],
+    "facing=north,half=top,shape=straight": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      }
+    ],
+    "facing=south,half=bottom,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8"
+      }
+    ],
+    "facing=south,half=bottom,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "y": 90
+      }
+    ],
+    "facing=south,half=bottom,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7"
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8"
+      }
+    ],
+    "facing=south,half=bottom,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "y": 90
+      }
+    ],
+    "facing=south,half=bottom,shape=straight": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_0",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_1",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_2",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_3",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_4",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_5",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_6",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_7",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_8",
+        "uvlock": true,
+        "y": 90
+      }
+    ],
+    "facing=south,half=top,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      }
+    ],
+    "facing=south,half=top,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      }
+    ],
+    "facing=south,half=top,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      }
+    ],
+    "facing=south,half=top,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      }
+    ],
+    "facing=south,half=top,shape=straight": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 90
+      }
+    ],
+    "facing=west,half=bottom,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "y": 90
+      }
+    ],
+    "facing=west,half=bottom,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "y": 180
+      }
+    ],
+    "facing=west,half=bottom,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "y": 90
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "y": 90
+      }
+    ],
+    "facing=west,half=bottom,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "y": 180
+      }
+    ],
+    "facing=west,half=bottom,shape=straight": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_0",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_1",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_2",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_3",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_4",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_5",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_6",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_7",
+        "uvlock": true,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_8",
+        "uvlock": true,
+        "y": 180
+      }
+    ],
+    "facing=west,half=top,shape=inner_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      }
+    ],
+    "facing=west,half=top,shape=inner_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_inner_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      }
+    ],
+    "facing=west,half=top,shape=outer_left": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      }
+    ],
+    "facing=west,half=top,shape=outer_right": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_outer_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 270
+      }
+    ],
+    "facing=west,half=top,shape=straight": [
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_0",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_1",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_2",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_3",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_4",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_5",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_6",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_7",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "nomansland:block/underground/limestone/ivory_limestone_brick_stairs_8",
+        "uvlock": true,
+        "x": 180,
+        "y": 180
+      }
+    ]
+  }
+}

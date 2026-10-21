@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#c:is_overworld",
+  "features": "nomansland:ore_sulfur",
+  "step": "underground_ores"
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:add",
+  "argument1": {
+    "type": "minecraft:noise",
+    "noise": "nomansland:geothermal",
+    "xz_scale": 1,
+    "y_scale": 1
+  },
+  "argument2": {
+    "type": "minecraft:y_clamped_gradient",
+    "from_y": -64,
+    "to_y": 80,
+    "from_value": 0.2,
+    "to_value": -0.05
+  }
+}

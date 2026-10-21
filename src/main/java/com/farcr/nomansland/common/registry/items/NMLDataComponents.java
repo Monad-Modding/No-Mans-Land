@@ -24,6 +24,10 @@ public class NMLDataComponents {
             "punch_cooldown", builder -> builder
                     .persistent(Codec.INT));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> GAS_MASK_DURATION = DATA_COMPONENTS.registerComponentType(
+            "gas_mask_duration", builder -> builder
+                    .persistent(Codec.INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> PUNCH_COUNT = DATA_COMPONENTS.registerComponentType(
             "punch_count", builder -> builder
                     .persistent(Codec.INT));

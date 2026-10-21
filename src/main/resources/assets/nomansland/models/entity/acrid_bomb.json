@@ -1,0 +1,6 @@
+{
+  "parent": "nomansland:entity/bomb",
+  "textures": {
+    "texture": "nomansland:entity/bombs/acrid_bomb"
+  }
+}
