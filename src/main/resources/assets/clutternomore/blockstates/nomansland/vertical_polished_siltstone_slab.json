@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=north,double=false": {
+      "model": "clutternomore:block/nomansland/vertical_polished_siltstone_slab_north"
+    },
+    "facing=north,double=true": {
+      "model": "clutternomore:block/nomansland/vertical_polished_siltstone_slab_double_z"
+    },
+    "facing=east,double=false": {
+      "model": "clutternomore:block/nomansland/vertical_polished_siltstone_slab_east"
+    },
+    "facing=east,double=true": {
+      "model": "clutternomore:block/nomansland/vertical_polished_siltstone_slab_double_x"
+    },
+    "facing=south,double=false": {
+      "model": "clutternomore:block/nomansland/vertical_polished_siltstone_slab_south"
+    },
+    "facing=south,double=true": {
+      "model": "clutternomore:block/nomansland/vertical_polished_siltstone_slab_double_z"
+    },
+    "facing=west,double=false": {
+      "model": "clutternomore:block/nomansland/vertical_polished_siltstone_slab_west"
+    },
+    "facing=west,double=true": {
+      "model": "clutternomore:block/nomansland/vertical_polished_siltstone_slab_double_x"
+    }
+  }
+}

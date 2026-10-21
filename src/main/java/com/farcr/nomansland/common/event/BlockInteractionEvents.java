@@ -4,6 +4,7 @@ import com.farcr.nomansland.NMLConfig;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.block.torches.ExtinguishableBlockPairing;
 import com.farcr.nomansland.common.integration.Mods;
+import com.farcr.nomansland.common.integration.MoonlightIntegration;
 import com.farcr.nomansland.common.registry.*;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import net.minecraft.core.BlockPos;
@@ -15,6 +16,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.FireChargeItem;
+import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -62,7 +65,7 @@ public class BlockInteractionEvents {
                         break;
                     }
                 } else { //lighting block
-                    if (pair.isExtinguishedVersion(state)) {
+                    if (pair.canRelight(state)) {
                         level.playSound(player, pos, stack.is(Items.FLINT_AND_STEEL) ? NMLSounds.TORCH_LIGHT_BY_FLINT_AND_STEEL.get() : NMLSounds.TORCH_LIGHT.get(), SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
                         level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
                         level.setBlockAndUpdate(pos, pair.litBlock().withPropertiesOf(state));
@@ -71,6 +74,12 @@ public class BlockInteractionEvents {
                         break;
                     }
                 }
+            }
+
+            if (!event.isCanceled() && Mods.MOONLIGHT.isLoaded() && MoonlightIntegration.use(level, pos, state, player, stack, isExtinguishing, isLighting)) {
+                event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
+                event.setCanceled(true);
+                return;
             }
 
             // Lighting vanilla candles, candle cakes, and campfires with firestarters
@@ -90,9 +99,11 @@ public class BlockInteractionEvents {
     private static void frostGrass(PlayerInteractEvent.RightClickBlock event, Level level, BlockPos pos, BlockState state, Player player, ItemStack stack) {
         // Grass Frosting
         if (stack.is(Blocks.SNOW.asItem()) && !player.isSpectator() && state.is(Blocks.SHORT_GRASS) && !Mods.SNOWREALMAGIC.isLoaded()) {
-            level.setBlockAndUpdate(pos, NMLBlocks.FROSTED_GRASS.get().defaultBlockState().setValue(SNOWLOGGED, true));
+            BlockState frosted = NMLBlocks.FROSTED_GRASS.get().defaultBlockState().setValue(SNOWLOGGED, true);
+            level.setBlockAndUpdate(pos, frosted);
             stack.consume(1, player);
             level.playSound(player, pos, SoundEvents.SNOW_PLACE, SoundSource.PLAYERS, 1, (level.random.nextFloat() - level.random.nextFloat()) * 0.6F + 1.2F);
+            level.gameEvent(GameEvent.BLOCK_PLACE, pos, GameEvent.Context.of(player, frosted));
             BlockPos posUnder = pos.below();
             BlockState stateUnder = level.getBlockState(posUnder);
             if (stateUnder.getBlock() instanceof SnowyDirtBlock)
@@ -299,6 +310,7 @@ public class BlockInteractionEvents {
             level.playSound(player, position, soundtype.getPlaceSound(), SoundSource.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
             stack.consume(1, player);
             level.setBlockAndUpdate(position, state);
+            level.gameEvent(GameEvent.BLOCK_PLACE, position, GameEvent.Context.of(player, state));
             return true;
         }
         return false;

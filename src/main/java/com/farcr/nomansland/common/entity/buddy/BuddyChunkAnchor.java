@@ -15,6 +15,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.neoforged.neoforge.event.EventHooks;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -98,8 +99,6 @@ public class BuddyChunkAnchor extends SavedData {
     }
 
     public void tickChunk(LevelChunk chunk) {
-        drainQueuedAnchors();
-
         LevelChunkExtension extensionChunk = (LevelChunkExtension) chunk;
         if (extensionChunk.nml$shouldIgnoreBuddyAnchor()) return;
 
@@ -133,12 +132,16 @@ public class BuddyChunkAnchor extends SavedData {
         }
     }
 
-    private void drainQueuedAnchors() {
+    public void drainQueuedAnchors() {
         ConcurrentLinkedQueue<BlockPos> queued = PENDING_ANCHORS.get(level.dimension());
         if (queued == null) return;
         BlockPos pos;
         while ((pos = queued.poll()) != null) {
-            if (!buddyAnchors.containsKey(pos) && pendingAnchors.add(pos)) setDirty();
+            if (!buddyAnchors.containsKey(pos) && pendingAnchors.add(pos)) {
+                setDirty();
+                LevelChunk anchorChunk = level.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);
+                if (anchorChunk != null) ((LevelChunkExtension) anchorChunk).nml$clearIgnoreBuddyAnchor();
+            }
         }
     }
 
@@ -146,13 +149,32 @@ public class BuddyChunkAnchor extends SavedData {
         return (blockPos.getX() >> 4) == chunkPos.x && (blockPos.getZ() >> 4) == chunkPos.z;
     }
 
-    // Returns the cycle, not phase, the moon is currently on.
+    private static final long MOON_CYCLE_DAYS = 8L;
+    private static final long NEW_MOON_DAY = 4L;
+
     public int getCurrentMoonCycle(long dayTime) {
-        return (int)((dayTime / 24000L) / 8L);
+        return (int)((dayTime / 24000L + NEW_MOON_DAY) / MOON_CYCLE_DAYS);
     }
 
     public boolean tryRespawning(BuddyData existingBuddyData) {
         return existingBuddyData.getShouldRespawn() && (getCurrentMoonCycle(level.getDayTime()) > existingBuddyData.getMoonCycle());
+    }
+
+    private static final int SPAWN_RADIUS = 2;
+    private static final int SPAWN_ATTEMPTS = 16;
+
+    private @Nullable BlockPos findSpawnPosition(BlockPos anchorPosition, EntityType<? extends Buddy> type) {
+        for (int attempt = 0; attempt < SPAWN_ATTEMPTS; attempt++) {
+            int offsetX = level.getRandom().nextInt(-SPAWN_RADIUS, SPAWN_RADIUS + 1);
+            int offsetZ = level.getRandom().nextInt(-SPAWN_RADIUS, SPAWN_RADIUS + 1);
+            if ((offsetX * offsetX) + (offsetZ * offsetZ) > SPAWN_RADIUS * SPAWN_RADIUS) continue;
+
+            BlockPos surface = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                new BlockPos(anchorPosition.getX() + offsetX, 0, anchorPosition.getZ() + offsetZ));
+            if (Buddy.checkBuddySpawnRules(type, level, MobSpawnType.EVENT, surface, level.getRandom())) return surface;
+        }
+
+        return null;
     }
 
     private boolean attemptSpawn(BlockPos spawnBlock) {
@@ -162,14 +184,9 @@ public class BuddyChunkAnchor extends SavedData {
 
         // Try spawning the buddy !!!
         Buddy buddy = NMLEntities.BUDDY.get().create(level);
-        BlockPos heightmapSpawnPosition = level.getHeightmapPos(
-            Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, new BlockPos(spawnBlock.getX(), 0, spawnBlock.getZ())
-        );
+        BlockPos heightmapSpawnPosition = buddy == null ? null : this.findSpawnPosition(spawnBlock, (EntityType<? extends Buddy>) buddy.getType());
 
-        if (buddy != null && Buddy.checkBuddySpawnRules(
-            (EntityType<? extends Buddy>) buddy.getType(),
-            level, MobSpawnType.EVENT, heightmapSpawnPosition, level.getRandom())
-        ) {
+        if (buddy != null && heightmapSpawnPosition != null) {
             buddy.setPos(heightmapSpawnPosition.above().getBottomCenter());
 
             // Prepare Buddy & Anchor

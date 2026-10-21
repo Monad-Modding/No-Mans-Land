@@ -1,6 +1,7 @@
 package com.farcr.nomansland.common.event;
 
 import com.farcr.nomansland.NoMansLand;
+import com.farcr.nomansland.common.block.IciclesBlock;
 import com.farcr.nomansland.common.effect.FlammableEffect;
 import com.farcr.nomansland.common.item.AncestralOathSwordItem;
 import com.farcr.nomansland.common.registry.entities.NMLEffects;
@@ -23,8 +24,12 @@ public class ItemBehaviorEvents {
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (event.getEntity() instanceof LivingEntity entity) {
-            if (!entity.level().isClientSide())
+            if (!entity.level().isClientSide()) {
                 FlammableEffect.dampenWhenWet(entity);
+                if (entity.isPassenger()) {
+                    IciclesBlock.hitRider(entity);
+                }
+            }
 
             ItemStack stack = entity.getItemBySlot(EquipmentSlot.HEAD);
             if (stack.is(NMLItems.ANCIENT_BRONZE_MASK)) {

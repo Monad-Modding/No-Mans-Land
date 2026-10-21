@@ -7,6 +7,7 @@ import com.farcr.nomansland.common.commands.MeetingPointCommand;
 import com.farcr.nomansland.common.commands.SunDogCommand;
 import com.farcr.nomansland.common.dreams.DreamManager;
 import com.farcr.nomansland.common.dreams.dreamlevel.DreamingPlayer;
+import com.farcr.nomansland.common.entity.buddy.BuddyChunkAnchor;
 import com.farcr.nomansland.common.friend.FriendMoon;
 import com.farcr.nomansland.common.friend.condition.DialogueConditionCompiler;
 import com.farcr.nomansland.common.friend.dialogue.DialogueTracker;
@@ -30,6 +31,7 @@ import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
@@ -46,6 +48,12 @@ public class ServerLifecycleEvents {
     }
 
     @SubscribeEvent
+    public static void onLevelSave(LevelEvent.Save event) {
+        if (event.getLevel() instanceof ServerLevel serverLevel)
+            BuddyChunkAnchor.getOrDefault(serverLevel).drainQueuedAnchors();
+    }
+
+    @SubscribeEvent
     public static void onServerStop(ServerStoppingEvent event) {
         LazilyCachedDensityFunctionSeedifier.clearCache();
     }
@@ -55,6 +63,7 @@ public class ServerLifecycleEvents {
         if (event.getLevel() instanceof ServerLevel serverLevel) {
             if (event.getLevel().equals(serverLevel.getServer().overworld()))
                 FriendMoon.getOrDefault(serverLevel).tick();
+            BuddyChunkAnchor.getOrDefault(serverLevel).drainQueuedAnchors();
             RegeneratingPotsData.getOrDefault(serverLevel).tick();
             SunDog.getOrDefault(serverLevel).tick();
             InvertedBellServerHandler.get(serverLevel).tick(serverLevel);

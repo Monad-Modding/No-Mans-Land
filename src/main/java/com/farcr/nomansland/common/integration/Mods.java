@@ -19,6 +19,7 @@ public enum Mods {
     VANITY,
     ETCHED,
     FIELDGUIDE,
+    MOONLIGHT,
     LAMBDYNLIGHTS;
 
     private final String id;

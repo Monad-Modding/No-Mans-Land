@@ -140,6 +140,7 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("nomansland.subtitle.entity.friend_moon.speak", "Friend Moon speaks");
         add("nomansland.subtitle.entity.friend_moon.speak_sad", "Friend Moon speaks sadly");
         add("nomansland.subtitle.block.icicle.shatter", "Icicle shatters");
+        add("nomansland.subtitle.block.tap.turns", "Tap turns");
         add("nomansland.subtitle.entity.living_pot.charge", "Living Pot charges");
 
         add("item.nomansland.billhook_bass_bucket", "Bucket of Billhook Bass");
@@ -190,6 +191,8 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("painting.nomansland.sun.author", "Farcr");
         add("painting.nomansland.white_eyes.title", "White Eyes");
         add("painting.nomansland.white_eyes.author", "Probleyes");
+        add("painting.nomansland.driftwood.title", "Driftwood");
+        add("painting.nomansland.driftwood.author", "call13");
         add("death.attack.nomansland.icicle_pierce", "%1$s was pierced by an icicle");
         add("death.attack.nomansland.icicle_pierce.player", "%1$s was pierced by an icicle while fighting %2$s");
         add("death.attack.nomansland.spike_fall", "%1$s fell for a spike trap");
@@ -251,11 +254,14 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("block.nomansland.inverted_bell.bad_teleport", "The bell's ringing leaves you battered...");
         add("block_type.nomansland.trimmed_planks", "Trimmed %s Planks");
         add("block_type.nomansland.bookshelf", "%s Bookshelf");
+        add("design.nomansland.tortoise", "Tortoise Shell");
         add("design.nomansland.tortoise.sandy", "Sandy");
         add("design.nomansland.tortoise.green", "Green");
         add("design.nomansland.tortoise.gray", "Gray");
-        add("design.nomansland.ancient_bronze_mask.alchemist", "Alchemist");
-        add("design.nomansland.warp_worn.warp_worn", "Warp-worn");
+        add("design.nomansland.alchemist", "Alchemist");
+        add("design.nomansland.alchemist.alchemist", "Alchemist");
+        add("design.nomansland.warp_worn_mask", "Warp-worn");
+        add("design.nomansland.warp_worn_mask.warp_worn", "Warp-worn");
         add("screen.nomansland.carving", "Scroll to select carving");
 
         add("item.nomansland.ancestral_oath_sword.refuse", "The sword refuses to violate its oath of pacifism...");

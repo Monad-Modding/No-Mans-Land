@@ -207,7 +207,7 @@ idea {
 publishMods {
     type = STABLE
     file = tasks.jar.map { it.archiveFile.get() }
-    changelog = provider { rootProject.file("changelog.md").readText() }
+    changelog = provider { rootProject.file("CHANGELOG.md").readText() }
 
     version = mod["version"]
     displayName = "${mod["name"]} ${mod["version"]}"

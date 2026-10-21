@@ -1,0 +1,8 @@
+{
+  "values": [
+    {
+      "id": "create:basin",
+      "required": false
+    }
+  ]
+}

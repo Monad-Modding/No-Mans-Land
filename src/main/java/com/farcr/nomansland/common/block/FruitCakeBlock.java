@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.integration.FDIntegration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -26,6 +27,14 @@ public class FruitCakeBlock extends CakeBlock {
     public FruitCakeBlock(Properties properties) {
         super(properties);
     }
+    public static final MapCodec<CakeBlock> CODEC = simpleCodec(FruitCakeBlock::new)
+            .xmap(block -> (CakeBlock) block, block -> (FruitCakeBlock) block);
+
+    @Override
+    public MapCodec<CakeBlock> codec() {
+        return CODEC;
+    }
+
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {

@@ -52,7 +52,7 @@ public class AncestralGlintRenderLayer<T extends LivingEntity, M extends EntityM
         int packedLight, @NotNull T livingEntity, float limbSwing, float limbSwingAmount,
         float partialTicks, float ageInTicks, float headYaw, float headPitch
     ) {
-        if (!livingEntity.hasEffect(NMLEffects.STASIS)) return;
+        if (AncestralGlintRenderType.ANCESTRAL_GLINT_SHADER == null || !livingEntity.hasEffect(NMLEffects.STASIS)) return;
 
         EntityModel<T> entityModel = this.getParentModel();
         entityModel.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTicks);

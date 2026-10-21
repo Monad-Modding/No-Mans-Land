@@ -107,6 +107,60 @@
         "projection": "rigid"
       },
       "weight": 10
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nomansland:alchemist_ruins/decorations/bell_1",
+        "processors": "nomansland:alchemist_ruins",
+        "projection": "rigid"
+      },
+      "weight": 10
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nomansland:alchemist_ruins/decorations/bell_2",
+        "processors": "nomansland:alchemist_ruins",
+        "projection": "rigid"
+      },
+      "weight": 10
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nomansland:alchemist_ruins/decorations/bell_3",
+        "processors": "nomansland:alchemist_ruins",
+        "projection": "rigid"
+      },
+      "weight": 10
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nomansland:alchemist_ruins/decorations/bell_4",
+        "processors": "nomansland:alchemist_ruins",
+        "projection": "rigid"
+      },
+      "weight": 10
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nomansland:alchemist_ruins/decorations/bell_5",
+        "processors": "nomansland:alchemist_ruins",
+        "projection": "rigid"
+      },
+      "weight": 10
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "nomansland:alchemist_ruins/decorations/bell_6",
+        "processors": "nomansland:alchemist_ruins",
+        "projection": "rigid"
+      },
+      "weight": 10
     }
   ],
   "fallback": "minecraft:empty"

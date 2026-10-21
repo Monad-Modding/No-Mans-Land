@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block.cauldrons;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.common.integration.FDIntegration;
 import com.farcr.nomansland.common.registry.NMLSounds;
 import com.mojang.serialization.MapCodec;
@@ -71,6 +72,7 @@ public class WitchStewCauldron extends FourLayeredCauldronBlock {
                 }
 
                 level.playSound(null, pos, NMLSounds.WITCH_STEW_CAULDRON_EMPTY.value(), SoundSource.BLOCKS);
+                level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
 
                 if (state.getValue(LEVEL) > 1) {
                     lowerFillLevel(state, level, pos);
