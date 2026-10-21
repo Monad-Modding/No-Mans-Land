@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "lit=false": {
+      "model": "nomansland:block/dungeon/explosive_barrel"
+    },
+    "lit=true": {
       "model": "nomansland:block/dungeon/explosive_barrel"
     }
   }

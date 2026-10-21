@@ -128,6 +128,7 @@ dependencies {
     })
     implementation("com.teamabnormals:blueprint:${mc["version"]}-${deps["blueprint"]}")
 
+    implementation("dev.ryanhcode.sable:sable-neoforge-${mc["version"]}:${deps["sable"]}") { isTransitive = false }
     compileOnly("com.simibubi.create:create-${mc["version"]}:${deps["create"]}:slim") { isTransitive = false }
 
 //MAKE SURE THESE ARE ALL "IMPLEMENTATION" WHEN RUNNING DATA! OTHERWISE DATA WILL BREAK!

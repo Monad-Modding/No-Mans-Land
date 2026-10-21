@@ -23,6 +23,9 @@ public record BlockProperties(BlockLootType lootType, boolean customLang) {
     public static BlockProperties fishBarrel() {
         return new BlockProperties(new SelfBlockLootType(), false);
     } // fish_barrel
+    public static BlockProperties physicsBarrel() {
+        return new BlockProperties(new SelfBlockLootType(), false);
+    }
     public static BlockProperties dirtLike() {
         return new BlockProperties(new SelfBlockLootType(), false);
     } // shovel

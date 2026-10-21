@@ -3,6 +3,10 @@ package com.farcr.nomansland.common.event;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.networking.*;
 import com.farcr.nomansland.common.networking.alchemist_tools.*;
+import com.farcr.nomansland.common.networking.barrel.ClientboundBarrelAssembledPacket;
+import com.farcr.nomansland.common.networking.barrel.ClientboundBarrelCarriersPacket;
+import com.farcr.nomansland.common.networking.barrel.ServerboundBarrelPunchPacket;
+import com.farcr.nomansland.common.networking.barrel.ServerboundBarrelReleasePacket;
 import com.farcr.nomansland.common.networking.buddy.ClientboundBuddyCrouchPacket;
 import com.farcr.nomansland.common.networking.dialogue.ClientboundDialoguePacket;
 import com.farcr.nomansland.common.networking.dialogue.ClientboundDialogueRegistrySyncPacket;
@@ -71,5 +75,10 @@ public class NetworkSetupEvents {
         registrar.playToServer(ServerboundRitualPickRequestPacket.TYPE, ServerboundRitualPickRequestPacket.STREAM_CODEC, ServerboundRitualPickRequestPacket::handleData);
         registrar.playToClient(ClientboundRitualPickResponsePacket.TYPE, ClientboundRitualPickResponsePacket.STREAM_CODEC, ClientboundRitualPickResponsePacket::handleData);
         registrar.playToServer(ServerBoundChiselPacket.TYPE, ServerBoundChiselPacket.STREAM_CODEC, ServerBoundChiselPacket::handleData);
+
+        registrar.playToClient(ClientboundBarrelAssembledPacket.TYPE, ClientboundBarrelAssembledPacket.STREAM_CODEC, ClientboundBarrelAssembledPacket::handleData);
+        registrar.playToClient(ClientboundBarrelCarriersPacket.TYPE, ClientboundBarrelCarriersPacket.STREAM_CODEC, ClientboundBarrelCarriersPacket::handleData);
+        registrar.playToServer(ServerboundBarrelReleasePacket.TYPE, ServerboundBarrelReleasePacket.STREAM_CODEC, ServerboundBarrelReleasePacket::handleData);
+        registrar.playToServer(ServerboundBarrelPunchPacket.TYPE, ServerboundBarrelPunchPacket.STREAM_CODEC, ServerboundBarrelPunchPacket::handleData);
     }
 }

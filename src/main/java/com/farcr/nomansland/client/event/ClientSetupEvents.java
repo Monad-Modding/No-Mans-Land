@@ -17,6 +17,7 @@ import com.farcr.nomansland.client.renderer.UpperAtmosphericRenderer;
 import com.farcr.nomansland.client.renderer.dreams.MoonlightDreamRenderer;
 import com.farcr.nomansland.client.renderer.effect.AccumulateZoomRenderer;
 import com.farcr.nomansland.client.renderer.effect.GreyscaleEffectRenderer;
+import com.farcr.nomansland.client.renderer.PhysicsBarrelBlockEntityRenderer;
 import com.farcr.nomansland.client.renderer.entity.*;
 import com.farcr.nomansland.client.renderer.rendertype.AncestralGlintRenderLayer;
 import com.farcr.nomansland.client.renderer.rendertype.AncestralGlintRenderType;
@@ -170,8 +171,10 @@ public class ClientSetupEvents {
         event.registerEntityRenderer(NMLEntities.PACIFIED_CLOUD.get(), NoopRenderer::new);
 
         event.registerBlockEntityRenderer(NMLBlockEntities.POT.get(), PotRenderer::new);
+        event.registerBlockEntityRenderer(NMLBlockEntities.PHYSICS_BARREL.get(), PhysicsBarrelBlockEntityRenderer::new);
         event.registerEntityRenderer(NMLEntities.LIVING_POT.get(), LivingPotRenderer::new);
         event.registerEntityRenderer(NMLEntities.FALLING_POT.get(), FallingPotRenderer::new);
+        event.registerEntityRenderer(NMLEntities.PHYSICS_BARREL.get(), PhysicsBarrelRenderer::new);
 
         event.registerBlockEntityRenderer(NMLBlockEntities.INVERTED_BELL.get(), InvertedBellRenderer::new);
         event.registerBlockEntityRenderer(NMLBlockEntities.ANCIENT_BRONZE_BELL.get(), AncientBronzeBellRenderer::new);

@@ -644,6 +644,12 @@ public class NMLBlocks {
             () -> new Block(ofFullCopy(NMLBlocks.COD_BARREL.get())), BlockProperties.fishBarrel());
 //    public static final BlockDefinition<Block> CAVE_CARP_BARREL = registerBlock("cave_carp_barrel",
 //            () -> new Block(ofFullCopy(NMLBlocks.COD_BARREL.get())));
+    public static final BlockDefinition<PhysicsBarrelBlock> EXPLOSIVE_BARREL = register("explosive_barrel",
+            () -> new PhysicsBarrelBlock(PhysicsBarrelBlock.Detonation.EXPLOSIVE, ofFullCopy(Blocks.BARREL).noOcclusion()), BlockProperties.physicsBarrel());
+    public static final BlockDefinition<PhysicsBarrelBlock> FLAMMABLE_BARREL = register("flammable_barrel",
+            () -> new PhysicsBarrelBlock(PhysicsBarrelBlock.Detonation.FLAMMABLE, ofFullCopy(Blocks.BARREL).noOcclusion()), BlockProperties.physicsBarrel());
+    public static final BlockDefinition<PhysicsBarrelBlock> TOXIC_BARREL = register("toxic_barrel",
+            () -> new PhysicsBarrelBlock(PhysicsBarrelBlock.Detonation.TOXIC, ofFullCopy(Blocks.BARREL).noOcclusion()), BlockProperties.physicsBarrel());
     public static final BlockDefinition<Block> APPLE_CRATE = register("apple_crate",
             () -> new Block(ofFullCopy(Blocks.BARREL)), new BlockProperties(new SelfBlockLootType(), false));
     public static final BlockDefinition<Block> PEAR_CRATE = register("pear_crate",

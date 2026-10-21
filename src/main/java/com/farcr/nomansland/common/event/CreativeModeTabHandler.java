@@ -572,6 +572,9 @@ public class CreativeModeTabHandler {
         insertAfter(WIND_CHARGE, AQUA_REGIA);
         insertAfter(SNOWBALL, LIVING_URN);
         insertBefore(TNT, EXPLOSIVE);
+        insertAfter(TNT, NMLBlocks.TOXIC_BARREL);
+        insertAfter(TNT, NMLBlocks.FLAMMABLE_BARREL);
+        insertAfter(TNT, NMLBlocks.EXPLOSIVE_BARREL);
         insertAfter(EGG, RESIN_OIL_BOTTLE);
         insertAfter(TURTLE_HELMET, TORTOISE_SHELL);
         insertAfter(TURTLE_HELMET, ANCIENT_BRONZE_MASK);

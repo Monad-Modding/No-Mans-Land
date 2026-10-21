@@ -1,6 +1,7 @@
 {
   "parent": "nomansland:block/physics_barrel_template",
   "textures": {
-    "0": "nomansland:block/dungeon/flammable_barrel"
+    "0": "nomansland:block/dungeon/flammable_barrel",
+    "particle": "nomansland:block/maple/maple_planks"
   }
 }

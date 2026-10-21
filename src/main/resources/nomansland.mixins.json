@@ -83,6 +83,7 @@
     "ParticleEngineMixin",
     "PlayerRendererMixin",
     "client.AbstractSoundInstanceMixin",
+    "client.BarrelCarryPoseMixin",
     "client.AnimationUtilsMixin",
     "client.AppleSkinHealthMixin",
     "client.AppleSkinHeldFoodMixin",

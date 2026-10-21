@@ -23,6 +23,7 @@ import com.farcr.nomansland.common.entity.goose.Goose;
 import com.farcr.nomansland.common.entity.living_pot.LivingPot;
 import com.farcr.nomansland.common.entity.remnant.Remnant;
 import com.farcr.nomansland.common.entity.tortoise.Tortoise;
+import com.farcr.nomansland.common.entity.barrel.PhysicsBarrel;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -66,6 +67,10 @@ public class NMLEntities {
     public static final Supplier<EntityType<LivingUrn>> LIVING_URN =
             ENTITIES.register("living_urn", () -> EntityType.Builder.<LivingUrn>of(LivingUrn::new, MobCategory.MISC)
                     .sized(0.375F, 0.375F).clientTrackingRange(4).updateInterval(20).build("living_urn"));
+
+    public static final Supplier<EntityType<PhysicsBarrel>> PHYSICS_BARREL =
+            ENTITIES.register("physics_barrel", () -> EntityType.Builder.<PhysicsBarrel>of(PhysicsBarrel::new, MobCategory.MISC)
+                    .sized(0.875F, 1.0F).clientTrackingRange(10).updateInterval(2).build("physics_barrel"));
 
     public static final Supplier<EntityType<FallingPotEntity>> FALLING_POT =
             ENTITIES.register("falling_pot", () -> EntityType.Builder.<FallingPotEntity>of(FallingPotEntity::new, MobCategory.MISC)

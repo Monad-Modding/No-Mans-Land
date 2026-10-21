@@ -55,6 +55,10 @@ public class NMLBlockEntities {
         BLOCK_ENTITIES.register("vent", () ->
             BlockEntityType.Builder.of(VentBlockEntity::new, NMLBlocks.THERMAL_VENT.get(), NMLBlocks.SULFURIC_FUMAROLE.get()).build(null));
 
+    public static final Supplier<BlockEntityType<PhysicsBarrelBlockEntity>> PHYSICS_BARREL =
+        BLOCK_ENTITIES.register("physics_barrel", () ->
+            BlockEntityType.Builder.of(PhysicsBarrelBlockEntity::new, NMLBlocks.EXPLOSIVE_BARREL.get(), NMLBlocks.FLAMMABLE_BARREL.get(), NMLBlocks.TOXIC_BARREL.get()).build(null));
+
     public static void addBlockEntities(final BlockEntityTypeAddBlocksEvent event) {
         event.modify(
                 BlockEntityType.SIGN,
