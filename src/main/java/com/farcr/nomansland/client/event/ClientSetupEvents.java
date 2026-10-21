@@ -32,6 +32,7 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.renderer.PostChain;
+import net.minecraft.client.renderer.entity.ItemFrameRenderer;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -133,14 +134,23 @@ public class ClientSetupEvents {
     @SubscribeEvent
     public static void registerEntityRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(NMLEntities.BILLHOOK_BASS.get(), BillhookBassRenderer::new);
+        event.registerEntityRenderer(NMLEntities.CAVE_CARP.get(), CaveCarpRenderer::new);
 
         event.registerEntityRenderer(NMLEntities.DEER.get(), DeerRenderer::new);
         event.registerEntityRenderer(NMLEntities.GOOSE.get(), GooseRenderer::new);
+        event.registerEntityRenderer(NMLEntities.CLOD.get(), ClodRenderer::new);
+        event.registerEntityRenderer(NMLEntities.TRANSLUCENT_ITEM_FRAME.get(), ItemFrameRenderer::new);
         // TODO: moose
 //        event.registerEntityRenderer(NMLEntities.MOOSE.get(), MooseRenderer::new);
         event.registerEntityRenderer(NMLEntities.TORTOISE.get(), TortoiseRenderer::new);
         event.registerEntityRenderer(NMLEntities.BUDDY.get(), BuddyRenderer::new);
         event.registerEntityRenderer(NMLEntities.FRIENDERMAN.get(), FriendermanRenderer::new);
+        event.registerEntityRenderer(NMLEntities.BURIED.get(), BuriedRenderer::new);
+        event.registerEntityRenderer(NMLEntities.CENTIPEDE.get(), CentipedeRenderer::new);
+        event.registerEntityRenderer(NMLEntities.REMNANT.get(), RemnantRenderer::new);
+        event.registerEntityRenderer(NMLEntities.BEETLE.get(), BeetleRenderer::new);
+        event.registerEntityRenderer(NMLEntities.GRUB.get(), GrubRenderer::new);
+        event.registerEntityRenderer(NMLEntities.DUNG_BALL.get(), DungBallRenderer::new);
 
         event.registerEntityRenderer(NMLEntities.DREAMING_PLAYER.get(), DreamingPlayerRenderer::new);
 
@@ -291,6 +301,8 @@ public class ClientSetupEvents {
     @SubscribeEvent
     public static void registerShaders(final RegisterShadersEvent event) throws IOException {
         if (GraphicsCompat.customShadersSupported()) {
+            GraphicsCompat.tryRegister(event, "rendertype_clod", DefaultVertexFormat.NEW_ENTITY,
+                    shader -> ClodRenderer.CLOD_SHADER = shader);
 //            GraphicsCompat.tryRegister(event, "rendertype_moonlight", DefaultVertexFormat.NEW_ENTITY,
 //                    shader -> MoonlightRayParticle.MOONLIGHT_RENDER_SHADER = shader);
             GraphicsCompat.tryRegister(event, "rendertype_moonlight_glow", DefaultVertexFormat.POSITION_TEX,

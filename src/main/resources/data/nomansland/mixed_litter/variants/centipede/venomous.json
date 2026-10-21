@@ -1,0 +1,7 @@
+{
+  "type": "mixed_litter:simple_texture",
+  "group": "nomansland:centipede_venomous",
+  "arguments": {
+    "texture": "nomansland:centipede/venomous_centipede"
+  }
+}

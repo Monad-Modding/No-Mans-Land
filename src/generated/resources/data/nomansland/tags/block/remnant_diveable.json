@@ -1,0 +1,20 @@
+{
+  "values": [
+    "#minecraft:base_stone_overworld",
+    "#minecraft:dirt",
+    "#c:ores",
+    "#c:gravels",
+    "#c:sands",
+    "minecraft:sandstone",
+    "minecraft:red_sandstone",
+    "minecraft:calcite",
+    "minecraft:dripstone_block",
+    "minecraft:smooth_basalt",
+    "minecraft:clay",
+    "minecraft:packed_mud",
+    "minecraft:terracotta",
+    "nomansland:siltstone",
+    "nomansland:silt",
+    "nomansland:coarse_silt"
+  ]
+}

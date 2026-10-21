@@ -1,17 +1,16 @@
 package com.farcr.nomansland.common.blockentity;
 
 import com.farcr.nomansland.NMLConfig;
+import com.farcr.nomansland.common.entity.Buried;
 import com.farcr.nomansland.common.registry.NMLBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BrushableBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 public class RemainsBlockEntity extends BrushableBlockEntity {
     public RemainsBlockEntity(BlockPos pos, BlockState state) {
@@ -25,27 +24,22 @@ public class RemainsBlockEntity extends BrushableBlockEntity {
 
     @Override
     public BlockEntityType<?> getType() {
-        return super.getType();
+        return NMLBlockEntities.REMAINS.get();
     }
 
     @Override
     public void brushingCompleted(Player player) {
-        if (level != null && level.getServer() != null) {
-            Block remainsBlockState = this.getBlockState().getBlock();
-            if (remainsBlockState instanceof BrushableBlock) {
-                if (level.random.nextFloat() < NMLConfig.BURIED_SPAWNING_CHANCE.get()) {
-                    //TODO: When Buried is readded/worked on, replace SKELETON with BURIED
-                    Skeleton buried = EntityType.SKELETON.create(level);
-                    if (buried != null) {
-                        BlockPos spawningPosition = worldPosition.relative(this.getHitDirection());
-                        if (level.getBlockState(spawningPosition) == Blocks.AIR.defaultBlockState())
-                            buried.moveTo(spawningPosition.getCenter());
-                        else
-                            buried.moveTo((player.getX() + worldPosition.getX()) / 2, (player.getY() + worldPosition.getY()) / 2, (player.getZ() + worldPosition.getZ()) / 2);
-                        level.addFreshEntity(buried);
-                        buried.spawnAnim();
-                    }
-                }
+        if (level instanceof ServerLevel serverLevel && serverLevel.random.nextFloat() < NMLConfig.BURIED_SPAWNING_CHANCE.get()) {
+            Direction direction = getHitDirection() == null ? Direction.UP : getHitDirection();
+            BlockPos spawnPos = worldPosition.relative(direction);
+            if (serverLevel.getBlockState(spawnPos).isAir()) {
+                Vec3 center = spawnPos.getCenter();
+                Buried.spawnFromRemains(serverLevel, center.x, center.y, center.z);
+            } else {
+                Buried.spawnFromRemains(serverLevel,
+                        (player.getX() + worldPosition.getX()) / 2,
+                        (player.getY() + worldPosition.getY()) / 2,
+                        (player.getZ() + worldPosition.getZ()) / 2);
             }
         }
 

@@ -1265,6 +1265,101 @@
     ],
     "subtitle": "nomansland.subtitle.entity.buddy.hurt"
   },
+  "entity.centipede.ambient": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.spider.ambient",
+        "pitch": 1.4,
+        "volume": 0.6
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.centipede.ambient"
+  },
+  "entity.centipede.death": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.spider.death",
+        "pitch": 1.4
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.centipede.death"
+  },
+  "entity.centipede.hiss": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.silverfish.hurt",
+        "pitch": 0.8,
+        "volume": 0.9
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.centipede.hiss"
+  },
+  "entity.centipede.hurt": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.spider.hurt",
+        "pitch": 1.4
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.centipede.hurt"
+  },
+  "entity.centipede.step": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.spider.step",
+        "pitch": 1.3,
+        "volume": 0.5
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "entity.clod.ambient": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.fox.sniff",
+        "pitch": 0.8,
+        "volume": 0.7
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.clod.ambient"
+  },
+  "entity.clod.death": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.fox.death",
+        "pitch": 1.2
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.clod.death"
+  },
+  "entity.clod.hurt": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.fox.hurt",
+        "pitch": 1.2
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.clod.hurt"
+  },
+  "entity.clod.step": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.spider.step",
+        "pitch": 1.1,
+        "volume": 0.4
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
   "entity.deer.ambient": {
     "sounds": [
       {
@@ -1812,6 +1907,125 @@
       "nomansland:entity/player/hurt_spike_trap1",
       "nomansland:entity/player/hurt_spike_trap2"
     ]
+  },
+  "entity.remnant.ambient": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.warden.ambient",
+        "pitch": 0.55,
+        "volume": 0.45
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.remnant.ambient"
+  },
+  "entity.remnant.attack": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.warden.attack_impact",
+        "pitch": 1.15,
+        "volume": 0.8
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.remnant.attack"
+  },
+  "entity.remnant.breathe": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.warden.ambient",
+        "pitch": 1.25,
+        "volume": 0.35
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.remnant.breathe"
+  },
+  "entity.remnant.crash": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.anvil.land",
+        "pitch": 0.55,
+        "volume": 0.9
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.remnant.crash"
+  },
+  "entity.remnant.death": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.deepslate.break",
+        "pitch": 0.45
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.remnant.death"
+  },
+  "entity.remnant.dive": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.warden.dig",
+        "pitch": 1.25,
+        "volume": 0.75
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.remnant.dive"
+  },
+  "entity.remnant.emerge": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.warden.emerge",
+        "pitch": 1.3,
+        "volume": 0.7
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.remnant.emerge"
+  },
+  "entity.remnant.grind": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.grindstone.use",
+        "pitch": 0.5,
+        "volume": 0.8
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.remnant.grind"
+  },
+  "entity.remnant.hurt": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.deepslate.break",
+        "pitch": 0.6
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.remnant.hurt"
+  },
+  "entity.remnant.phase": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.deepslate.step",
+        "pitch": 0.4,
+        "volume": 0.5
+      }
+    ],
+    "subtitle": "nomansland.subtitle.entity.remnant.phase"
+  },
+  "entity.remnant.step": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.deepslate.step",
+        "pitch": 0.6,
+        "volume": 0.9
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
   },
   "entity.tortoise.ambient": {
     "sounds": [

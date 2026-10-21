@@ -107,6 +107,30 @@ public class NMLSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> GOOSE_HURT = registerSound("entity.goose.hurt");
     public static final DeferredHolder<SoundEvent, SoundEvent> GOOSE_STEP = registerSound("entity.goose.step");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> CENTIPEDE_AMBIENT = registerSound("entity.centipede.ambient");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CENTIPEDE_HURT = registerSound("entity.centipede.hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CENTIPEDE_DEATH = registerSound("entity.centipede.death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CENTIPEDE_STEP = registerSound("entity.centipede.step");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CENTIPEDE_HISS = registerSound("entity.centipede.hiss");
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> REMNANT_AMBIENT = registerSound("entity.remnant.ambient");
+    public static final DeferredHolder<SoundEvent, SoundEvent> REMNANT_HURT = registerSound("entity.remnant.hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> REMNANT_DEATH = registerSound("entity.remnant.death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> REMNANT_STEP = registerSound("entity.remnant.step");
+    public static final DeferredHolder<SoundEvent, SoundEvent> REMNANT_CRASH = registerSound("entity.remnant.crash");
+    public static final DeferredHolder<SoundEvent, SoundEvent> REMNANT_DIVE = registerSound("entity.remnant.dive");
+    public static final DeferredHolder<SoundEvent, SoundEvent> REMNANT_EMERGE = registerSound("entity.remnant.emerge");
+    public static final DeferredHolder<SoundEvent, SoundEvent> REMNANT_PHASE = registerSound("entity.remnant.phase");
+    public static final DeferredHolder<SoundEvent, SoundEvent> REMNANT_GRIND = registerSound("entity.remnant.grind");
+    public static final DeferredHolder<SoundEvent, SoundEvent> REMNANT_ATTACK = registerSound("entity.remnant.attack");
+    public static final DeferredHolder<SoundEvent, SoundEvent> REMNANT_BREATHE = registerSound("entity.remnant.breathe");
+
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> CLOD_AMBIENT = registerSound("entity.clod.ambient");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CLOD_DEATH = registerSound("entity.clod.death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CLOD_HURT = registerSound("entity.clod.hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CLOD_STEP = registerSound("entity.clod.step");
+
     //Tortoise
     public static final DeferredHolder<SoundEvent, SoundEvent> TORTOISE_AMBIENT = registerSound("entity.tortoise.ambient");
     public static final DeferredHolder<SoundEvent, SoundEvent> TORTOISE_HURT = registerSound("entity.tortoise.hurt");

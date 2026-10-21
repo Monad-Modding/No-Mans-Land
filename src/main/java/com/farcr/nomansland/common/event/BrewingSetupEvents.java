@@ -2,7 +2,6 @@ package com.farcr.nomansland.common.event;
 
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.networking.*;
-import com.farcr.nomansland.common.networking.alchemist_tools.*;
 import com.farcr.nomansland.common.registry.items.NMLItems;
 import com.farcr.nomansland.common.registry.items.NMLPotions;
 import java.util.Objects;
@@ -26,6 +25,7 @@ public class BrewingSetupEvents {
     @SubscribeEvent
     public static void registerBrewingRecipes(RegisterBrewingRecipesEvent event) {
         event.getBuilder().addMix(Potions.WATER, NMLItems.AWKWARD_RESIDUE.get(), Potions.AWKWARD);
+        event.getBuilder().addMix(Potions.AWKWARD, NMLItems.TRANSLUCENT_SAC.get(), Potions.INVISIBILITY);
 
         event.getBuilder().addStartMix(Items.NAUTILUS_SHELL, NMLPotions.STASIS);
         event.getBuilder().addMix(NMLPotions.STASIS, Items.REDSTONE, NMLPotions.LONG_STASIS);

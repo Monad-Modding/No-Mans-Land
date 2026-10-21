@@ -286,7 +286,7 @@ public class NMLBlocks {
     public static final BlockDefinition<PathBlock> RED_SAND_PATH = register("red_sand_path",
             () -> new PathBlock(ofFullCopy(Blocks.RED_SAND), Blocks.RED_SAND, true), BlockProperties.simplePath(Blocks.RED_SAND));
     //Dungeon
-    public static final BlockDefinition<RemainsBlock> REMAINS = registerNoItem("remains",
+    public static final BlockDefinition<RemainsBlock> REMAINS = register("remains",
             () -> new RemainsBlock(Blocks.COARSE_DIRT, SoundEvents.BRUSH_SAND, SoundEvents.BRUSH_SAND_COMPLETED, of().mapColor(MapColor.DIRT).strength(0.25F).sound(SoundType.SUSPICIOUS_SAND).pushReaction(PushReaction.DESTROY)), BlockProperties.custom(false));
     public static final BlockDefinition<MonsterAnchorBlock> MONSTER_ANCHOR = register("monster_anchor",
             () -> new MonsterAnchorBlock(ofFullCopy(Blocks.SPAWNER).strength(7, 7).sound(NMLSounds.MONSTER_ANCHOR).noOcclusion()));

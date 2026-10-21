@@ -56,11 +56,21 @@ public class NMLItems {
     public static final ItemDefinition<Item> RAW_VENISON = register("raw_venison", () -> new Item(new Properties().food(NMLFoods.RAW_VENISON)));
     public static final ItemDefinition<Item> COOKED_VENISON = register("cooked_venison", () -> new Item(new Properties().food(NMLFoods.COOKED_VENISON)));
 
+    public static final ItemDefinition<Item> BUG_MEAT = register("bug_meat", () -> new Item(new Properties().food(NMLFoods.BUG_MEAT)));
+    public static final ItemDefinition<Item> RAW_GRUB = register("raw_grub", () -> new Item(new Properties().food(NMLFoods.RAW_GRUB)));
+    public static final ItemDefinition<Item> FRIED_GRUB = register("fried_grub", () -> new Item(new Properties().food(NMLFoods.FRIED_GRUB)));
+    public static final ItemDefinition<Item> GRUBROOT = register("grubroot", () -> new Item(new Properties()));
+
+    public static final ItemDefinition<Item> TRANSLUCENT_SAC = register("translucent_sac", () -> new Item(new Properties()));
+
+    public static final ItemDefinition<TranslucentItemFrameItem> TRANSLUCENT_ITEM_FRAME = register("translucent_item_frame",
+            () -> new TranslucentItemFrameItem(NMLEntities.TRANSLUCENT_ITEM_FRAME.get(), new Properties()));
+
     public static final ItemDefinition<Item> BILLHOOK_BASS = register("billhook_bass",
             () -> new Item(new Properties().food(NMLFoods.BILLHOOK_BASS)), true);
     public static final ItemDefinition<Item> COOKED_BILLHOOK_BASS = register("cooked_billhook_bass", () -> new Item(new Properties().food(NMLFoods.COOKED_BILLHOOK_BASS)));
-//    public static final ItemDefinition<Item> CAVE_CARP = registerItem("cave_carp",
-//            () -> new Item(new Properties().food(NMLFoods.CAVE_CARP)), true);
+    public static final ItemDefinition<Item> CAVE_CARP = register("cave_carp",
+            () -> new Item(new Properties().food(NMLFoods.CAVE_CARP)), true);
 
     public static final ItemDefinition<Item> PEAR = register("pear", () -> new Item(new Properties().food(NMLFoods.PEAR)));
     public static final ItemDefinition<Item> SYRUPED_PEAR = register("syruped_pear", () -> new Item(new Properties().food(NMLFoods.SYRUPED_PEAR)));
@@ -193,6 +203,13 @@ public class NMLItems {
     public static final ItemDefinition<Item> BILLHOOK_BASS_SPAWN_EGG = register("billhook_bass_spawn_egg",
             () -> new DeferredSpawnEggItem(NMLEntities.BILLHOOK_BASS, 6443553, 11236417, new Properties()));
 
+    public static final ItemDefinition<Item> CAVE_CARP_BUCKET = register("cave_carp_bucket",
+            () -> new MobBucketItem(NMLEntities.CAVE_CARP.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH,
+                    (new Properties()).stacksTo(1).component(DataComponents.BUCKET_ENTITY_DATA, CustomData.EMPTY)), true);
+
+    public static final ItemDefinition<Item> CAVE_CARP_SPAWN_EGG = register("cave_carp_spawn_egg",
+            () -> new DeferredSpawnEggItem(NMLEntities.CAVE_CARP, 7236702, 12565408, new Properties()));
+
     public static final ItemDefinition<Item> TORTOISE_SPAWN_EGG = register("tortoise_spawn_egg", // TODO: color
             () -> new DeferredSpawnEggItem(NMLEntities.TORTOISE, 3681313, 7098676, new Properties()));
 
@@ -202,12 +219,30 @@ public class NMLItems {
     public static final ItemDefinition<Item> GOOSE_SPAWN_EGG = register("goose_spawn_egg",
             () -> new DeferredSpawnEggItem(NMLEntities.GOOSE, 11773851, 11888408, new Properties()));
 
+    public static final ItemDefinition<Item> CLOD_SPAWN_EGG = register("clod_spawn_egg",
+            () -> new DeferredSpawnEggItem(NMLEntities.CLOD, 10266268, 14082258, new Properties()));
+
     // TODO: moose
 //    public static final ItemDefinition<Item> MOOSE_SPAWN_EGG = register("moose_spawn_egg",
 //            () -> new DeferredSpawnEggItem(NMLEntities.MOOSE, 5323048, 2694937, new Properties()));
 
     public static final ItemDefinition<Item> BUDDY_SPAWN_EGG = register("buddy_spawn_egg",
         () -> new DeferredSpawnEggItem(NMLEntities.BUDDY, 9252139, 4798761, new Properties()));
+
+    public static final ItemDefinition<Item> BURIED_SPAWN_EGG = register("buried_spawn_egg",
+            () -> new DeferredSpawnEggItem(NMLEntities.BURIED, 14078140, 13938487, new Properties()));
+
+    public static final ItemDefinition<Item> BEETLE_SPAWN_EGG = register("beetle_spawn_egg",
+            () -> new DeferredSpawnEggItem(NMLEntities.BEETLE, 3025952, 7031851, new Properties()));
+
+    public static final ItemDefinition<Item> GRUB_SPAWN_EGG = register("grub_spawn_egg",
+            () -> new DeferredSpawnEggItem(NMLEntities.GRUB, 15259573, 13209178, new Properties()));
+
+    public static final ItemDefinition<Item> CENTIPEDE_SPAWN_EGG = register("centipede_spawn_egg",
+            () -> new DeferredSpawnEggItem(NMLEntities.CENTIPEDE, 5598767, 10506797, new Properties()));
+
+    public static final ItemDefinition<Item> REMNANT_SPAWN_EGG = register("remnant_spawn_egg",
+            () -> new DeferredSpawnEggItem(NMLEntities.REMNANT, 9145221, 4871496, new Properties()));
 
 //    public static final ItemDefinition<Item> CAVE_CARP_BUCKET = registerItem("cave_carp_bucket",
 //            () -> new MobBucketItem(EntityType.PIG, Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH,

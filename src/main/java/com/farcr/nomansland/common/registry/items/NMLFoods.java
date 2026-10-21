@@ -44,6 +44,10 @@ public class NMLFoods {
             .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 160, 0), 1).build();
 
     public static final FoodProperties AWKWARD_RESIDUE = new FoodProperties.Builder().nutrition(1).saturationModifier(0.1F).effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 100, 2), 0.8F).build();
+
+    public static final FoodProperties BUG_MEAT = new FoodProperties.Builder().nutrition(2).saturationModifier(0.2F).build();
+    public static final FoodProperties RAW_GRUB = new FoodProperties.Builder().nutrition(2).saturationModifier(0.1F).effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 80, 0), 0.3F).build();
+    public static final FoodProperties FRIED_GRUB = new FoodProperties.Builder().nutrition(6).saturationModifier(0.7F).build();
 }
 
 

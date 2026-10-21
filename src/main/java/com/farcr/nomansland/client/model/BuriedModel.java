@@ -1,81 +1,132 @@
-package com.farcr.nomansland.client.model;// Made with Blockbench 4.9.3, Made by Farcr
+package com.farcr.nomansland.client.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.EntityModel;
+import com.farcr.nomansland.common.entity.Buried;
+import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 
-public class BuriedModel<T extends Entity> extends EntityModel<T> {
-    private final ModelPart buried;
+public class BuriedModel extends HierarchicalModel<Buried> {
+    private static final float DEG_TO_RAD = (float) Math.PI / 180;
+
+    private final ModelPart root;
     private final ModelPart head;
-    private final ModelPart body;
-    private final ModelPart legs;
-    private final ModelPart arms;
-    private final ModelPart leftLeg;
-    private final ModelPart rightLeg;
-    private final ModelPart rightArm;
-    private final ModelPart leftArm;
 
     public BuriedModel(ModelPart root) {
-        this.buried = root.getChild("buried");
-        this.head = buried.getChild("Head");
-        this.body = buried.getChild("Body");
-        this.legs = buried.getChild("Body").getChild("Legs");
-        this.arms = buried.getChild("Body").getChild("Arms");
-        this.leftLeg = buried.getChild("Body").getChild("Legs").getChild("LeftLeg");
-        this.rightLeg = buried.getChild("Body").getChild("Legs").getChild("RightLeg");
-        this.rightArm = buried.getChild("Body").getChild("Arms").getChild("RightArm");
-        this.leftArm = buried.getChild("Body").getChild("Arms").getChild("LeftArm");
+        this.root = root;
+        this.head = root.getChild("buried").getChild("Body").getChild("Head");
     }
 
     public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
+        MeshDefinition mesh = new MeshDefinition();
+        PartDefinition root = mesh.getRoot();
 
-        PartDefinition buried = partdefinition.addOrReplaceChild("buried", CubeListBuilder.create(), PartPose.offset(0.0F, 34.0F, -6.0F));
+        PartDefinition buried = root.addOrReplaceChild("buried",
+                CubeListBuilder.create(),
+                PartPose.offset(0, 21.72757F, 0.33068F));
 
-        PartDefinition Head = buried.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -6.0F, -8.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -13.0F, 0.0F, 0.0436F, 0.0F, -0.1309F));
+        PartDefinition Body = buried.addOrReplaceChild("Body",
+                CubeListBuilder.create()
+                        .texOffs(0, 16).addBox(-4, -12.04149F, -2.04967F, 8, 12, 4),
+                PartPose.offsetAndRotation(0, 0.27243F, 5.66932F, 1.48353F, 0, 0));
 
-        PartDefinition Body = buried.addOrReplaceChild("Body", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -13.0F, 0.0F, 1.4835F, 0.0F, 0.0F));
+        Body.addOrReplaceChild("RightArm",
+                CubeListBuilder.create()
+                        .texOffs(2, 0).mirror().addBox(-1, 5, -1, 2, 0, 2, new CubeDeformation(0.01F)).mirror(false)
+                        .texOffs(40, 16).addBox(-1, -1, -1, 2, 12, 2),
+                PartPose.offsetAndRotation(5, -11.04149F, -0.04967F, -2.83616F, 0, 0.34907F));
 
-        PartDefinition Legs = Body.addOrReplaceChild("Legs", CubeListBuilder.create(), PartPose.offset(4.0F, 1.0F, 0.0F));
+        Body.addOrReplaceChild("LeftArm",
+                CubeListBuilder.create()
+                        .texOffs(40, 0).mirror().addBox(-1, -1, -1, 2, 12, 2).mirror(false)
+                        .texOffs(-2, 0).mirror().addBox(-1, 5, -1, 2, 0, 2, new CubeDeformation(0.01F)).mirror(false),
+                PartPose.offsetAndRotation(-5, -11.04149F, -0.04967F, -2.83616F, 0, -0.34907F));
 
-        PartDefinition LeftLeg = Legs.addOrReplaceChild("LeftLeg", CubeListBuilder.create().texOffs(32, 0).mirror().addBox(-1.0F, 0.0F, -1.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false).texOffs(-2, 2).mirror().addBox(-1.0F, 6.0F, -1.0F, 2.0F, 0.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-2.0F, 11.0F, 0.0F, -0.0444F, -0.0852F, -0.112F));
+        Body.addOrReplaceChild("Head",
+                CubeListBuilder.create()
+                        .texOffs(0, 0).addBox(-4, -6, -8, 8, 8, 8),
+                PartPose.offsetAndRotation(0, -12.04149F, -0.04967F, -1.48353F, 0, 0));
 
-        PartDefinition RightLeg = Legs.addOrReplaceChild("RightLeg", CubeListBuilder.create().texOffs(32, 16).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)).texOffs(2, 2).mirror().addBox(-1.0F, 5.0F, -2.0F, 2.0F, 0.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-6.0F, 12.0F, 1.0F, 0.0F, 0.0F, 0.2182F));
+        buried.addOrReplaceChild("LeftLeg",
+                CubeListBuilder.create()
+                        .texOffs(32, 0).mirror().addBox(-1, -0.8087F, -1.91225F, 2, 12, 2).mirror(false)
+                        .texOffs(-2, 2).mirror().addBox(-1, 5.1913F, -1.91225F, 2, 0, 2, new CubeDeformation(0.01F)).mirror(false),
+                PartPose.offsetAndRotation(-2, -0.47757F, 6.37366F, 1.39626F, 0, 0));
 
-        PartDefinition Arms = Body.addOrReplaceChild("Arms", CubeListBuilder.create(), PartPose.offset(-2.0F, 13.0F, 1.0F));
+        buried.addOrReplaceChild("RightLeg",
+                CubeListBuilder.create()
+                        .texOffs(32, 16).addBox(-1, -1, -1.96231F, 2, 12, 2)
+                        .texOffs(2, 2).mirror().addBox(-1, 5, -1.96231F, 2, 0, 2, new CubeDeformation(0.01F)).mirror(false),
+                PartPose.offsetAndRotation(2, -0.59074F, 6.66932F, 1.39626F, 0, 0));
 
-        PartDefinition LeftArm = Arms.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(40, 0).mirror().addBox(-1.0F, -1.0F, -1.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false).texOffs(-2, 0).mirror().addBox(-1.0F, 5.0F, -1.0F, 2.0F, 0.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(7.0F, -12.0F, -1.0F, -2.7213F, -0.0735F, 0.4305F));
-
-        PartDefinition RightArm = Arms.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(2, 0).mirror().addBox(-1.0F, 5.0F, -1.0F, 2.0F, 0.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false).texOffs(40, 16).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 12.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.0F, -12.0F, -1.0F, -2.7242F, 0.4157F, -0.1073F));
-
-        return LayerDefinition.create(meshdefinition, 64, 32);
+        return LayerDefinition.create(mesh, 64, 32);
     }
 
+    public static LayerDefinition createArmorLayer(CubeDeformation deformation) {
+        MeshDefinition mesh = new MeshDefinition();
+        PartDefinition root = mesh.getRoot();
 
-    @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        PartDefinition buried = root.addOrReplaceChild("buried",
+                CubeListBuilder.create(),
+                PartPose.offset(0, 21.72757F, 0.33068F));
 
-        if (head.yRot != 0) {
-            body.yRot = (head.yRot / 10);
-            body.zRot = (head.yRot / 10);
-            legs.xRot = (-head.yRot / 8);
-            arms.xRot = (head.yRot / 8);
-        }
+        PartDefinition Body = buried.addOrReplaceChild("Body",
+                CubeListBuilder.create(),
+                PartPose.offsetAndRotation(0, 0.27243F, 5.66932F, 1.48353F, 0, 0));
 
-        if (head != null) {
-            head.xRot = (headPitch * ((float) Math.PI / 180F));
-            head.yRot = (netHeadYaw * ((float) Math.PI / 180F));
-        }
+        Body.addOrReplaceChild("BodyArmor",
+                CubeListBuilder.create().texOffs(16, 16).addBox(-4, -12.04149F, -2.04967F, 8, 12, 4, deformation),
+                PartPose.ZERO);
 
+        Body.addOrReplaceChild("RightArm",
+                CubeListBuilder.create().texOffs(40, 16).addBox(-2, -1, -2, 4, 12, 4, deformation),
+                PartPose.offsetAndRotation(5, -11.04149F, -0.04967F, -2.83616F, 0, 0.34907F));
+
+        Body.addOrReplaceChild("LeftArm",
+                CubeListBuilder.create().texOffs(40, 16).mirror().addBox(-2, -1, -2, 4, 12, 4, deformation),
+                PartPose.offsetAndRotation(-5, -11.04149F, -0.04967F, -2.83616F, 0, -0.34907F));
+
+        Body.addOrReplaceChild("Head",
+                CubeListBuilder.create().texOffs(0, 0).addBox(-4, -6, -8, 8, 8, 8, deformation),
+                PartPose.offsetAndRotation(0, -12.04149F, -0.04967F, -1.48353F, 0, 0));
+
+        buried.addOrReplaceChild("LeftLeg",
+                CubeListBuilder.create().texOffs(0, 16).mirror().addBox(-2, -0.8087F, -2.91225F, 4, 12, 4, deformation),
+                PartPose.offsetAndRotation(-2, -0.47757F, 6.37366F, 1.39626F, 0, 0));
+
+        buried.addOrReplaceChild("RightLeg",
+                CubeListBuilder.create().texOffs(0, 16).addBox(-2, -1, -2.96231F, 4, 12, 4, deformation),
+                PartPose.offsetAndRotation(2, -0.59074F, 6.66932F, 1.39626F, 0, 0));
+
+        return LayerDefinition.create(mesh, 64, 32);
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-        buried.render(poseStack, buffer, packedLight, packedOverlay, color);
+    public void setupAnim(Buried entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.root.getAllParts().forEach(ModelPart::resetPose);
+
+        this.animate(entity.emergeAnimationState, BuriedAnimation.EMERGE, ageInTicks);
+        this.animate(entity.lungeStartAnimationState, BuriedAnimation.LUNGE_START, ageInTicks);
+        this.animate(entity.lungeAirborneAnimationState, BuriedAnimation.LUNGE_AIRBORNE, ageInTicks);
+
+        if (entity.getAnimState() == Buried.ANIM_NONE) {
+            if (entity.isAggressive()) {
+                this.animateWalk(BuriedAnimation.CHASING, limbSwing, limbSwingAmount, 2.0F, 2.5F);
+            } else {
+                this.animateWalk(BuriedAnimation.CRAWL, limbSwing, limbSwingAmount, 2.0F, 2.5F);
+            }
+        }
+
+        this.head.xRot += headPitch * DEG_TO_RAD;
+        this.head.zRot -= netHeadYaw * DEG_TO_RAD;
+    }
+
+    @Override
+    public ModelPart root() {
+        return this.root;
     }
 }

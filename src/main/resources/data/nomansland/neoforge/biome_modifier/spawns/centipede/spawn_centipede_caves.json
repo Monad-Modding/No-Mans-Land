@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#nomansland:caves",
+  "spawners": [
+    {
+      "type": "nomansland:centipede",
+      "weight": 30,
+      "minCount": 1,
+      "maxCount": 3
+    }
+  ]
+}

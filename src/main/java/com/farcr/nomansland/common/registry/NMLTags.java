@@ -13,9 +13,11 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class NMLTags {
     public static final TagKey<Item> FIRESTARTERS = createItemTag("firestarters");
+    public static final TagKey<Item> FRIGHTENS_BUGS = createItemTag("frightens_bugs");
     public static final TagKey<Item> DEER_FOOD = createItemTag("deer_food");
     public static final TagKey<Item> MOOSE_FOOD = createItemTag("moose_food");
     public static final TagKey<Item> TORTOISE_FOOD = createItemTag("tortoise_food");
+    public static final TagKey<Item> CLOD_FOOD = createItemTag("clod_food");
     public static final TagKey<Item> MAKES_RESIN_OIL = createItemTag("makes_resin_oil");
     public static final TagKey<Item> INK_IMMUNE = createItemTag("ink_immune");
     public static final TagKey<Item> MAKES_PATHS = createItemTag("makes_paths");
@@ -68,6 +70,8 @@ public class NMLTags {
 
     public static final TagKey<Biome> HAS_GRAVEL_SHORE = createBiomeTag("has_gravel_shore");
     public static final TagKey<Block> SUITABLE_TORTOISE_HOME = createBlockTag("tortoise_valid_home");
+    public static final TagKey<Block> CENTIPEDE_BURROW = createBlockTag("centipede_burrow");
+    public static final TagKey<Block> REMNANT_DIVEABLE = createBlockTag("remnant_diveable");
 
     public static class FeatureAddition {
         // Broad brushes

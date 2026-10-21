@@ -204,6 +204,18 @@ public class NMLBlockTagsProvider extends BlockTagsProvider {
         tag(NMLTags.INCORRECT_FOR_RITUAL_TOOL).addTag(BlockTags.INCORRECT_FOR_STONE_TOOL);
         tag(NMLTags.RESONATES_WITH_RITUAL_PICKAXE).addTag(Tags.Blocks.ORES);
         tag(NMLTags.OCCLUDES_RITUAL_PICKAXE_RESONANCE).addTags(BlockTags.OCCLUDES_VIBRATION_SIGNALS);
+
+        tag(NMLTags.CENTIPEDE_BURROW).add(Blocks.STONE, Blocks.DEEPSLATE, Blocks.TUFF, Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.GRAVEL, Blocks.CLAY, Blocks.MOSS_BLOCK, Blocks.MUD, NMLBlocks.SILTSTONE.get());
+
+        tag(NMLTags.REMNANT_DIVEABLE)
+                .addTag(BlockTags.BASE_STONE_OVERWORLD)
+                .addTag(BlockTags.DIRT)
+                .addTag(Tags.Blocks.ORES)
+                .addTag(Tags.Blocks.GRAVELS)
+                .addTag(Tags.Blocks.SANDS)
+                .add(Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.CALCITE, Blocks.DRIPSTONE_BLOCK, Blocks.SMOOTH_BASALT,
+                        Blocks.CLAY, Blocks.PACKED_MUD, Blocks.TERRACOTTA,
+                        NMLBlocks.SILTSTONE.get(), NMLBlocks.SILT.get(), NMLBlocks.COARSE_SILT.get());
     }
 
     @SafeVarargs

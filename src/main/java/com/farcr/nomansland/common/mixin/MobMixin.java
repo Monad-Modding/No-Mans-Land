@@ -3,6 +3,7 @@ package com.farcr.nomansland.common.mixin;
 import com.farcr.nomansland.common.entity.billhook_bass.BillhookBass;
 import com.farcr.nomansland.common.entity.cervidae.deer.Deer;
 import com.farcr.nomansland.common.entity.cervidae.moose.Moose;
+import com.farcr.nomansland.common.entity.clod.Clod;
 import com.farcr.nomansland.common.entity.frienderman.Frienderman;
 import com.farcr.nomansland.common.extension.EntityExtension;
 import net.minecraft.world.entity.Mob;
@@ -21,5 +22,6 @@ public class MobMixin implements EntityExtension {
         Moose.registerMooseRelatedGoals(mob);
         BillhookBass.registerBillhookBassRelatedGoals(mob);
         Frienderman.registerFriendermanRelatedGoals(mob);
+        Clod.registerClodRelatedGoals(mob);
     }
 }

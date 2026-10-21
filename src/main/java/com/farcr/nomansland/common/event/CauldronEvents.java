@@ -6,6 +6,7 @@ import com.farcr.nomansland.common.recipe.CauldronInteractionInput;
 import com.farcr.nomansland.common.recipe.CauldronInteractionRecipe;
 import com.farcr.nomansland.common.registry.NMLRecipeSerializers;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
+import com.farcr.nomansland.common.registry.items.NMLDataComponents;
 import com.farcr.nomansland.common.registry.items.NMLItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -88,6 +89,21 @@ public class CauldronEvents {
                     level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
                 }
             } else if (state.getBlock() instanceof LayeredCauldronBlock) {
+                if (state.is(Blocks.WATER_CAULDRON) && stack.getCount() == 1 && stack.has(NMLDataComponents.TRANSLUCENT.get())) {
+                    ItemStack washed = stack.copy();
+                    washed.remove(NMLDataComponents.TRANSLUCENT.get());
+                    player.setItemInHand(hand, washed);
+                    int i = state.getValue(LayeredCauldronBlock.LEVEL) - 1;
+                    newState = i == 0 ? Blocks.CAULDRON.defaultBlockState() : state.setValue(LayeredCauldronBlock.LEVEL, i);
+                    level.setBlockAndUpdate(pos, newState);
+                    level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    player.awardStat(Stats.USE_CAULDRON);
+                    player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+                    level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
+                    event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide));
+                    return;
+                }
+
                 RecipeManager recipes = level.getRecipeManager();
 
                 CauldronInteractionInput input = new CauldronInteractionInput(state, stack);

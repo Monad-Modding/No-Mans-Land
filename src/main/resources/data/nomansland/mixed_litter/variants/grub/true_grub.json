@@ -1,0 +1,7 @@
+{
+  "type": "nomansland:grub",
+  "group": "nomansland:grub",
+  "arguments": {
+    "texture": "nomansland:grub/true_grub"
+  }
+}

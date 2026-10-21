@@ -1,0 +1,10 @@
+{
+  "conditions": {
+    "entity_predicate": {
+      "type": "nomansland:buried"
+    }
+  },
+  "exclusive": true,
+  "replace_default": true,
+  "selection": "weighted"
+}

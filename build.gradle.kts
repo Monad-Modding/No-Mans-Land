@@ -108,6 +108,7 @@ repositories {
     maven("https://maven.ryanhcode.dev/releases")
     maven("https://maven.theillusivec4.top/")
     maven("https://maven.createmod.net")
+    maven("https://maven.gegy.dev/releases")
     maven("https://maven.ithundxr.dev/snapshots")
     maven("https://maven.squiddev.cc") {
         name = "SquidDev Maven"
@@ -152,6 +153,9 @@ dependencies {
     compileOnly("maven.modrinth:etched:h6eJfwiW")
     compileOnly("maven.modrinth:stellarview:QD13LaRR")
     implementation("maven.modrinth:appleskin:3.0.5+mc1.21")
+
+//    compileOnly("dev.lambdaurora.lambdynamiclights:lambdynamiclights-runtime:4.8.0+1.21.1")
+    localRuntime("maven.modrinth:lambdynamiclights:4.8.10+1.21.1")
 
     compileOnly("mezz.jei:jei-${mc["version"]}-common-api:${deps["jei"]}")
     compileOnly("mezz.jei:jei-${mc["version"]}-neoforge-api:${deps["jei"]}")

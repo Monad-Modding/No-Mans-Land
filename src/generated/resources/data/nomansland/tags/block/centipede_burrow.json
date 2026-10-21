@@ -1,0 +1,14 @@
+{
+  "values": [
+    "minecraft:stone",
+    "minecraft:deepslate",
+    "minecraft:tuff",
+    "minecraft:dirt",
+    "minecraft:coarse_dirt",
+    "minecraft:gravel",
+    "minecraft:clay",
+    "minecraft:moss_block",
+    "minecraft:mud",
+    "nomansland:siltstone"
+  ]
+}

@@ -95,7 +95,7 @@ public class NMLItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.EQUIPPABLE_ENCHANTABLE).add(NMLItems.ANCIENT_BRONZE_MASK.get());
         tag(ItemTags.CHEST_ARMOR).add(NMLItems.TORTOISE_SHELL.get());
         tag(ItemTags.CHEST_ARMOR_ENCHANTABLE).add(NMLItems.TORTOISE_SHELL.get());
-        tag(ItemTags.FISHES).add(NMLItems.COOKED_BILLHOOK_BASS.get(), NMLItems.BILLHOOK_BASS.get());
+        tag(ItemTags.FISHES).add(NMLItems.COOKED_BILLHOOK_BASS.get(), NMLItems.BILLHOOK_BASS.get(), NMLItems.CAVE_CARP.get());
 
         tag(NMLTags.DOES_NOT_CORRODE).add(
                 Items.NETHERITE_SWORD, Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE,

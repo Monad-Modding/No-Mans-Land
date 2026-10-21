@@ -1,0 +1,20 @@
+{
+  "defaults": {
+    "entity": "",
+    "texture": "nomansland:grub/true_grub"
+  },
+  "actions": [
+    {
+      "type": "mixed_litter:set_texture",
+      "arguments": {
+        "texture": "texture"
+      }
+    },
+    {
+      "type": "nomansland:set_grub_bug",
+      "arguments": {
+        "entity": "entity"
+      }
+    }
+  ]
+}

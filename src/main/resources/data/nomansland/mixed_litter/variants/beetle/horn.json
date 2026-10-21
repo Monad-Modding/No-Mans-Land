@@ -1,0 +1,7 @@
+{
+  "type": "mixed_litter:simple_texture",
+  "group": "nomansland:beetle",
+  "arguments": {
+    "texture": "nomansland:beetle/horn"
+  }
+}

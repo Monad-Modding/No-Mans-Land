@@ -7,8 +7,10 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.attachment.AttachmentType;
+import net.minecraft.util.Unit;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -19,6 +21,11 @@ public class NMLDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Long>> TIME_WHEN_DISABLED = DATA_COMPONENTS.registerComponentType(
             "time_when_disabled", builder -> builder
                     .persistent(Codec.LONG).networkSynchronized(ByteBufCodecs.VAR_LONG));
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Unit>> TRANSLUCENT = DATA_COMPONENTS.registerComponentType(
+            "translucent", builder -> builder
+                    .persistent(Codec.unit(Unit.INSTANCE))
+                    .networkSynchronized(StreamCodec.unit(Unit.INSTANCE)));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> PUNCH_COOLDOWN = DATA_COMPONENTS.registerComponentType(
             "punch_cooldown", builder -> builder

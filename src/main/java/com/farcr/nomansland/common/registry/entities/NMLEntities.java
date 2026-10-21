@@ -3,17 +3,25 @@ package com.farcr.nomansland.common.registry.entities;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.dreams.dreamlevel.DreamingPlayer;
 import com.farcr.nomansland.common.entity.*;
+import com.farcr.nomansland.common.entity.beetle.Beetle;
+import com.farcr.nomansland.common.entity.beetle.DungBall;
+import com.farcr.nomansland.common.entity.beetle.Grub;
 import com.farcr.nomansland.common.entity.billhook_bass.BillhookBass;
 import com.farcr.nomansland.common.entity.bombs.AcridBomb;
+import com.farcr.nomansland.common.entity.cave_carp.CaveCarp;
 import com.farcr.nomansland.common.entity.bombs.Explosive;
 import com.farcr.nomansland.common.entity.bombs.Firebomb;
 import com.farcr.nomansland.common.entity.bombs.InkBomb;
 import com.farcr.nomansland.common.entity.bombs.LivingUrn;
 import com.farcr.nomansland.common.entity.buddy.Buddy;
+import com.farcr.nomansland.common.entity.centipede.Centipede;
 import com.farcr.nomansland.common.entity.cervidae.deer.Deer;
+import com.farcr.nomansland.common.entity.clod.Clod;
+import com.farcr.nomansland.common.entity.clod.TranslucentItemFrame;
 import com.farcr.nomansland.common.entity.frienderman.Frienderman;
 import com.farcr.nomansland.common.entity.goose.Goose;
 import com.farcr.nomansland.common.entity.living_pot.LivingPot;
+import com.farcr.nomansland.common.entity.remnant.Remnant;
 import com.farcr.nomansland.common.entity.tortoise.Tortoise;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
@@ -91,13 +99,39 @@ public class NMLEntities {
 
     public static final Supplier<EntityType<BillhookBass>> BILLHOOK_BASS = register("billhook_bass", BillhookBass::new, MobCategory.WATER_CREATURE, 0.7F, 0.5F);
 
+    public static final Supplier<EntityType<CaveCarp>> CAVE_CARP = register("cave_carp", CaveCarp::new, MobCategory.WATER_CREATURE, 0.5F, 0.4F);
+
     public static final Supplier<EntityType<Deer>> DEER = register("deer", Deer::new, MobCategory.CREATURE, 0.8F, 1.4F);
 
     public static final Supplier<EntityType<Goose>> GOOSE = register("goose", Goose::new, MobCategory.CREATURE, 0.6F, 0.9F);
 
-//    public static final Supplier<EntityType<BuriedEntity>> BURIED =
-//            ENTITIES.register("buried", () -> EntityType.Builder.of(BuriedEntity::new, MobCategory.MONSTER)
-//                    .sized(1.0f, 1.0f).clientTrackingRange(8).build("buried"));
+    public static final Supplier<EntityType<Buried>> BURIED = register("buried", Buried::new, MobCategory.MONSTER, 1.0F, 0.6F);
+
+    public static final Supplier<EntityType<Centipede>> CENTIPEDE = register("centipede", Centipede::new, MobCategory.MONSTER, 0.5F, 0.4F);
+
+    public static final Supplier<EntityType<Beetle>> BEETLE = register("beetle", Beetle::new, MobCategory.CREATURE, 0.7F, 0.5F);
+
+    public static final Supplier<EntityType<Grub>> GRUB = register("grub", Grub::new, MobCategory.CREATURE, 0.5F, 0.4F);
+
+    public static final Supplier<EntityType<DungBall>> DUNG_BALL =
+            ENTITIES.register("dung_ball", () -> EntityType.Builder.of(DungBall::new, MobCategory.MISC)
+                    .sized(0.7F, 0.7F).clientTrackingRange(8).updateInterval(3).build("dung_ball"));
+
+    public static final Supplier<EntityType<Clod>> CLOD =
+            ENTITIES.register("clod", () -> EntityType.Builder.of(Clod::new, MobCategory.CREATURE)
+                    .sized(0.6F, 0.9F)
+                    .eyeHeight(0.4F)
+                    .passengerAttachments(new Vec3(0.0F, 0.9F, 0.0F))
+                    .clientTrackingRange(8)
+                    .build("clod"));
+
+    public static final Supplier<EntityType<TranslucentItemFrame>> TRANSLUCENT_ITEM_FRAME =
+            ENTITIES.register("translucent_item_frame", () -> EntityType.Builder.<TranslucentItemFrame>of(TranslucentItemFrame::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .eyeHeight(0.0F)
+                    .clientTrackingRange(10)
+                    .updateInterval(Integer.MAX_VALUE)
+                    .build("translucent_item_frame"));
 
     // TODO: moose
 //    public static final Supplier<EntityType<Moose>> MOOSE =
@@ -119,6 +153,14 @@ public class NMLEntities {
             .sized(.75f, 2.05f)
             .ridingOffset(-0.7F)
             .build("buddy"));
+
+    public static final Supplier<EntityType<Remnant>> REMNANT =
+            ENTITIES.register("remnant", () -> EntityType.Builder.of(Remnant::new, MobCategory.MONSTER)
+                    .sized(0.8F, 2.3F)
+                    .eyeHeight(2.05F)
+                    .fireImmune()
+                    .clientTrackingRange(10)
+                    .build("remnant"));
 
     public static final Supplier<EntityType<Frienderman>> FRIENDERMAN =
             ENTITIES.register("frienderman", () -> EntityType.Builder.of(Frienderman::new, MobCategory.MONSTER)

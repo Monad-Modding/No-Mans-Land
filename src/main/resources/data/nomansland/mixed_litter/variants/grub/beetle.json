@@ -1,0 +1,8 @@
+{
+  "type": "nomansland:grub",
+  "group": "nomansland:grub",
+  "arguments": {
+    "texture": "nomansland:grub/beetle",
+    "entity": "nomansland:beetle"
+  }
+}

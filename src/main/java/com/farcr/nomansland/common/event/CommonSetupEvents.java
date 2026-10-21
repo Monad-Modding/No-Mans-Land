@@ -4,12 +4,20 @@ import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.blockentity.BombDispenseBehavior;
 import com.farcr.nomansland.common.definitions.BlockDefinition;
 import com.farcr.nomansland.common.definitions.ItemDefinition;
+import com.farcr.nomansland.common.entity.Buried;
 import com.farcr.nomansland.common.entity.billhook_bass.BillhookBass;
+import com.farcr.nomansland.common.entity.cave_carp.CaveCarp;
+import com.farcr.nomansland.common.entity.beetle.Beetle;
+import com.farcr.nomansland.common.entity.beetle.Grub;
 import com.farcr.nomansland.common.entity.buddy.Buddy;
+import com.farcr.nomansland.common.entity.buddy.BuddyFood;
+import com.farcr.nomansland.common.entity.centipede.Centipede;
 import com.farcr.nomansland.common.entity.cervidae.deer.Deer;
+import com.farcr.nomansland.common.entity.clod.Clod;
 import com.farcr.nomansland.common.entity.frienderman.Frienderman;
 import com.farcr.nomansland.common.entity.goose.Goose;
 import com.farcr.nomansland.common.entity.living_pot.LivingPot;
+import com.farcr.nomansland.common.entity.remnant.Remnant;
 import com.farcr.nomansland.common.entity.tortoise.Tortoise;
 import com.farcr.nomansland.common.integration.FDIntegration;
 import com.farcr.nomansland.common.integration.Mods;
@@ -89,20 +97,28 @@ public class CommonSetupEvents {
     @SubscribeEvent
     public static void createEntityAttributes(EntityAttributeCreationEvent event) {
         event.put(NMLEntities.BILLHOOK_BASS.get(), BillhookBass.createAttributes().build());
+        event.put(NMLEntities.CAVE_CARP.get(), CaveCarp.createAttributes().build());
         event.put(NMLEntities.DEER.get(), Deer.createAttributes().build());
         // TODO: moose
 //        event.put(NMLEntities.MOOSE.get(), Moose.createAttributes().build());
         event.put(NMLEntities.GOOSE.get(), Goose.createAttributes().build());
+        event.put(NMLEntities.CLOD.get(), Clod.createAttributes().build());
         event.put(NMLEntities.TORTOISE.get(), Tortoise.createAttributes().build());
         event.put(NMLEntities.LIVING_POT.get(), LivingPot.createAttributes().build());
         event.put(NMLEntities.BUDDY.get(), Buddy.createAttributes().build());
         event.put(NMLEntities.FRIENDERMAN.get(), Frienderman.createAttributes().build());
+        event.put(NMLEntities.BURIED.get(), Buried.createAttributes().build());
+        event.put(NMLEntities.CENTIPEDE.get(), Centipede.createAttributes().build());
+        event.put(NMLEntities.REMNANT.get(), Remnant.createAttributes().build());
+        event.put(NMLEntities.BEETLE.get(), Beetle.createAttributes().build());
+        event.put(NMLEntities.GRUB.get(), Grub.createAttributes().build());
         event.put(NMLEntities.DREAMING_PLAYER.get(), Mob.createMobAttributes().build());
     }
 
     @SubscribeEvent
     public static void registerSpawnPlacements(final RegisterSpawnPlacementsEvent event) {
         event.register(NMLEntities.BILLHOOK_BASS.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, BillhookBass::checkSurfaceWaterAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(NMLEntities.CAVE_CARP.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, CaveCarp::checkCaveCarpSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(NMLEntities.DEER.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Deer::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
         // TODO: moose
 //        event.register(NMLEntities.MOOSE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Moose::checkMooseSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
@@ -110,6 +126,11 @@ public class CommonSetupEvents {
         event.register(EntityType.HUSK, SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(NMLEntities.TORTOISE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Tortoise::checkTortoiseSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(NMLEntities.GOOSE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.OCEAN_FLOOR, Goose::checkGooseSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(NMLEntities.CLOD.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Clod::checkClodSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(NMLEntities.BEETLE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Beetle::checkBeetleSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(NMLEntities.GRUB.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Grub::checkGrubSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(NMLEntities.CENTIPEDE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Centipede::checkCentipedeSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(NMLEntities.REMNANT.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Remnant::checkRemnantSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
     @SubscribeEvent

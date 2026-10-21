@@ -1,0 +1,11 @@
+{
+  "conditions": {
+    "entity_predicate": {
+      "type": "nomansland:centipede",
+      "nbt": "{Stunning:1b}"
+    }
+  },
+  "exclusive": true,
+  "replace_default": true,
+  "selection": "weighted"
+}

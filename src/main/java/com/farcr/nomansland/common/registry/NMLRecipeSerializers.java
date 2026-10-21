@@ -5,6 +5,7 @@ import com.farcr.nomansland.common.recipe.CauldronInteractionRecipe;
 import com.farcr.nomansland.common.recipe.CauldronInteractionRecipeSerializer;
 import com.farcr.nomansland.common.recipe.GasMaskCombineRecipe;
 import com.farcr.nomansland.common.recipe.GasMaskRefuelRecipe;
+import com.farcr.nomansland.common.recipe.TranslucentArmorRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -25,6 +26,9 @@ public class NMLRecipeSerializers {
 
     public static final Supplier<RecipeSerializer<GasMaskCombineRecipe>> GAS_MASK_COMBINE =
             RECIPE_SERIALIZERS.register("gas_mask_combine", () -> new SimpleCraftingRecipeSerializer<>(GasMaskCombineRecipe::new));
+
+    public static final Supplier<SimpleCraftingRecipeSerializer<TranslucentArmorRecipe>> TRANSLUCENT_ARMOR_SERIALIZER =
+            RECIPE_SERIALIZERS.register("translucent_armor", () -> new SimpleCraftingRecipeSerializer<>(TranslucentArmorRecipe::new));
 
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =
             DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE, NoMansLand.MODID);
