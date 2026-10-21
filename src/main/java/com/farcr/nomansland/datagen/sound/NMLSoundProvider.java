@@ -78,6 +78,7 @@ public class NMLSoundProvider extends LodestoneBlockSoundEventSystem {
         add(NMLSounds.CRUDE_TRAPDOOR_CLOSE, s -> s.subtitle("subtitles.block.trapdoor.toggle").with(allSounds("block/crude_door/close")));
 
         add(NMLSounds.ICICLE_SHATTER, s -> s.subtitle("nomansland.subtitle.block.icicle.shatter").with(sound("block.glass.break", EVENT)));
+        add(NMLSounds.TAP_TURNS, s -> s.subtitle("nomansland.subtitle.block.tap.turns").with(sound("block/tap/turns")));
 
         //Items
         add(NMLSounds.BANDAGE_WRAP, s -> s.with(sound("item/bandage/wrap")));
@@ -162,6 +163,7 @@ public class NMLSoundProvider extends LodestoneBlockSoundEventSystem {
         add(NMLSounds.BUDDY_BONE_BREAK, s -> s.with(allSounds("entity/buddy/bone_break")));
 
         //Living Urn
+        add(NMLSounds.POT_REGENERATE, s -> s.subtitle(null).with(allSounds("block/pot/regenerate", se -> se.pitch(1.3f))));
         add(NMLSounds.LIVING_URN_SHATTERS, s -> s.with(allSounds("minecraft:block/decorated_pot/shatter")));
 
         //Living Pot

@@ -1,0 +1,32 @@
+{
+  "variants": {
+    "facing=south,up=false": {
+      "model": "nomansland:block/building/wooden_platform_step_lower"
+    },
+    "facing=west,up=false": {
+      "model": "nomansland:block/building/wooden_platform_step_lower",
+      "y": 90
+    },
+    "facing=north,up=false": {
+      "model": "nomansland:block/building/wooden_platform_step_lower_flipped"
+    },
+    "facing=east,up=false": {
+      "model": "nomansland:block/building/wooden_platform_step_lower_flipped",
+      "y": 90
+    },
+    "facing=south,up=true": {
+      "model": "nomansland:block/building/wooden_platform_step_upper"
+    },
+    "facing=west,up=true": {
+      "model": "nomansland:block/building/wooden_platform_step_upper",
+      "y": 90
+    },
+    "facing=north,up=true": {
+      "model": "nomansland:block/building/wooden_platform_step_upper_flipped"
+    },
+    "facing=east,up=true": {
+      "model": "nomansland:block/building/wooden_platform_step_upper_flipped",
+      "y": 90
+    }
+  }
+}

@@ -16,4 +16,8 @@ public class LevelChunkMixin implements LevelChunkExtension {
     public void nml$setIgnoreBuddyAnchor() {
         this.nml$ignoreBuddyAnchor = true;
     }
+
+    public void nml$clearIgnoreBuddyAnchor() {
+        this.nml$ignoreBuddyAnchor = false;
+    }
 }

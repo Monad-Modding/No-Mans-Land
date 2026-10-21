@@ -9,9 +9,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public record ClientboundBandageSoundPacket(int playerId) implements CustomPacketPayload {
+public record ClientboundBandageSoundPacket(int playerId, int targetId) implements CustomPacketPayload {
     public static final StreamCodec<ByteBuf, ClientboundBandageSoundPacket> STREAM_CODEC = StreamCodec.composite(
         ByteBufCodecs.VAR_INT, ClientboundBandageSoundPacket::playerId,
+        ByteBufCodecs.VAR_INT, ClientboundBandageSoundPacket::targetId,
         ClientboundBandageSoundPacket::new
     );
 
@@ -25,6 +26,7 @@ public record ClientboundBandageSoundPacket(int playerId) implements CustomPacke
     public void handleData(final IPayloadContext context) {
         if (context.flow().isClientbound()) {
             context.enqueueWork(() -> {
+                com.farcr.nomansland.client.animation.BandageAnimations.setTarget(playerId(), targetId());
                 Entity entity = context.player().level().getEntity(playerId());
                 if (entity instanceof Player p) {
                     com.farcr.nomansland.client.sound.BandageSoundInstance.play(p);

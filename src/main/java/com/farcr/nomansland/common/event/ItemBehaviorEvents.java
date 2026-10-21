@@ -1,6 +1,7 @@
 package com.farcr.nomansland.common.event;
 
 import com.farcr.nomansland.NoMansLand;
+import com.farcr.nomansland.common.block.IciclesBlock;
 import com.farcr.nomansland.common.block.ToxicGasBlock;
 import com.farcr.nomansland.common.effect.FlammableEffect;
 import com.farcr.nomansland.common.handler.ToxicGasHandler;
@@ -39,6 +40,9 @@ public class ItemBehaviorEvents {
             if (!entity.level().isClientSide()) {
                 FlammableEffect.dampenWhenWet(entity);
                 ToxicGasHandler.handle(entity);
+                if (entity.isPassenger()) {
+                    IciclesBlock.hitRider(entity);
+                }
             }
 
             ItemStack stack = entity.getItemBySlot(EquipmentSlot.HEAD);

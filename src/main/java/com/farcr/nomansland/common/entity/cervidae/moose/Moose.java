@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.entity.cervidae.moose;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.client.NMLMooseChargeAttackHandler;
 import com.farcr.nomansland.common.entity.cervidae.IAntlers;
 import com.farcr.nomansland.common.entity.cervidae.ShedAntlersGoal;
@@ -568,6 +569,7 @@ public class Moose extends PathfinderMob implements PlayerRideable, PlayerRideab
             if (!isClientSide) {
                 stack.shrink(1);
                 playSound(NMLSounds.MOOSE_EAT.get(), 1f, 1f);
+                this.gameEvent(GameEvent.EAT);
                 heal(8);
             }
 
@@ -601,6 +603,7 @@ public class Moose extends PathfinderMob implements PlayerRideable, PlayerRideab
             if (!isClientSide) {
                 stack.shrink(1);
                 playSound(NMLSounds.MOOSE_EAT.get(), 1f, 1f);
+                this.gameEvent(GameEvent.EAT);
                 int stage = getPacificationStage();
                 if (stage < MINIMUM_TAME_ATTEMPTS) {
                     stage++;

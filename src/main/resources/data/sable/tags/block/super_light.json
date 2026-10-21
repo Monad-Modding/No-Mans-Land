@@ -3,6 +3,7 @@
   "values": [
     "nomansland:wooden_platform",
     "nomansland:wooden_platform_stairs",
+    "nomansland:wooden_platform_step",
     "nomansland:tortoise_egg",
     { "id": "nomansland:stallion_strips", "required": false }
   ]

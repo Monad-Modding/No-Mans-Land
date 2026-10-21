@@ -1,61 +1,21 @@
 {
-  "sources": [
-    {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "minecraft:bee_nest",
-        "Properties": {
-          "honey_level": "3"
-        }
-      }
-    },
-    {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "minecraft:bee_nest",
-        "Properties": {
-          "honey_level": "4"
-        }
-      }
-    },
-    {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "minecraft:bee_nest",
-        "Properties": {
-          "honey_level": "5"
-        }
-      }
-    },
-    {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "minecraft:beehive",
-        "Properties": {
-          "honey_level": "3"
-        }
-      }
-    },
-    {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "minecraft:beehive",
-        "Properties": {
-          "honey_level": "4"
-        }
-      }
-    },
-    {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "minecraft:beehive",
-        "Properties": {
-          "honey_level": "5"
-        }
-      }
+  "source": {
+    "block": [
+      "minecraft:bee_nest",
+      "minecraft:beehive"
+    ],
+    "properties": {
+      "honey_level": "5"
     }
-  ],
-  "cauldron": "nomansland:honey_cauldron",
-  "rate": 0,
-  "particle": "minecraft:dripping_honey"
+  },
+  "output": {
+    "cauldron": "nomansland:honey_cauldron"
+  },
+  "interval": 80,
+  "particle": {
+    "type": "minecraft:dripping_honey"
+  },
+  "consume": {
+    "honey_level": "0"
+  }
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "siltstone_bricks",
+  "key": {
+    "#": {
+      "item": "minecraft:mossy_siltstone"
+    }
+  },
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "result": {
+    "count": 4,
+    "id": "nomansland:mossy_siltstone_bricks"
+  },
+  "show_notification": true
+}

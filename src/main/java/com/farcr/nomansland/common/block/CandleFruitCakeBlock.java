@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.common.integration.FDIntegration;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
@@ -98,6 +99,7 @@ public class CandleFruitCakeBlock extends AbstractCandleBlock {
                     pos.getX(), pos.getY() + 0.2, pos.getZ() + 0.5,
                     -0.05, 0, 0);
             level.playSound(null, pos, ModSounds.BLOCK_FOOD_SLICE.get(), SoundSource.PLAYERS, 0.8F, 0.8F);
+            level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
 
             return ItemInteractionResult.SUCCESS;
         }

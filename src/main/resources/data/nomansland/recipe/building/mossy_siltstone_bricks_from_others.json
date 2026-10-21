@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " # ",
+        "#C#",
+        " # "
+    ],
+    "key": {
+        "#": {
+            "tag": "nomansland:alternative_moss"
+        },
+        "C": {
+            "item": "nomansland:siltstone_bricks"
+        }
+    },
+    "result": {
+        "id": "nomansland:mossy_siltstone_bricks",
+        "count": 1
+    }
+}

@@ -1,6 +1,0 @@
-- Fixed occasional music-related crash
-- Improved meeting point generation
-- Fixed trimmed planks item tag being incomplete
-- Fixed parts of the inverted bell being broken by water
-- Fixed several bugs with the tortoise and improved their performance
-- Fixed some pot performance issues

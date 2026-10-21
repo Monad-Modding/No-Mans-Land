@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.entity.ai;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.common.block.cauldrons.WitchStewCauldron;
 import com.farcr.nomansland.common.integration.FDIntegration;
 import com.farcr.nomansland.common.mixin.IWitchAccessor;
@@ -73,6 +74,7 @@ public class WitchBowlStewGoal extends MoveToBlockGoal {
                         level.setBlock(this.blockPos.above(), FDIntegration.EMPTY_WITCH_STEW.block().defaultBlockState(), 3);
                     }
                     level.playSound(null, this.blockPos.above(), NMLSounds.WITCH_STEW_CAULDRON_EMPTY.value(), this.mob.getSoundSource());
+                    level.gameEvent(null, GameEvent.FLUID_PICKUP, this.blockPos.above());
                     this.mob.swing(InteractionHand.MAIN_HAND);
                     this.mob.setItemSlot(EquipmentSlot.MAINHAND, FDIntegration.WITCH_STEW_ITEM.stack());
                     if (this.mob instanceof Witch witch) {

@@ -295,6 +295,7 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
 
         level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT_FAIL, SoundSource.BLOCKS, 1, 1);
         pot.wobble(DecoratedPotBlockEntity.WobbleStyle.NEGATIVE);
+        level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
 
         if (pot.isLiving()) {
             pot.wakeUp(null);
@@ -367,7 +368,9 @@ public class PotBlock extends BaseEntityBlock implements SimpleWaterloggedBlock,
         if (level.getBlockEntity(pos) instanceof PotBlockEntity pot) {
             if (pot.variant == null) {
                 pot.ensureVariant(size);
-            } else if (state.getValue(BRITTLE) != pot.variant.traits().contains(PotTrait.BRITTLE)) state.setValue(BRITTLE, pot.variant.traits().contains(PotTrait.BRITTLE));
+            } else if (state.getValue(BRITTLE) != pot.variant.traits().contains(PotTrait.BRITTLE)) {
+                level.setBlock(pos, state.setValue(BRITTLE, pot.variant.traits().contains(PotTrait.BRITTLE)), Block.UPDATE_CLIENTS);
+            }
         }
 
         level.scheduleTick(pos, this, this.getDelayAfterPlace());

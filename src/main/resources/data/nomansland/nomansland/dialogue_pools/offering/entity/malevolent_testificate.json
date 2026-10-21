@@ -1,7 +1,7 @@
 {
     "condition": {
         "type": "nomansland:entity_conditional",
-        "entity": "#minecraft:illagers"
+        "entity": "#minecraft:illager"
     },
     "weight": 1,
     "text": "I dread accepting how our legacy could have led to minds as twisted as these. \n To see our sown seeds of virtue nourish our children was a short-lived joy.///\n And from them, grew something nature could /never /have /conceived. \n Hatred remains unknown to our world. And yet, the hearts of its denizens harbor said sickness."

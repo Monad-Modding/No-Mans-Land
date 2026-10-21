@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.event;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import net.minecraft.core.BlockPos;
@@ -39,6 +40,7 @@ public class BoneMealingEvents {
                 stack.hurtAndBreak(1, player, stack.getEquipmentSlot());
 
                 level.setBlockAndUpdate(pos, NMLBlocks.CUT_SUGAR_CANE.get().defaultBlockState());
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, NMLBlocks.CUT_SUGAR_CANE.get().defaultBlockState()));
             }
             event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
             event.setCanceled(true);
@@ -51,7 +53,9 @@ public class BoneMealingEvents {
             if (!level.isClientSide()) {
                 stack.hurtAndBreak(1, player, stack.getEquipmentSlot());
 
-                level.setBlockAndUpdate(pos, NMLBlocks.CUT_VINE.get().withPropertiesOf(state));
+                BlockState cut = NMLBlocks.CUT_VINE.get().withPropertiesOf(state);
+                level.setBlockAndUpdate(pos, cut);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, cut));
             }
             event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
             event.setCanceled(true);
@@ -71,6 +75,7 @@ public class BoneMealingEvents {
                             if (!player.isCreative()) stack.shrink(1);
                             bonemealDirt(level, pos, level.getBlockState(newBlockPos));
                             level.playSound(player, pos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1F, 1F);
+                            if (!level.isClientSide()) player.gameEvent(GameEvent.ITEM_INTERACT_FINISH);
                             event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
                             event.setCanceled(true);
                             return;
@@ -78,6 +83,7 @@ public class BoneMealingEvents {
                             if (!player.isCreative()) stack.shrink(1);
                             bonemealDirt(level, pos, level.getBlockState(newBlockPos.relative(d1)));
                             level.playSound(player, pos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1F, 1F);
+                            if (!level.isClientSide()) player.gameEvent(GameEvent.ITEM_INTERACT_FINISH);
                             event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
                             event.setCanceled(true);
                             return;

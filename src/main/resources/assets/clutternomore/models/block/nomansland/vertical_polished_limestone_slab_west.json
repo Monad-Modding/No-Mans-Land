@@ -1,0 +1,9 @@
+{
+  "parent": "clutternomore:block/templates/rotateable_vertical_slab_west",
+  "textures": {
+    "top": "nomansland:block/underground/polished_limestone",
+    "bottom": "nomansland:block/underground/polished_limestone",
+    "side": "nomansland:block/underground/polished_limestone_slab_vertical",
+    "slab": "nomansland:block/underground/polished_limestone_slab"
+  }
+}

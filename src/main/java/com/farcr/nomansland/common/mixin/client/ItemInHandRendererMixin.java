@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.mixin.client;
 
+import com.farcr.nomansland.client.animation.BandageAnimations;
 import com.farcr.nomansland.client.renderer.dreams.ClientDreamRenderer;
 import com.farcr.nomansland.common.registry.entities.NMLEntityDataAttachments;
 import com.farcr.nomansland.common.registry.items.NMLItems;
@@ -25,6 +26,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemInHandRenderer.class)
 public class ItemInHandRendererMixin {
+
+    @Inject(method = "renderArmWithItem", at = @At("HEAD"))
+    private void nml$captureHandContext(AbstractClientPlayer player, float partialTicks, float pitch, InteractionHand hand, float swingProgress, ItemStack stack, float equippedProgress, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, CallbackInfo ci) {
+        BandageAnimations.setHandContext(buffer, combinedLight);
+    }
 
     @Inject(method = "itemUsed", at = @At("HEAD"), cancellable = true)
     private void nml$cancelItemUsed(InteractionHand hand, CallbackInfo ci) {

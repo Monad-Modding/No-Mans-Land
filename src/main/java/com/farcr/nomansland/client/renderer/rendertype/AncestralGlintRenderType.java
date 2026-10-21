@@ -71,6 +71,7 @@ public class AncestralGlintRenderType {
     public static @Nullable VertexConsumer getConsumer(
         MultiBufferSource bufferSource, ItemStack itemContext
     ) {
+        if (ANCESTRAL_GLINT_SHADER == null) return null;
         if (itemContext != null) {
             if (IClientItemExtensions.of(itemContext) instanceof AncestralOathSwordClientExtensions extensions)
                 return bufferSource.getBuffer(DEFAULT_ANCESTRAL_GLINT);
