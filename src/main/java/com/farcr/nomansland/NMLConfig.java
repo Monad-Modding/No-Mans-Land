@@ -1,6 +1,7 @@
 package com.farcr.nomansland;
 
 import com.farcr.nomansland.common.condition.BooleanConfigCondition;
+import com.teamabnormals.blueprint.core.annotations.ConfigKey;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.HashMap;
@@ -28,25 +29,7 @@ public class NMLConfig {
     public static ModConfigSpec.BooleanValue GRASS_FROSTING;
     public static ModConfigSpec.BooleanValue PATH_TWEAKS;
     public static final String CATEGORY_BIOMES = "biomes";
-    public static ModConfigSpec.BooleanValue BIOMES;
-    public static ModConfigSpec.BooleanValue CAVES_BIOMES;
-    public static ModConfigSpec.BooleanValue MAPLE_BIOMES;
-    public static ModConfigSpec.BooleanValue OLD_GROWTH_FOREST;
-    public static ModConfigSpec.BooleanValue AUTUMNAL_FOREST;
-    public static ModConfigSpec.BooleanValue DARK_TAIGA;
-    public static ModConfigSpec.BooleanValue BOREAL_FOREST;
-    public static ModConfigSpec.BooleanValue DARK_SWAMP;
-    public static ModConfigSpec.BooleanValue FROZEN_WOODS;
-    public static ModConfigSpec.BooleanValue BAYOU;
-    public static ModConfigSpec.BooleanValue BOG;
-    public static ModConfigSpec.BooleanValue PRAIRIE;
-    public static ModConfigSpec.BooleanValue LAVENDER_FIELD;
-    public static ModConfigSpec.BooleanValue BLACKWATER_RIVER;
-    public static ModConfigSpec.BooleanValue LUSH_RIVER;
-    public static ModConfigSpec.BooleanValue DESERT_RIVER;
-    public static ModConfigSpec.BooleanValue FROZEN_SHORE;
-    public static ModConfigSpec.BooleanValue MUD_BEACH;
-    public static ModConfigSpec.BooleanValue TROPICAL_BEACH;
+    public static NMLConfig.Biomes BIOMES;
     public static final String CATEGORY_TAP = "tap";
     public static ModConfigSpec.DoubleValue FILLING_SPEED_MULTIPLIER;
     public static final String CATEGORY_ANCHOR = "monster_anchor";
@@ -136,66 +119,7 @@ public class NMLConfig {
                 .define("allowGrassFrosting", true);
         COMMON_BUILDER.pop();
 
-        COMMON_BUILDER.push(CATEGORY_BIOMES);
-        BIOMES = COMMON_BUILDER
-                .comment("If any custom biomes are enabled")
-                .define("biomes", true);
-        CAVES_BIOMES = COMMON_BUILDER
-                .comment("If the generic caves biomes are enabled")
-                .define("genericCavesBiomes", true);
-        MAPLE_BIOMES = COMMON_BUILDER
-                .comment("If the maple biomes are enabled")
-                .define("mapleBiomes", true);
-        OLD_GROWTH_FOREST = COMMON_BUILDER
-                .comment("If the old growth forest is enabled")
-                .define("oldGrowthForest", true);
-        AUTUMNAL_FOREST = COMMON_BUILDER
-                .comment("If the autumnal forest is enabled")
-                .define("autumnal", true);
-        BOREAL_FOREST = COMMON_BUILDER
-                .comment("If the boreal forest is enabled")
-                .define("borealForest", true);
-        DARK_TAIGA = COMMON_BUILDER
-                .comment("If the dark taiga is enabled")
-                .define("darkTaiga", true);
-        DARK_SWAMP = COMMON_BUILDER
-                .comment("If the dark swamp is enabled")
-                .define("darkSwamp", true);
-        FROZEN_WOODS = COMMON_BUILDER
-                .comment("If the frozen woods is enabled")
-                .define("frozenWoods", true);
-        BAYOU = COMMON_BUILDER
-                .comment("If the bayou is enabled")
-                .define("bayou", true);
-        BOG = COMMON_BUILDER
-                .comment("If the bog is enabled")
-                .define("bog", true);
-        PRAIRIE = COMMON_BUILDER
-                .comment("If the prairie is enabled")
-                .define("prairie", true);
-        LAVENDER_FIELD = COMMON_BUILDER
-                .comment("If the lavender field is enabled")
-                .define("lavenderField", true);
-        BLACKWATER_RIVER = COMMON_BUILDER
-                .comment("If the blackwater river sub-biome is enabled")
-                .define("blackwaterRiver", true);
-        LUSH_RIVER = COMMON_BUILDER
-                .comment("If the lush river sub-biome is enabled")
-                .define("lushRiver", true);
-        DESERT_RIVER = COMMON_BUILDER
-                .comment("If the desert river sub-biome is enabled")
-                .define("desertRiver", true);
-        FROZEN_SHORE = COMMON_BUILDER
-                .comment("If the frozen shore sub-biome is enabled")
-                .define("frozenShore", true);
-        MUD_BEACH = COMMON_BUILDER
-                .comment("If the mud beach sub-biome is enabled")
-                .define("mudBeach", true);
-        TROPICAL_BEACH = COMMON_BUILDER
-                .comment("If the tropical beach sub-biome is enabled")
-                .define("tropicalBeach", true);
-
-        COMMON_BUILDER.pop();
+        BIOMES = new NMLConfig.Biomes(COMMON_BUILDER);
 
         COMMON_BUILDER.push(CATEGORY_TAP);
         COMMON_BUILDER.comment("Time is calculated in ticks. 20 ticks make 1 second.");
@@ -377,4 +301,124 @@ public class NMLConfig {
         STARTUP_CONFIG = STARTUP_BUILDER.build();
     }
 
+    public static final class Biomes {
+        @ConfigKey("biomes")
+        public final ModConfigSpec.BooleanValue biomes;
+
+        @ConfigKey("caves_biomes")
+        public final ModConfigSpec.BooleanValue cavesBiomes;
+
+        @ConfigKey("maple_biomes")
+        public final ModConfigSpec.BooleanValue mapleBiomes;
+
+        @ConfigKey("old_growth_forest")
+        public final ModConfigSpec.BooleanValue oldGrowthForest;
+
+        @ConfigKey("autumnal_forest")
+        public final ModConfigSpec.BooleanValue autumnalForest;
+
+        @ConfigKey("dark_taiga")
+        public final ModConfigSpec.BooleanValue darkTaiga;
+
+        @ConfigKey("boreal_forest")
+        public final ModConfigSpec.BooleanValue borealForest;
+
+        @ConfigKey("dark_swamp")
+        public final ModConfigSpec.BooleanValue darkSwamp;
+
+        @ConfigKey("frozen_woods")
+        public final ModConfigSpec.BooleanValue frozenWoods;
+
+        @ConfigKey("bayou")
+        public final ModConfigSpec.BooleanValue bayou;
+
+        @ConfigKey("bog")
+        public final ModConfigSpec.BooleanValue bog;
+
+        @ConfigKey("prairie")
+        public final ModConfigSpec.BooleanValue prairie;
+
+        @ConfigKey("lavender_field")
+        public final ModConfigSpec.BooleanValue lavenderField;
+
+        @ConfigKey("blackwater_river")
+        public final ModConfigSpec.BooleanValue blackwaterRiver;
+
+        @ConfigKey("lush_river")
+        public final ModConfigSpec.BooleanValue lushRiver;
+
+        @ConfigKey("desert_river")
+        public final ModConfigSpec.BooleanValue desertRiver;
+
+        @ConfigKey("frozen_shore")
+        public final ModConfigSpec.BooleanValue frozenShore;
+
+        @ConfigKey("mud_beach")
+        public final ModConfigSpec.BooleanValue mudBeach;
+
+        @ConfigKey("tropical_beach")
+        public final ModConfigSpec.BooleanValue tropicalBeach;
+
+        public Biomes(ModConfigSpec.Builder builder) {
+            builder.push(CATEGORY_BIOMES);
+            this.biomes = builder
+                .comment("If any custom biomes are enabled")
+                .define("biomes", true);
+            this.cavesBiomes = builder
+                .comment("If the generic caves biomes are enabled")
+                .define("genericCavesBiomes", true);
+            this.mapleBiomes = builder
+                .comment("If the maple biomes are enabled")
+                .define("mapleBiomes", true);
+            this.oldGrowthForest = builder
+                .comment("If the old growth forest is enabled")
+                .define("oldGrowthForest", true);
+            this.autumnalForest = builder
+                .comment("If the autumnal forest is enabled")
+                .define("autumnal", true);
+            this.borealForest = builder
+                .comment("If the boreal forest is enabled")
+                .define("borealForest", true);
+            this.darkTaiga = builder
+                .comment("If the dark taiga is enabled")
+                .define("darkTaiga", true);
+            this.darkSwamp = builder
+                .comment("If the dark swamp is enabled")
+                .define("darkSwamp", true);
+            this.frozenWoods = builder
+                .comment("If the frozen woods is enabled")
+                .define("frozenWoods", true);
+            this.bayou = builder
+                .comment("If the bayou is enabled")
+                .define("bayou", true);
+            this.bog = builder
+                .comment("If the bog is enabled")
+                .define("bog", true);
+            this.prairie = builder
+                .comment("If the prairie is enabled")
+                .define("prairie", true);
+            this.lavenderField = builder
+                .comment("If the lavender field is enabled")
+                .define("lavenderField", true);
+            this.blackwaterRiver = builder
+                .comment("If the blackwater river sub-biome is enabled")
+                .define("blackwaterRiver", true);
+            this.lushRiver = builder
+                .comment("If the lush river sub-biome is enabled")
+                .define("lushRiver", true);
+            this.desertRiver = builder
+                .comment("If the desert river sub-biome is enabled")
+                .define("desertRiver", true);
+            this.frozenShore = builder
+                .comment("If the frozen shore sub-biome is enabled")
+                .define("frozenShore", true);
+            this.mudBeach = builder
+                .comment("If the mud beach sub-biome is enabled")
+                .define("mudBeach", true);
+            this.tropicalBeach = builder
+                .comment("If the tropical beach sub-biome is enabled")
+                .define("tropicalBeach", true);
+            builder.pop();
+        }
+    }
 }

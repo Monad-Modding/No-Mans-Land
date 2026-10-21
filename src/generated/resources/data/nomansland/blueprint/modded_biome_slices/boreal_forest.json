@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "nomansland:config",
+          "value": "biomes"
+        },
+        {
+          "type": "nomansland:config",
+          "value": "boreal_forest"
+        }
+      ]
+    }
+  ],
+  "levels": [
+    "minecraft:overworld"
+  ],
+  "provider": {
+    "type": "blueprint:multi_noise",
+    "areas": {
+      "minecraft:forest": "nomansland:boreal_forest",
+      "minecraft:taiga": "nomansland:boreal_forest"
+    },
+    "biomes": "minecraft:overworld",
+    "only_map_from_areas": true
+  },
+  "weight": 42
+}

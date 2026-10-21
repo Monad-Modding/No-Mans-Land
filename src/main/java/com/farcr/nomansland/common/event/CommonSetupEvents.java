@@ -1,6 +1,5 @@
 package com.farcr.nomansland.common.event;
 
-import com.farcr.nomansland.NMLConfig;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.blockentity.BombDispenseBehavior;
 import com.farcr.nomansland.common.definitions.BlockDefinition;
@@ -25,9 +24,7 @@ import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import com.farcr.nomansland.common.registry.blocks.NMLFlammables;
 import com.farcr.nomansland.common.registry.entities.NMLEntities;
 import com.farcr.nomansland.common.registry.items.NMLItems;
-import com.farcr.nomansland.common.world.generation.NMLBiomePlacements;
 import com.farcr.nomansland.common.world.generation.NMLDensityModifications;
-import com.farcr.nomansland.common.world.generation.NMLSurfaceRules;
 import net.minecraft.core.dispenser.BoatDispenseItemBehavior;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
@@ -53,9 +50,7 @@ public class CommonSetupEvents {
     @SubscribeEvent
     public static void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            if (NMLConfig.BIOMES.get()) NMLBiomePlacements.register();
             NMLDensityModifications.register();
-            NMLSurfaceRules.register();
             NMLFlammables.register();
             if (Mods.CREATE.isLoaded()) CreateIntegration.registerOpenPipeEffects();
 

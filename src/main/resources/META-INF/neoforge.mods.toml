@@ -42,10 +42,10 @@ config="${mod_id}.mixins.json"
     side="BOTH"
 
 [[dependencies."${mod_id}"]]
-    modId="biolith"
+    modId="blueprint"
     type="required"
     reason="Required for world generation"
-    versionRange="${biolith_range}"
+    versionRange="${blueprint_range}"
     ordering="AFTER"
     side="BOTH"
 

@@ -1,0 +1,87 @@
+{
+  "molding": "json",
+  "remolder": [
+    {
+      "type": "replace",
+      "target": "$provider",
+      "value": {}
+    },
+    {
+      "type": "replace",
+      "target": "$provider[\"transitional_prairie\"]",
+      "value": "nomansland:prairie"
+    },
+    {
+      "type": "replace",
+      "target": "$provider[\"transitional_dark_swamp\"]",
+      "value": "nomansland:dark_swamp"
+    },
+    {
+      "type": "replace",
+      "target": "$provider[\"transitional_bayou\"]",
+      "value": "nomansland:bayou"
+    },
+    {
+      "type": "replace",
+      "target": "$provider[\"transitional_bog\"]",
+      "value": "nomansland:bog"
+    },
+    {
+      "type": "replace",
+      "target": "$provider[\"frozen_shore\"]",
+      "value": "nomansland:frozen_shore"
+    },
+    {
+      "type": "replace",
+      "target": "$provider[\"tropical_beach\"]",
+      "value": "nomansland:tropical_beach"
+    },
+    {
+      "type": "replace",
+      "target": "$provider[\"mud_beach\"]",
+      "value": "nomansland:mud_beach"
+    },
+    {
+      "type": "replace",
+      "target": "$provider[\"blackwater_river\"]",
+      "value": "nomansland:blackwater_river"
+    },
+    {
+      "type": "replace",
+      "target": "$provider[\"lush_river\"]",
+      "value": "nomansland:lush_river"
+    },
+    {
+      "type": "replace",
+      "target": "$provider[\"desert_river\"]",
+      "value": "nomansland:desert_river"
+    },
+    {
+      "type": "replace",
+      "target": "$provider[\"type\"]",
+      "value": "nomansland:initial_overworld_replacements"
+    },
+    {
+      "type": "replace",
+      "expressed_value": "provider",
+      "target": "$provider[\"base\"]"
+    },
+    {
+      "type": "replace",
+      "expressed_value": "$provider",
+      "target": "provider"
+    }
+  ],
+  "selector": {
+    "type": "names",
+    "conditions": [
+      {
+        "type": "nomansland:config",
+        "value": "biomes"
+      }
+    ],
+    "config": [
+      "blueprint:blueprint/modded_biome_slices/overworld"
+    ]
+  }
+}

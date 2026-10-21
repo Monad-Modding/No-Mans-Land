@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "nomansland:config",
+          "value": "biomes"
+        },
+        {
+          "type": "nomansland:config",
+          "value": "frozen_woods"
+        }
+      ]
+    }
+  ],
+  "levels": [
+    "minecraft:overworld"
+  ],
+  "provider": {
+    "type": "blueprint:multi_noise",
+    "areas": {
+      "minecraft:snowy_plains": "nomansland:frozen_woods",
+      "minecraft:snowy_taiga": "nomansland:frozen_woods"
+    },
+    "biomes": "minecraft:overworld",
+    "only_map_from_areas": true
+  },
+  "weight": 25
+}

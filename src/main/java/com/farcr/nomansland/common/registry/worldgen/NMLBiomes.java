@@ -56,7 +56,7 @@ public class NMLBiomes {
     public static Holder<Biome> CAVE_DEPTHS_HOLDER;
     public static Holder<Biome> ALCHEMIST_RUINS_HOLDER;
 
-    private static ResourceKey<Biome> createKey(String name) {
+    public static ResourceKey<Biome> createKey(String name) {
         ResourceKey<Biome> biome = ResourceKey.create(Registries.BIOME, NoMansLand.location(name));
         BIOMES.add(biome);
         return biome;

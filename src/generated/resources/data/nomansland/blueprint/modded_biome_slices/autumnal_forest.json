@@ -1,0 +1,34 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "nomansland:config",
+          "value": "biomes"
+        },
+        {
+          "type": "nomansland:config",
+          "value": "autumnal_forest"
+        },
+        {
+          "type": "nomansland:config",
+          "inverted": true,
+          "value": "boreal_forest"
+        }
+      ]
+    }
+  ],
+  "levels": [
+    "minecraft:overworld"
+  ],
+  "provider": {
+    "type": "blueprint:multi_noise",
+    "areas": {
+      "minecraft:forest": "nomansland:autumnal_forest"
+    },
+    "biomes": "minecraft:overworld",
+    "only_map_from_areas": true
+  },
+  "weight": 42
+}

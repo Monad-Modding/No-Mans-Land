@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:and",
+      "values": [
+        {
+          "type": "nomansland:config",
+          "value": "biomes"
+        },
+        {
+          "type": "nomansland:config",
+          "value": "bog"
+        }
+      ]
+    }
+  ],
+  "levels": [
+    "minecraft:overworld"
+  ],
+  "provider": {
+    "type": "blueprint:multi_noise",
+    "areas": {
+      "minecraft:mangrove_swamp": "nomansland:bog",
+      "minecraft:swamp": "nomansland:bog"
+    },
+    "biomes": "minecraft:overworld",
+    "only_map_from_areas": true
+  },
+  "weight": 21
+}

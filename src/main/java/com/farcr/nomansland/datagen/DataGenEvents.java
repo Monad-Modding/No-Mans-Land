@@ -5,6 +5,7 @@ import com.farcr.nomansland.datagen.sound.NMLSoundProvider;
 import com.farcr.nomansland.datagen.tags.NMLBiomeTagsProvider;
 import com.farcr.nomansland.datagen.tags.NMLBlockTagsProvider;
 import com.farcr.nomansland.datagen.tags.NMLItemTagsProvider;
+import com.farcr.nomansland.datagen.worldgen.NMLChunkGeneratorModifierProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -54,7 +55,9 @@ public class DataGenEvents {
         BlockTagsProvider blockTagsProvider = generator.addProvider(server, new NMLBlockTagsProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(server, new NMLItemTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
 
-        generator.addProvider(server, new NMLDatapackEntriesProvider(packOutput, lookupProvider));
+        NMLDatapackEntriesProvider datapackEntriesProvider = generator.addProvider(server, new NMLDatapackEntriesProvider(packOutput, lookupProvider));
+        generator.addProvider(server, new NMLChunkGeneratorModifierProvider(packOutput, datapackEntriesProvider.getRegistryProvider()));
+        generator.addProvider(server, new NMLDataRemolderProvider(packOutput, datapackEntriesProvider.getRegistryProvider()));
 
         // Lang
         Path existingDataRoot = packOutput.getOutputFolder().getParent().getParent().resolve("main/resources");

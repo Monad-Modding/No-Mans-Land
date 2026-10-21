@@ -13,6 +13,7 @@ import com.farcr.nomansland.common.registry.blocks.NMLExtinguishables;
 import com.farcr.nomansland.common.registry.entities.*;
 import com.farcr.nomansland.common.registry.items.*;
 import com.farcr.nomansland.common.registry.worldgen.*;
+import com.farcr.nomansland.common.world.generation.NMLBiomeProviders;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -79,6 +80,7 @@ public class NoMansLand {
         NMLStructureElementTypes.STRUCTURE_ELEMENTS.register(bus);
         NMLMapDecorationTypes.MAP_DECORATION_TYPES.register(bus);
         NMLAttachmentTypes.ATTACHMENT_TYPES.register(bus);
+        NMLBiomeProviders.register();
 
         if (Mods.FARMERSDELIGHT.isLoaded()) {
             FDIntegration.register();

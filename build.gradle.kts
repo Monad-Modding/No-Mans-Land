@@ -103,8 +103,8 @@ repositories {
             includeGroup("com.tterrag.registrate")
         }
     }
+    maven("https://maven.teamabnormals.com/")
     maven ("https://maven.blamejared.com/")
-    maven ("https://maven.terraformersmc.com/")
     maven("https://maven.ryanhcode.dev/releases")
     maven("https://maven.theillusivec4.top/")
     maven("https://maven.createmod.net")
@@ -120,18 +120,17 @@ repositories {
 
 dependencies {
     jarJar(implementation("maven.modrinth:mixed-litter:${deps["mixed_litter"]}") {})
-    jarJar(implementation("com.terraformersmc:biolith-neoforge:${deps["biolith"]}") {})
     jarJar(api("dev.ryanhcode.sable-companion:sable-companion-common-${mc["version"]}:${deps["sable_companion"]}") {
         version {
             prefer(deps["sable_companion"])
         }
     })
+    implementation("com.teamabnormals:blueprint:${mc["version"]}-${deps["blueprint"]}")
 
     compileOnly("com.simibubi.create:create-${mc["version"]}:${deps["create"]}:slim") { isTransitive = false }
 
 //MAKE SURE THESE ARE ALL "IMPLEMENTATION" WHEN RUNNING DATA! OTHERWISE DATA WILL BREAK!
     implementation("maven.modrinth:farmers-delight:1.21.1-1.3.0")
-    implementation("maven.modrinth:blueprint:8.0.8")
     implementation("maven.modrinth:boatload:6.0.2")
     implementation("maven.modrinth:the-block-box:0.1.1")
     implementation("maven.modrinth:nirvana-mod:DeFmDBVC")
@@ -182,8 +181,8 @@ tasks.withType<ProcessResources>().configureEach {
         "mod_description" to mod["description"],
         "mixed_litter" to deps["mixed_litter"],
         "mixed_litter_range" to deps["mixed_litter_range"],
-        "biolith" to deps["biolith"],
-        "biolith_range" to deps["biolith_range"]
+        "blueprint" to deps["blueprint"],
+        "blueprint_range" to deps["blueprint_range"]
     )
 
     inputs.properties(replaceProperties)
@@ -218,7 +217,7 @@ publishMods {
         clientRequired = true
         serverRequired = true
 
-        requires("biolith")
+        requires("blueprint")
         embeds("mixed-litter")
     }
 
@@ -227,7 +226,7 @@ publishMods {
         projectId = "kjZCvAn6"
         minecraftVersions.add(mc["version"])
 
-        requires("biolith")
+        requires("blueprint")
         embeds("mixed-litter")
     }
 }
