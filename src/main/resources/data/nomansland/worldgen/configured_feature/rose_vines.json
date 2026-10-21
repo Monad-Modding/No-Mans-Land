@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:multiface_growth",
+  "config": {
+    "block": "nomansland:rose_vines",
+    "search_range": 4,
+    "chance_of_spreading": 0.5,
+    "can_place_on_floor": false,
+    "can_place_on_ceiling": false,
+    "can_place_on_wall": true,
+    "can_be_placed_on": "#nomansland:rose_vines_can_grow_on"
+  }
+}

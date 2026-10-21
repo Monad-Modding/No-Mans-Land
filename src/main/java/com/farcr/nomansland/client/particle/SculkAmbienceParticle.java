@@ -18,7 +18,7 @@ public class SculkAmbienceParticle extends TextureSheetParticle {
     }
 
     @Override
-    protected int getLightColor(float pPartialTick) {
+    protected int getLightColor(float partialTick) {
         return LightTexture.pack(2, 0);
     }
 

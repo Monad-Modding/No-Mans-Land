@@ -17,13 +17,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SimpleFoliageBlock extends BushBlock implements BonemealableBlock {
 
-    public static final MapCodec<SimpleFoliageBlock> CODEC = simpleCodec(SimpleFoliageBlock::new);
-
     protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 12.0D, 14.0D);
 
-    public SimpleFoliageBlock(Properties pProperties) {
-        super(pProperties);
+    public SimpleFoliageBlock(Properties properties) {
+        super(properties);
     }
+
+    public static final MapCodec<SimpleFoliageBlock> CODEC = simpleCodec(SimpleFoliageBlock::new);
 
     @Override
     protected MapCodec<? extends BushBlock> codec() {
@@ -31,7 +31,7 @@ public class SimpleFoliageBlock extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext pContext) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         Vec3 offset = state.getOffset(level, pos);
         return SHAPE.move(offset.x, offset.y, offset.z);
     }

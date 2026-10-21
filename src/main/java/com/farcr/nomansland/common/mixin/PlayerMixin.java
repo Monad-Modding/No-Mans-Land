@@ -6,6 +6,7 @@ import com.farcr.nomansland.common.dreams.dreamtypes.MoonlightDreamType;
 import com.farcr.nomansland.common.extension.PlayerExtension;
 import com.farcr.nomansland.common.registry.NMLDamageTypes;
 import com.farcr.nomansland.common.registry.NMLSounds;
+import com.farcr.nomansland.common.registry.entities.NMLEffects;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -103,10 +104,12 @@ public abstract class PlayerMixin implements PlayerExtension {
     @Inject(method = "mayUseItemAt", at = @At("RETURN"), cancellable = true)
     private void nml$cancelInteraction(BlockPos pos, Direction facing, ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         if (DreamManager.getAmbiguousDreamType(nml$Self) != null) cir.setReturnValue(false);
+        if (this.nml$Self.hasEffect(NMLEffects.STASIS)) cir.setReturnValue(false);
     }
 
     @Inject(method = "blockActionRestricted", at = @At("RETURN"), cancellable = true)
     private void nml$cancelAction(Level level, BlockPos pos, GameType gameMode, CallbackInfoReturnable<Boolean> cir) {
         if (DreamManager.getAmbiguousDreamType(nml$Self) != null) cir.setReturnValue(true);
+        if (this.nml$Self.hasEffect(NMLEffects.STASIS)) cir.setReturnValue(true);
     }
 }

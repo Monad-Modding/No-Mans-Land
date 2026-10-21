@@ -1,7 +1,7 @@
 {
     "condition": {
         "type": "nomansland:entity_conditional",
-        "entity": "#minecraft:fishes"
+        "entity": "#c:fishes"
     },
     "weight": 1,
     "text": "Currents shape this one’s movement, which we mock unaware that our seas and their skies are one."

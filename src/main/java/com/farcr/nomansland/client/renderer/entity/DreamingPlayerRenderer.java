@@ -48,9 +48,9 @@ public class DreamingPlayerRenderer extends EntityRenderer<DreamingPlayer> {
     }
 
     @Override
-    public void render(@NotNull DreamingPlayer p_entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public void render(@NotNull DreamingPlayer dreamingPlayer, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-        RemotePlayer remotePlayer = (RemotePlayer) getRemotePlayer(p_entity);
+        RemotePlayer remotePlayer = (RemotePlayer) getRemotePlayer(dreamingPlayer);
         if (remotePlayer == null)
             return;
 

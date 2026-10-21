@@ -1,0 +1,33 @@
+{
+    "type": "default",
+    "styles": {
+        "alchemist": 
+        [
+            {
+                "item": "nomansland:ancient_bronze_mask",
+                "assets": {
+                    "default": "nomansland:ancient_bronze_mask_alchemist",
+                    "armor": "nomansland:textures/armor/ancient_bronze_mask_alchemist.png"
+                }
+            },
+            {
+                "item": "nomansland:ancestral_oath_sword",
+                "assets": {
+                    "default": "nomansland:ancestral_oath_sword_alchemist"
+                }
+            },
+            {
+                "item": "nomansland:ritual_pick",
+                "assets": {
+                    "default": "nomansland:ritual_pick_alchemist"
+                }
+            },
+            {
+                "item": "nomansland:ancient_bronze_chisel",
+                "assets": {
+                    "default": "nomansland:ancient_bronze_chisel_alchemist"
+                }
+            }
+        ]
+    }
+}

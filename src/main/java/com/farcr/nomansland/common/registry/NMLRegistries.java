@@ -7,6 +7,8 @@ import com.farcr.nomansland.common.block.pots.PotVariant;
 import com.farcr.nomansland.common.block.pots.PotionTable;
 import com.farcr.nomansland.common.block.tap.TapInteraction;
 import com.farcr.nomansland.common.block.torches.ExtinguishableBlockPairing;
+import com.farcr.nomansland.common.carving.CarvingType;
+import com.farcr.nomansland.common.dreams.DreamType;
 import com.farcr.nomansland.common.dreams.DreamType;
 import com.farcr.nomansland.common.entity.buddy.BuddyFood;
 import com.farcr.nomansland.common.friend.dialogue.DialoguePool;
@@ -64,4 +66,7 @@ public class NMLRegistries {
 
     public static final ResourceKey<Registry<ExtinguishableBlockPairing>> EXTINGUISHABLE_BLOCKS_KEY = ResourceKey.createRegistryKey(NoMansLand.location("extinguishable_blocks"));
     public static final Registry<ExtinguishableBlockPairing> EXTINGUISHABLE_BLOCKS = new RegistryBuilder<>(EXTINGUISHABLE_BLOCKS_KEY).create();
+
+    public static final ResourceKey<Registry<CarvingType>> CARVING_TYPE_KEY = ResourceKey.createRegistryKey(NoMansLand.location("carving_type"));
+    public static final Registry<CarvingType> CARVING_TYPE = new RegistryBuilder<>(CARVING_TYPE_KEY).sync(true).create();
 }

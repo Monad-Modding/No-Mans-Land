@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.common.integration.FDIntegration;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
@@ -41,11 +42,6 @@ import vectorwing.farmersdelight.common.utility.ItemUtils;
 import java.util.Map;
 
 public class CandleFruitCakeBlock extends AbstractCandleBlock {
-    public static final MapCodec<CandleFruitCakeBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
-            instance.group(
-                    BuiltInRegistries.BLOCK.byNameCodec().fieldOf("candle").forGetter(block -> block.candleBlock),
-                    propertiesCodec()
-            ).apply(instance, CandleFruitCakeBlock::new));
 
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
 
@@ -69,6 +65,12 @@ public class CandleFruitCakeBlock extends AbstractCandleBlock {
             throw new IllegalArgumentException("Expected block to be of " + candleClass + " was " + candleBlock.getClass());
         }
     }
+
+    public static final MapCodec<CandleFruitCakeBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(
+                    BuiltInRegistries.BLOCK.byNameCodec().fieldOf("candle").forGetter(block -> block.candleBlock),
+                    propertiesCodec()
+            ).apply(instance, CandleFruitCakeBlock::new));
 
     public MapCodec<CandleFruitCakeBlock> codec() {
         return CODEC;
@@ -97,6 +99,7 @@ public class CandleFruitCakeBlock extends AbstractCandleBlock {
                     pos.getX(), pos.getY() + 0.2, pos.getZ() + 0.5,
                     -0.05, 0, 0);
             level.playSound(null, pos, ModSounds.BLOCK_FOOD_SLICE.get(), SoundSource.PLAYERS, 0.8F, 0.8F);
+            level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
 
             return ItemInteractionResult.SUCCESS;
         }

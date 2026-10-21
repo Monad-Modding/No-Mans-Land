@@ -20,8 +20,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import java.util.Optional;
 
 public class CenteredSinglePoolElement extends SinglePoolElement {
-    protected CenteredSinglePoolElement(final Either<ResourceLocation, StructureTemplate> p_210348_, final Holder<StructureProcessorList> p_210349_, final StructureTemplatePool.Projection p_210350_, final Optional<LiquidSettings> p_352209_) {
-        super(p_210348_, p_210349_, p_210350_, p_352209_);
+    protected CenteredSinglePoolElement(final Either<ResourceLocation, StructureTemplate> template, final Holder<StructureProcessorList> holder, final StructureTemplatePool.Projection projection, final Optional<LiquidSettings> optional) {
+        super(template, holder, projection, optional);
     }
 
     public Vec3i getOffset(final StructureTemplateManager structureTemplateManager, final BlockPos pos, final Rotation rotation) {

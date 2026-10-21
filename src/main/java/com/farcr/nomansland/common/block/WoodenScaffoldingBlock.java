@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,6 +21,14 @@ public class WoodenScaffoldingBlock extends ScaffoldingBlock {
         super(properties);
         registerDefaultState(stateDefinition.any().setValue(DISTANCE, 6).setValue(WATERLOGGED, false).setValue(BOTTOM, false));
     }
+    public static final MapCodec<ScaffoldingBlock> CODEC = simpleCodec(WoodenScaffoldingBlock::new)
+            .xmap(block -> (ScaffoldingBlock) block, block -> (WoodenScaffoldingBlock) block);
+
+    @Override
+    public MapCodec<ScaffoldingBlock> codec() {
+        return CODEC;
+    }
+
     public static int getDistance(BlockGetter level, BlockPos pos) {
         BlockPos.MutableBlockPos blockpos$mutableblockpos = pos.mutable().move(Direction.DOWN);
         BlockState blockstate = level.getBlockState(blockpos$mutableblockpos);

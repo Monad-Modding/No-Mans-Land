@@ -12,7 +12,7 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 
 public class WarningAttack {
     public static OneShot<Mob> create(int cooldownBetweenAttacks) {
-        return BehaviorBuilder.create((instance) -> instance.group(instance.registered(MemoryModuleType.LOOK_TARGET), instance.present(MemoryModuleType.NEAREST_ATTACKABLE), instance.absent(MemoryModuleType.ATTACK_COOLING_DOWN), instance.present(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES)).apply(instance, (muPositionTrackerMemoryAccessor, muLivingEntityMemoryAccessor, muBooleanMemoryAccessor, nearestVisibleLivingEntities) -> (serverLevel, mob, p_258541_) -> {
+        return BehaviorBuilder.create((instance) -> instance.group(instance.registered(MemoryModuleType.LOOK_TARGET), instance.present(MemoryModuleType.NEAREST_ATTACKABLE), instance.absent(MemoryModuleType.ATTACK_COOLING_DOWN), instance.present(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES)).apply(instance, (muPositionTrackerMemoryAccessor, muLivingEntityMemoryAccessor, muBooleanMemoryAccessor, nearestVisibleLivingEntities) -> (serverLevel, mob, gameTime) -> {
             LivingEntity livingentity = instance.get(muLivingEntityMemoryAccessor);
             if (!isHoldingUsableProjectileWeapon(mob) && mob.isWithinMeleeAttackRange(livingentity) && instance.get(nearestVisibleLivingEntities).contains(livingentity)) {
                 muPositionTrackerMemoryAccessor.set(new EntityTracker(livingentity, true));

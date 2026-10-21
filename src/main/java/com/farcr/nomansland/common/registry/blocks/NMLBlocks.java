@@ -88,6 +88,8 @@ public class NMLBlocks {
             () -> new PlatformBlock(Block.Properties.ofFullCopy(Blocks.SPRUCE_PLANKS).sound(SoundType.CHERRY_WOOD)), new BlockProperties(new SelfBlockLootType(), false));
     public static final BlockDefinition<PlatformStairsBlock> WOODEN_PLATFORM_STAIRS = register("wooden_platform_stairs",
             () -> new PlatformStairsBlock(Block.Properties.ofFullCopy(NMLBlocks.WOODEN_PLATFORM.get())), new BlockProperties(new SelfBlockLootType(), false));
+    public static final BlockDefinition<PlatformStepBlock> WOODEN_PLATFORM_STEP = register("wooden_platform_step",
+            () -> new PlatformStepBlock(Block.Properties.ofFullCopy(NMLBlocks.WOODEN_PLATFORM.get())), new BlockProperties(new SelfBlockLootType(), false));
     public static final BlockDefinition<CrudeDoorBlock> CRUDE_DOOR = register("crude_door",
             () -> new CrudeDoorBlock(crudeBlockSetType(), BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion().pushReaction(PushReaction.DESTROY)), new BlockProperties(new DoorBlockLootType(), false));
     public static final BlockDefinition<CrudeTrapDoorBlock> CRUDE_TRAPDOOR = register("crude_trapdoor",
@@ -253,13 +255,13 @@ public class NMLBlocks {
     public static final BlockDefinition<BuddingQuartziteBlock> BUDDING_QUARTZITE = register("budding_quartzite",
             () -> new BuddingQuartziteBlock(of().mapColor(MapColor.TERRACOTTA_WHITE).randomTicks().strength(1.3F).sound(NMLSounds.QUARTZITE).pushReaction(PushReaction.DESTROY).noLootTable()));
     public static final BlockDefinition<AmethystClusterBlock> QUARTZITE_CLUSTER = register("quartzite_cluster",
-            () -> new AmethystClusterBlock(7, 3, of().mapColor(MapColor.TERRACOTTA_WHITE).forceSolidOn().noOcclusion().randomTicks().sound(NMLSounds.QUARTZITE_CLUSTER).strength(1.3F).lightLevel((p_152632_) -> 5).pushReaction(PushReaction.DESTROY)));
+            () -> new AmethystClusterBlock(7, 3, of().mapColor(MapColor.TERRACOTTA_WHITE).forceSolidOn().noOcclusion().randomTicks().sound(NMLSounds.QUARTZITE_CLUSTER).strength(1.3F).lightLevel((state) -> 5).pushReaction(PushReaction.DESTROY)));
     public static final BlockDefinition<AmethystClusterBlock> SMALL_QUARTZITE_BUD = register("small_quartzite_bud",
-            () -> new AmethystClusterBlock(3, 4, ofFullCopy(NMLBlocks.QUARTZITE_CLUSTER.get()).sound(NMLSounds.QUARTZITE_CLUSTER).forceSolidOn().lightLevel((p_187409_) -> 1).pushReaction(PushReaction.DESTROY)));
+            () -> new AmethystClusterBlock(3, 4, ofFullCopy(NMLBlocks.QUARTZITE_CLUSTER.get()).sound(NMLSounds.QUARTZITE_CLUSTER).forceSolidOn().lightLevel((state) -> 1).pushReaction(PushReaction.DESTROY)));
     public static final BlockDefinition<AmethystClusterBlock> MEDIUM_QUARTZITE_BUD = register("medium_quartzite_bud",
-            () -> new AmethystClusterBlock(4, 3, ofFullCopy(NMLBlocks.QUARTZITE_CLUSTER.get()).sound(NMLSounds.QUARTZITE_CLUSTER).forceSolidOn().lightLevel((p_152617_) -> 2).pushReaction(PushReaction.DESTROY)));
+            () -> new AmethystClusterBlock(4, 3, ofFullCopy(NMLBlocks.QUARTZITE_CLUSTER.get()).sound(NMLSounds.QUARTZITE_CLUSTER).forceSolidOn().lightLevel((state) -> 2).pushReaction(PushReaction.DESTROY)));
     public static final BlockDefinition<AmethystClusterBlock> LARGE_QUARTZITE_BUD = register("large_quartzite_bud",
-            () -> new AmethystClusterBlock(5, 3, ofFullCopy(NMLBlocks.QUARTZITE_CLUSTER.get()).sound(NMLSounds.QUARTZITE_CLUSTER).forceSolidOn().lightLevel((p_152629_) -> 4).pushReaction(PushReaction.DESTROY)));
+            () -> new AmethystClusterBlock(5, 3, ofFullCopy(NMLBlocks.QUARTZITE_CLUSTER.get()).sound(NMLSounds.QUARTZITE_CLUSTER).forceSolidOn().lightLevel((state) -> 4).pushReaction(PushReaction.DESTROY)));
     public static final BlockDefinition<Block> SILT = register("silt",
             () -> new Block(of().mapColor(MapColor.TERRACOTTA_GRAY).sound(SoundType.ROOTED_DIRT).strength(0.6F)), BlockProperties.dirtLike());
     public static final BlockDefinition<PathBlock> SILT_PATH = register("silt_path",
@@ -296,7 +298,7 @@ public class NMLBlocks {
                     .sound(SoundType.CHERRY_WOOD)
             ));
     public static final BlockDefinition<AncestralEffigyBlock> ANCESTRAL_EFFIGY = register("ancestral_effigy",
-          () -> new AncestralEffigyBlock(ofFullCopy(Blocks.STONE).offsetType(OffsetType.XYZ).dynamicShape()));
+          () -> new AncestralEffigyBlock(ofFullCopy(Blocks.STONE).offsetType(OffsetType.XYZ).dynamicShape().noOcclusion()));
     public static final BlockDefinition<AncestralCarvingBlock> ANCESTRAL_CARVING = register("ancestral_carving",
           () -> new AncestralCarvingBlock(ofFullCopy(Blocks.STONE)));
 
@@ -313,6 +315,9 @@ public class NMLBlocks {
     public static final BlockDefinition<MoonCarvingBlock> MOON_CARVING = registerNoItem("moon_carving",
             () -> new MoonCarvingBlock(ofFullCopy(Blocks.STONE)));
 
+    public static final BlockDefinition<AncientBronzeBellBlock> ANCIENT_BRONZE_BELL = register("ancient_bronze_bell",
+            () -> new AncientBronzeBellBlock(ofFullCopy(Blocks.BELL).sound(SoundType.COPPER)), BlockProperties.stoneLike());
+
     public static final BlockDefinition<InvertedBellBlock> INVERTED_BELL = registerNoItem("inverted_bell",
             () -> new InvertedBellBlock(ofFullCopy(Blocks.BEDROCK).sound(SoundType.COPPER).noOcclusion().forceSolidOn()));
     //Tiles
@@ -328,13 +333,39 @@ public class NMLBlocks {
             () -> new StairBlock(EARTHEN_TILES.get().defaultBlockState(), ofFullCopy(NMLBlocks.EARTHEN_TILES.get())), BlockProperties.stoneLikeStairs());
     public static final BlockDefinition<SlabBlock> EARTHEN_TILE_SLAB = register("earthen_tile_slab",
             () -> new SlabBlock(ofFullCopy(NMLBlocks.EARTHEN_TILES.get())), BlockProperties.stoneLikeSlab());
-
     public static final BlockDefinition<Block> DROSS_TILES = register("dross_tiles",
             () -> new Block(ofFullCopy(Blocks.PACKED_MUD)), BlockProperties.stoneLike());
     public static final BlockDefinition<StairBlock> DROSS_TILE_STAIRS = register("dross_tile_stairs",
             () -> new StairBlock(DROSS_TILES.get().defaultBlockState(), ofFullCopy(NMLBlocks.DROSS_TILES.get())), BlockProperties.stoneLikeStairs());
     public static final BlockDefinition<SlabBlock> DROSS_TILE_SLAB = register("dross_tile_slab",
             () -> new SlabBlock(ofFullCopy(NMLBlocks.DROSS_TILES.get())), BlockProperties.stoneLikeSlab());
+
+    public static final BlockDefinition<Block> LARGE_STELLAR_TILE = register("large_stellar_tile",
+            () -> new Block(ofFullCopy(Blocks.DEEPSLATE_BRICKS)), BlockProperties.stoneLike());
+    public static final BlockDefinition<Block> STELLAR_TILES = register("stellar_tiles",
+            () -> new Block(ofFullCopy(Blocks.DEEPSLATE_TILES)), BlockProperties.stoneLike());
+    public static final BlockDefinition<StairBlock> STELLAR_TILE_STAIRS = register("stellar_tile_stairs",
+            () -> new StairBlock(STELLAR_TILES.get().defaultBlockState(), ofFullCopy(NMLBlocks.STELLAR_TILES.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> STELLAR_TILE_SLAB = register("stellar_tile_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.STELLAR_TILES.get())), BlockProperties.stoneLikeSlab());
+
+    public static final BlockDefinition<Block> LARGE_SOLAR_TILE = register("large_solar_tile",
+            () -> new Block(ofFullCopy(Blocks.DEEPSLATE_BRICKS)), BlockProperties.stoneLike());
+    public static final BlockDefinition<Block> SOLAR_TILES = register("solar_tiles",
+            () -> new Block(ofFullCopy(Blocks.DEEPSLATE_TILES)), BlockProperties.stoneLike());
+    public static final BlockDefinition<StairBlock> SOLAR_TILE_STAIRS = register("solar_tile_stairs",
+            () -> new StairBlock(SOLAR_TILES.get().defaultBlockState(), ofFullCopy(NMLBlocks.SOLAR_TILES.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> SOLAR_TILE_SLAB = register("solar_tile_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.SOLAR_TILES.get())), BlockProperties.stoneLikeSlab());
+
+    public static final BlockDefinition<Block> LARGE_LUNAR_TILE = register("large_lunar_tile",
+            () -> new Block(ofFullCopy(Blocks.DEEPSLATE_BRICKS)), BlockProperties.stoneLike());
+    public static final BlockDefinition<Block> LUNAR_TILES = register("lunar_tiles",
+            () -> new Block(ofFullCopy(Blocks.DEEPSLATE_TILES)), BlockProperties.stoneLike());
+    public static final BlockDefinition<StairBlock> LUNAR_TILE_STAIRS = register("lunar_tile_stairs",
+            () -> new StairBlock(LUNAR_TILES.get().defaultBlockState(), ofFullCopy(NMLBlocks.LUNAR_TILES.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> LUNAR_TILE_SLAB = register("lunar_tile_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.LUNAR_TILES.get())), BlockProperties.stoneLikeSlab());
 
     public static final BlockDefinition<Block> SILT_BRICKS = register("silt_bricks",
             () -> new Block(ofFullCopy(Blocks.PACKED_MUD)), BlockProperties.stoneLike());
@@ -392,6 +423,14 @@ public class NMLBlocks {
     public static final BlockDefinition<SlabBlock> SILTSTONE_BRICK_SLAB = register("siltstone_brick_slab",
             () -> new SlabBlock(ofFullCopy(NMLBlocks.SILTSTONE_BRICKS.get())), BlockProperties.stoneLikeSlab());
     public static final BlockDefinition<WallBlock> SILTSTONE_BRICK_WALL = register("siltstone_brick_wall",
+            () -> new WallBlock(ofFullCopy(Blocks.STONE_BRICK_WALL)), BlockProperties.stoneLikeWall());
+    public static final BlockDefinition<Block> MOSSY_SILTSTONE_BRICKS = register("mossy_siltstone_bricks",
+            () -> new Block(ofFullCopy(Blocks.STONE_BRICKS)), BlockProperties.stoneLike());
+    public static final BlockDefinition<StairBlock> MOSSY_SILTSTONE_BRICK_STAIRS = register("mossy_siltstone_brick_stairs",
+            () -> new StairBlock(MOSSY_SILTSTONE_BRICKS.get().defaultBlockState(), ofFullCopy(NMLBlocks.MOSSY_SILTSTONE_BRICKS.get())), BlockProperties.stoneLikeStairs());
+    public static final BlockDefinition<SlabBlock> MOSSY_SILTSTONE_BRICK_SLAB = register("mossy_siltstone_brick_slab",
+            () -> new SlabBlock(ofFullCopy(NMLBlocks.MOSSY_SILTSTONE_BRICKS.get())), BlockProperties.stoneLikeSlab());
+    public static final BlockDefinition<WallBlock> MOSSY_SILTSTONE_BRICK_WALL = register("mossy_siltstone_brick_wall",
             () -> new WallBlock(ofFullCopy(Blocks.STONE_BRICK_WALL)), BlockProperties.stoneLikeWall());
     public static final BlockDefinition<Block> CHISELED_SILTSTONE = register("chiseled_siltstone",
             () -> new Block(ofFullCopy(NMLBlocks.SILTSTONE.get())), BlockProperties.stoneLike());

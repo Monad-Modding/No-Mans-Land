@@ -31,8 +31,9 @@ public class FlammableEffect extends MobEffect {
     }
 
     public static void dampenWhenWet(LivingEntity livingEntity) {
+        if (!(livingEntity instanceof ServerPlayer)) return;
         MobEffectInstance flammableEffectInstance = livingEntity.getEffect(NMLEffects.FLAMMABLE);
-        if (flammableEffectInstance != null && livingEntity.isInWaterOrRain() && livingEntity instanceof ServerPlayer) {
+        if (flammableEffectInstance != null && livingEntity.isInWaterOrRain()) {
             livingEntity.removeEffect(NMLEffects.FLAMMABLE);
             int durationLost = livingEntity.isUnderWater() ? 4 : 2;
             if (flammableEffectInstance.getDuration() > durationLost) livingEntity.addEffect(new MobEffectInstance(NMLEffects.FLAMMABLE, flammableEffectInstance.getDuration() - durationLost, flammableEffectInstance.getAmplifier()));

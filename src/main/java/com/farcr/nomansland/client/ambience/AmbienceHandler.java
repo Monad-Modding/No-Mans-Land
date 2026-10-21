@@ -10,12 +10,14 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 @SuppressWarnings("unused")
 @EventBusSubscriber(value = Dist.CLIENT, modid = NoMansLand.MODID)
 public class AmbienceHandler {
+    private static final String AMBIENCE_PROFILER = NoMansLand.MODID + ".ambienceTick";
+
     public static final SurfaceAmbience SURFACE_AMBIENCE_HANDLER = new SurfaceAmbience(Minecraft.getInstance());
     public static final FogModifierHandler FOG_MODIFIER_HANDLER = new FogModifierHandler();
 
     @SubscribeEvent
     public static void onTick(ClientTickEvent.Pre event) {
-        Minecraft.getInstance().getProfiler().push(NoMansLand.MODID + ".ambienceTick");
+        Minecraft.getInstance().getProfiler().push(AMBIENCE_PROFILER);
 
         boolean shouldUpdate = shouldUpdate();
         SURFACE_AMBIENCE_HANDLER.tick(shouldUpdate);

@@ -1,5 +1,7 @@
 package com.farcr.nomansland.common.block.cauldrons;
 
+import net.minecraft.world.level.gameevent.GameEvent;
+import com.mojang.serialization.MapCodec;
 import com.farcr.nomansland.common.registry.NMLSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
@@ -18,6 +20,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class EmptyWitchStewCauldron extends Block {
+
     public static final VoxelShape SHAPE = Shapes.join(
             Shapes.block(),
             Shapes.or(
@@ -33,13 +36,19 @@ public class EmptyWitchStewCauldron extends Block {
     }
 
     @Override
+    public MapCodec<EmptyWitchStewCauldron> codec() {
+        return simpleCodec(EmptyWitchStewCauldron::new);
+    }
+
+    @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
-
-        player.addItem(Items.BONE_MEAL.getDefaultInstance());
-
-        level.playSound(null, pos, NMLSounds.WITCH_STEW_CAULDRON_CLEAN.value(), SoundSource.BLOCKS);
-        return InteractionResult.SUCCESS;
+        if (!level.isClientSide) {
+            level.setBlockAndUpdate(pos, Blocks.CAULDRON.defaultBlockState());
+            player.addItem(Items.BONE_MEAL.getDefaultInstance());
+            level.playSound(null, pos, NMLSounds.WITCH_STEW_CAULDRON_CLEAN.value(), SoundSource.BLOCKS);
+            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, Blocks.CAULDRON.defaultBlockState()));
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override

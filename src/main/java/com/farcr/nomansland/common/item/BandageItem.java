@@ -47,7 +47,7 @@ public class BandageItem extends Item {
         if (!target.isDeadOrDying() && target != player && !player.getCooldowns().isOnCooldown(stack.getItem())) {
             TARGET_ENTITY.set(target);
             player.startUsingItem(hand);
-            if (player instanceof ServerPlayer sp) PacketDistributor.sendToPlayersTrackingEntityAndSelf(sp, new ClientboundBandageSoundPacket(sp.getId()));
+            if (player instanceof ServerPlayer sp) PacketDistributor.sendToPlayersTrackingEntityAndSelf(sp, new ClientboundBandageSoundPacket(sp.getId(), target.getId()));
             return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
@@ -115,7 +115,7 @@ public class BandageItem extends Item {
 //    }
 
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
-        if (player instanceof ServerPlayer sp) PacketDistributor.sendToPlayersTrackingEntityAndSelf(sp, new ClientboundBandageSoundPacket(sp.getId()));
+        if (player instanceof ServerPlayer sp) PacketDistributor.sendToPlayersTrackingEntityAndSelf(sp, new ClientboundBandageSoundPacket(sp.getId(), -1));
         return ItemUtils.startUsingInstantly(level, player, hand);
     }
 

@@ -9,4 +9,7 @@ public interface LevelChunkExtension {
     default void nml$setIgnoreBuddyAnchor() throws NotImplementedException {
         throw new NotImplementedException();
     }
+    default void nml$clearIgnoreBuddyAnchor() throws NotImplementedException {
+        throw new NotImplementedException();
+    }
 }

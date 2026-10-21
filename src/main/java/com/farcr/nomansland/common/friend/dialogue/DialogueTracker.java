@@ -43,6 +43,11 @@ public class DialogueTracker extends SavedData {
         return playerData.computeIfAbsent(playerUUID, (uuid) -> new PlayerDialogueData());
     }
 
+    public boolean hasHeardFrom(UUID playerUUID, ResourceLocation registryLocation) {
+        PlayerDialogueData data = playerData.get(playerUUID);
+        return data != null && !data.heardByRegistry.getOrDefault(registryLocation, Set.of()).isEmpty();
+    }
+
     public void markDialogueHeard(ServerPlayer player, ResourceLocation registryLocation, ResourceLocation dialogueLocation) {
         PlayerDialogueData data = getData(player.getUUID());
         boolean changed = !data.heardAnyDialogue;

@@ -15,4 +15,5 @@ public interface EntityExtension {
     default float NML$getInspectionFade(float partialTick) throws NotImplementedException {
         throw new NotImplementedException();
     }
+    default float nml$getVisualTickMultiplier() { return 1f; }
 }

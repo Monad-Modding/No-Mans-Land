@@ -3,16 +3,44 @@
   "config": {
     "feature": {
       "feature": {
-        "type": "minecraft:simple_block",
+        "type": "minecraft:random_selector",
         "config": {
-          "to_place": {
-            "type": "minecraft:simple_state_provider",
-            "state": {
-              "Name": "minecraft:rose_bush",
-              "Properties": {
-                "half": "lower"
+          "features": [
+            {
+              "chance": 0.015,
+              "feature": {
+                "feature": {
+                  "type": "minecraft:random_patch",
+                  "config": {
+                    "feature": {
+                      "feature": "nomansland:rose_vines",
+                      "placement": []
+                    },
+                    "tries": 64,
+                    "xz_spread": 3,
+                    "y_spread": 2
+                  }
+                },
+                "placement": []
               }
             }
+          ],
+          "default": {
+            "feature": {
+              "type": "minecraft:simple_block",
+              "config": {
+                "to_place": {
+                  "type": "minecraft:simple_state_provider",
+                  "state": {
+                    "Name": "minecraft:rose_bush",
+                    "Properties": {
+                      "half": "lower"
+                    }
+                  }
+                }
+              }
+            },
+            "placement": []
           }
         }
       },

@@ -17,6 +17,7 @@ import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ViewportEvent;
@@ -30,6 +31,8 @@ import java.util.List;
 
 @EventBusSubscriber(value = Dist.CLIENT, modid = NoMansLand.MODID)
 public class FogModifierHandler {
+    private static final String FOG_MODIFIER_PROFILER = NoMansLand.MODID + ".fogModifierTick";
+
     private final List<FogModifierInstance> fogModifiers;
     private final FogContext context = new FogContext();
 
@@ -58,7 +61,7 @@ public class FogModifierHandler {
     }
 
     public void tick(ClientLevel level, Vec3 playerPos, float undergroundness) {
-        Minecraft.getInstance().getProfiler().push(NoMansLand.MODID + ".fogModifierTick");
+        Minecraft.getInstance().getProfiler().push(FOG_MODIFIER_PROFILER);
         // this is just a bunch of lerps, so updated every tick!
         this.tickModifierInterpolation();
         // this is updated less frequently because it gathers a lot of context about the world
@@ -130,8 +133,9 @@ public class FogModifierHandler {
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
     public static void renderFog(ViewportEvent.RenderFog event) {
+        if (event.isCanceled()) return;
         float partialTicks = (float) event.getPartialTick();
 
         float startMul = AmbienceHandler.FOG_MODIFIER_HANDLER.getFogStartMultiplier(partialTicks);

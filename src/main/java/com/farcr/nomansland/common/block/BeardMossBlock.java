@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -30,6 +31,11 @@ public class BeardMossBlock extends Block implements BonemealableBlock {
     public BeardMossBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.getStateDefinition().getOwner().defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER));
+    }
+
+    @Override
+    public MapCodec<BeardMossBlock> codec() {
+        return simpleCodec(BeardMossBlock::new);
     }
 
     @Override

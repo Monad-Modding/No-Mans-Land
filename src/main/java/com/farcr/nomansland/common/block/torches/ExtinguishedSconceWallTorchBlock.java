@@ -1,4 +1,6 @@
 package com.farcr.nomansland.common.block.torches;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.MapCodec;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -7,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -23,6 +26,16 @@ public class ExtinguishedSconceWallTorchBlock extends ExtinguishedWallTorchBlock
 
     public ExtinguishedSconceWallTorchBlock(SimpleParticleType flameParticle, Properties properties) {
         super(flameParticle, properties);
+    }
+
+    public static final MapCodec<WallTorchBlock> CODEC = RecordCodecBuilder.<ExtinguishedSconceWallTorchBlock>mapCodec(instance -> instance.group(
+            PARTICLE_OPTIONS_FIELD.forGetter(block -> block.flameParticle),
+            propertiesCodec()
+    ).apply(instance, ExtinguishedSconceWallTorchBlock::new)).xmap(block -> (WallTorchBlock) block, block -> (ExtinguishedSconceWallTorchBlock) block);
+
+    @Override
+    public MapCodec<WallTorchBlock> codec() {
+        return CODEC;
     }
 
     public static VoxelShape getShape(BlockState state) {

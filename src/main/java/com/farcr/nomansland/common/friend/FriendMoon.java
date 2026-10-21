@@ -11,6 +11,7 @@ import com.farcr.nomansland.common.friend.condition.MoonlightGreetingConditions;
 import com.farcr.nomansland.common.friend.condition.MoonlightLeavingConditions;
 import com.farcr.nomansland.common.friend.dialogue.DialogueLocation;
 import com.farcr.nomansland.common.friend.dialogue.DialoguePool;
+import com.farcr.nomansland.common.friend.dialogue.DialogueTracker;
 import com.farcr.nomansland.common.friend.dialogue.DialogueUtil;
 import com.farcr.nomansland.common.friend.offering.OfferingContext;
 import com.farcr.nomansland.common.friend.offering.OfferingType;
@@ -31,6 +32,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import com.farcr.nomansland.NMLConfig;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -425,8 +428,27 @@ public class FriendMoon extends SavedData {
         return lastFriendshipPlayers.containsKey(player);
     }
 
+    public static boolean isFriendMoonDimension(ServerLevel candidate) {
+        MinecraftServer server = candidate.getServer();
+        if (server == null) return false;
+
+        List<? extends String> configured = NMLConfig.FRIEND_MOON_DIMENSIONS.get();
+        if (!configured.isEmpty())
+            return configured.contains(candidate.dimension().location().toString());
+
+        return candidate.dimensionTypeRegistration().equals(server.overworld().dimensionTypeRegistration());
+    }
+
     public List<ServerPlayer> getFriendshipPlayers() {
-        return level.getPlayers(this::playerHasFriendship);
+        if (level == null) return List.of();
+        MinecraftServer server = level.getServer();
+        if (server == null) return level.getPlayers(this::playerHasFriendship);
+
+        List<ServerPlayer> players = new ArrayList<>();
+        for (ServerLevel candidate : server.getAllLevels())
+            if (isFriendMoonDimension(candidate))
+                players.addAll(candidate.getPlayers(this::playerHasFriendship));
+        return players;
     }
 
     private final HashMap<ServerPlayer, Integer> lastFriendshipPlayers = new HashMap<>();
@@ -559,7 +581,11 @@ public class FriendMoon extends SavedData {
     public void updateMeetingPointInformation(ServerLevel level) {
         if (isNightTime(level)) {
             if (!updatedShadow) {
-                level.players().forEach((player) -> updatePlayerFriendShadow(player));
+                MinecraftServer server = level.getServer();
+                if (server == null) level.players().forEach((player) -> updatePlayerFriendShadow(player));
+                else for (ServerLevel candidate : server.getAllLevels())
+                    if (isFriendMoonDimension(candidate))
+                        candidate.players().forEach((player) -> updatePlayerFriendShadow(player));
                 updatedShadow = true;
             }
         } else updatedShadow = false;
@@ -616,7 +642,9 @@ public class FriendMoon extends SavedData {
     }
 
     public static boolean hasMetWithPlayer(ServerPlayer player) {
-        AdvancementHolder meetAdvancement = player.level().getServer().getAdvancements().get(MEET_MOON_ADVANCEMENT);
+        MinecraftServer server = player.level().getServer();
+        if (DialogueTracker.getOrDefault(server).hasHeardFrom(player.getUUID(), NMLRegistries.GREETING_DIALOGUE_KEY.location())) return true;
+        AdvancementHolder meetAdvancement = server.getAdvancements().get(MEET_MOON_ADVANCEMENT);
         return (meetAdvancement != null && player.getAdvancements().getOrStartProgress(meetAdvancement).isDone());
     }
 
@@ -692,6 +720,8 @@ public class FriendMoon extends SavedData {
                                 (registry) -> greetingFilter(registry, wokenUpBy)
                             ).setTargetPlayer(wokenUpBy).dispatch(level, getFriendshipPlayers())
                         );
+                        forFriendshipPlayers((player) ->
+                            NMLCriteriaTriggers.MEET_FRIEND_MOON.get().trigger(player));
                         getState().getMoonConsumer().accept(this);
                         // just in case I dont want it softlocking players if they log off please
                     } else if (awake) {
@@ -789,7 +819,6 @@ public class FriendMoon extends SavedData {
             if (dreamAdvancement != null && serverPlayer.getAdvancements().getOrStartProgress(dreamAdvancement).isDone())
                 filteredDialogue = MoonlightGreetingConditions.DreamGreetingConditional.DREAM_ARRAY;
         }
-        NMLCriteriaTriggers.MEET_FRIEND_MOON.get().trigger(serverPlayer);
         return DialogueUtil.getWeightedEntry(filteredDialogue, level.getRandom());
     }
 

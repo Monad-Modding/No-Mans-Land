@@ -27,7 +27,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 
 public class StrawBedBlock extends HorizontalDirectionalBlock {
-    public static final MapCodec<StrawBedBlock> CODEC = simpleCodec(StrawBedBlock::new);
     public static final EnumProperty<BedPart> PART = BlockStateProperties.BED_PART;
     public static final BooleanProperty OCCUPIED = BedBlock.OCCUPIED;
     protected static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0);
@@ -39,6 +38,8 @@ public class StrawBedBlock extends HorizontalDirectionalBlock {
                 .setValue(OCCUPIED, false)
                 .setValue(FACING, Direction.NORTH));
     }
+
+    public static final MapCodec<StrawBedBlock> CODEC = simpleCodec(StrawBedBlock::new);
 
     @Override
     protected MapCodec<? extends HorizontalDirectionalBlock> codec() {

@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.blockentity;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.common.block.AncestralCarvingBlock;
 import com.farcr.nomansland.common.block.MoonCarvingBlock;
 import com.farcr.nomansland.common.dreams.DreamManager;
@@ -7,6 +8,7 @@ import com.farcr.nomansland.common.dreams.DreamStorage;
 import com.farcr.nomansland.common.dreams.DreamType;
 import com.farcr.nomansland.common.friend.FriendMoon;
 import com.farcr.nomansland.common.networking.ClientboundZoomEffectPacket;
+import com.farcr.nomansland.common.registry.NMLAttachmentTypes;
 import com.farcr.nomansland.common.registry.NMLBlockEntities;
 import com.farcr.nomansland.common.registry.NMLDreamTypes;
 import com.farcr.nomansland.common.registry.NMLSounds;
@@ -122,8 +124,10 @@ public class MoonCarvingBlockEntity extends BlockEntity {
                                 NMLSounds.MOON_CARVING_ACTIVATE.get(),
                                 SoundSource.AMBIENT
                             );
+                            level.gameEvent(player, GameEvent.BLOCK_ACTIVATE, pos);
                             PacketDistributor.sendToPlayer((ServerPlayer) player,
                                 new ClientboundZoomEffectPacket(70));
+                            player.setData(NMLAttachmentTypes.LAST_MOON_CARVING_INTERACTION.get(), level.getGameTime());
                         }
                     } else
                         map.remove(player);
