@@ -34,15 +34,16 @@ public class TranslucentSignEvents {
         Level level = event.getLevel();
         BlockPos pos = event.getPos();
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof SignBlockEntity) || !(blockEntity instanceof TranslucentSign sign)) return;
-        if (sign.nml$isTranslucent()) return;
+        if (!(blockEntity instanceof SignBlockEntity signBlockEntity) || !(blockEntity instanceof TranslucentSign sign)) return;
+        boolean front = signBlockEntity.isFacingFrontText(player);
+        if (sign.nml$isTranslucent(front)) return;
 
         if (!level.isClientSide) {
-            sign.nml$setTranslucent(true);
+            sign.nml$setTranslucent(front, true);
             blockEntity.setChanged();
             BlockState state = level.getBlockState(pos);
             level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
-            stack.consume(1, player);
+            player.getItemInHand(event.getHand()).consume(1, player);
             level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 0.6F, 1.4F);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
         }

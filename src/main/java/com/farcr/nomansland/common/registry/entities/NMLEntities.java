@@ -125,7 +125,7 @@ public class NMLEntities {
     public static final Supplier<EntityType<Clod>> CLOD =
             ENTITIES.register("clod", () -> EntityType.Builder.of(Clod::new, MobCategory.CREATURE)
                     .sized(0.6F, 0.9F)
-                    .eyeHeight(0.4F)
+                    .eyeHeight(0.72F)
                     .passengerAttachments(new Vec3(0.0F, 0.9F, 0.0F))
                     .clientTrackingRange(8)
                     .build("clod"));

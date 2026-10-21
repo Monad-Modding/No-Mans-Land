@@ -25,14 +25,16 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.FollowParentGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -55,11 +57,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Clod extends Animal {
 
@@ -71,10 +73,19 @@ public class Clod extends Animal {
     private static final double THREAT_RANGE = 10.0;
     private static final double LEAVE_RANGE = 15.0;
     private static final double ALARM_RANGE = 20.0;
-    private static final int ALERT_TICKS = 300;
+    private static final int UNFREEZE_MIN = 20;
+    private static final int UNFREEZE_SPREAD = 181;
+    private static final int FLEE_LINGER_SPREAD = 101;
     private static final int INVESTIGATE_TICKS = 100;
+    private static final double SURFACE_GAP = 0.05;
+    private static final double FLOAT_RATE = 0.3;
+    private static final double FLOAT_MAX_SPEED = 0.1;
+    private static final int TRUST_MIN = 200;
+    private static final int TRUST_SPREAD = 401;
 
-    private int fleeTicks;
+    private boolean fleeing;
+    private int fleeTicks = -1;
+    private boolean threatInRange;
     private boolean hiding;
     private int alertTicks;
     private int investigateTicks;
@@ -82,9 +93,13 @@ public class Clod extends Animal {
     private Vec3 lastThreatPos;
     @Nullable
     private LivingEntity watchedThreat;
+    @Nullable
+    private UUID trusted;
+    private int trustTicks;
 
     public Clod(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
+        this.getNavigation().setCanFloat(true);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -113,7 +128,6 @@ public class Clod extends Animal {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new TemptGoal(this, 1.0, stack -> stack.is(NMLTags.CLOD_FOOD), false));
         this.goalSelector.addGoal(2, new ClodInvestigateGoal(this, 1.0));
         this.goalSelector.addGoal(2, new ClodFreezeGoal(this));
@@ -155,15 +169,17 @@ public class Clod extends Animal {
     }
 
     public boolean isFleeing() {
-        return this.fleeTicks > 0;
+        return this.fleeing;
     }
 
     public void startFleeing() {
-        this.fleeTicks = 80 + this.random.nextInt(40);
+        this.fleeing = true;
+        this.fleeTicks = -1;
     }
 
     public void stopFleeing() {
-        this.fleeTicks = 0;
+        this.fleeing = false;
+        this.fleeTicks = -1;
     }
 
     @Nullable
@@ -189,11 +205,11 @@ public class Clod extends Animal {
     }
 
     public boolean isAlerted() {
-        return this.alertTicks > 0;
+        return this.threatInRange || this.alertTicks > 0;
     }
 
     public void alert() {
-        this.alertTicks = ALERT_TICKS;
+        this.alertTicks = Math.max(this.alertTicks, UNFREEZE_MIN + this.random.nextInt(UNFREEZE_SPREAD));
     }
 
     public boolean isInvestigating() {
@@ -214,10 +230,11 @@ public class Clod extends Animal {
         if (entity instanceof Clod) return false;
         if (entity instanceof Player player) {
             if (player.isCreative() || player.isSpectator()) return false;
+            if (this.trustTicks > 0 && player.getUUID().equals(this.trusted)) return false;
             if (player.getMainHandItem().is(NMLTags.CLOD_FOOD) || player.getOffhandItem().is(NMLTags.CLOD_FOOD)) return false;
             return true;
         }
-        if (entity instanceof Monster) return true;
+        if (entity instanceof Monster || entity instanceof NeutralMob) return true;
         return entity instanceof Fox || entity instanceof Wolf || entity instanceof PolarBear
                 || entity instanceof Cat || entity instanceof Ocelot;
     }
@@ -234,22 +251,40 @@ public class Clod extends Animal {
     protected void customServerAiStep() {
         super.customServerAiStep();
 
-        if (this.fleeTicks > 0) this.fleeTicks--;
+        if (this.trustTicks > 0 && --this.trustTicks == 0) {
+            this.trusted = null;
+        }
 
         LivingEntity threat = this.findThreat(this.leaveRange());
         boolean seeingVisible = threat != null && !threat.isInvisible();
         if (threat != null) {
-            this.alertTicks = ALERT_TICKS;
+            this.threatInRange = true;
             if (seeingVisible) this.lastThreatPos = threat.position();
             boolean within10 = this.distanceToSqr(threat) <= THREAT_RANGE * THREAT_RANGE;
             if (within10 && !this.isInvisibleByStillness()) {
                 this.startFleeing();
             }
-        } else if (this.alertTicks > 0) {
-            this.alertTicks--;
-            if (this.alertTicks == 0) {
-                this.lastThreatPos = null;
-                this.investigateTicks = 0;
+        } else {
+            if (this.threatInRange) {
+                this.threatInRange = false;
+                this.alertTicks = UNFREEZE_MIN + this.random.nextInt(UNFREEZE_SPREAD);
+            }
+            if (this.alertTicks > 0) {
+                this.alertTicks--;
+                if (this.alertTicks == 0) {
+                    this.lastThreatPos = null;
+                    this.investigateTicks = 0;
+                }
+            }
+        }
+
+        if (this.fleeing) {
+            if (threat != null) {
+                this.fleeTicks = -1;
+            } else if (this.fleeTicks < 0) {
+                this.fleeTicks = this.random.nextInt(FLEE_LINGER_SPREAD);
+            } else if (this.fleeTicks-- <= 0) {
+                this.stopFleeing();
             }
         }
 
@@ -295,10 +330,23 @@ public class Clod extends Animal {
         return super.finalizeSpawn(level, difficulty, spawnType, data);
     }
 
-    public void alarmGroup() {
+    public void trust(Player player) {
+        this.trusted = player.getUUID();
+        this.trustTicks = TRUST_MIN + this.random.nextInt(TRUST_SPREAD);
+    }
+
+    public void distrust(@Nullable Entity attacker) {
+        if (attacker != null && attacker.getUUID().equals(this.trusted)) {
+            this.trusted = null;
+            this.trustTicks = 0;
+        }
+    }
+
+    public void alarmGroup(@Nullable Entity attacker) {
         Vec3 source = this.position();
         for (Clod clod : this.level().getEntitiesOfClass(Clod.class, this.getBoundingBox().inflate(ALARM_RANGE))) {
             if (clod == this) continue;
+            clod.distrust(attacker);
             clod.lastThreatPos = source;
             clod.alert();
             clod.startFleeing();
@@ -309,11 +357,12 @@ public class Clod extends Animal {
     public boolean hurt(DamageSource source, float amount) {
         boolean result = super.hurt(source, amount);
         if (result && !this.level().isClientSide) {
+            this.distrust(source.getEntity());
             this.setOpacity(1.0F);
             this.lastThreatPos = source.getEntity() != null ? source.getEntity().position() : this.position();
             this.alert();
             this.startFleeing();
-            this.alarmGroup();
+            this.alarmGroup(source.getEntity());
         }
         return result;
     }
@@ -342,20 +391,27 @@ public class Clod extends Animal {
     }
 
     @Override
-    public boolean canStandOnFluid(FluidState fluidState) {
-        return fluidState.is(FluidTags.WATER);
-    }
-
-    @Override
     public void aiStep() {
         super.aiStep();
         this.floatClod();
     }
 
     private void floatClod() {
-        if (this.isInWater()) {
-            this.setDeltaMovement(this.getDeltaMovement().scale(0.5).add(0.0, 0.02, 0.0));
+        if (!this.isInWater()) return;
+        double depth = this.getFluidHeight(FluidTags.WATER) - (this.getEyeHeight() - SURFACE_GAP);
+        if (depth <= 0.0) return;
+        Vec3 motion = this.getDeltaMovement();
+        this.setDeltaMovement(motion.x, Math.min(depth * FLOAT_RATE, FLOAT_MAX_SPEED), motion.z);
+    }
+
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        boolean food = this.isFood(player.getItemInHand(hand));
+        InteractionResult result = super.mobInteract(player, hand);
+        if (food && result.consumesAction() && !this.level().isClientSide()) {
+            this.trust(player);
         }
+        return result;
     }
 
     @Override
@@ -373,6 +429,7 @@ public class Clod extends Animal {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putFloat("Opacity", this.getOpacity());
+        compound.putBoolean("Fleeing", this.fleeing);
         compound.putInt("FleeTicks", this.fleeTicks);
     }
 
@@ -380,7 +437,8 @@ public class Clod extends Animal {
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.setOpacity(compound.getFloat("Opacity"));
-        this.fleeTicks = compound.getInt("FleeTicks");
+        this.fleeing = compound.getBoolean("Fleeing");
+        this.fleeTicks = compound.contains("FleeTicks") ? compound.getInt("FleeTicks") : -1;
     }
 
     @Override
