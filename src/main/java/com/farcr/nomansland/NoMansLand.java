@@ -29,9 +29,11 @@ public class NoMansLand {
     public static final Logger LOGGER = LogManager.getLogger("No Man's Land");
 
     public NoMansLand(IEventBus bus, ModContainer container) {
+        NMLItems.ITEMS.addAlias(NoMansLand.location("sulfuric_vent"), NoMansLand.location("sulfuric_fumarole"));
         NMLItems.ITEMS.register(bus);
         NMLBlocks.BLOCKS.addAlias(NoMansLand.location("apple_fruit"), NoMansLand.location("apple"));
         NMLBlocks.BLOCKS.addAlias(NoMansLand.location("pear_fruit"), NoMansLand.location("pear"));
+        NMLBlocks.BLOCKS.addAlias(NoMansLand.location("sulfuric_vent"), NoMansLand.location("sulfuric_fumarole"));
         NMLBlocks.BLOCKS.register(bus);
         NMLExtinguishables.EXTINGUISHABLES.register(bus);
         NMLEntityDataSerializers.ENTITY_DATA_SERIALIZERS.register(bus);

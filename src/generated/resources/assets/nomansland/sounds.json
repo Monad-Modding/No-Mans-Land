@@ -2169,6 +2169,28 @@
     ],
     "subtitle": "nomansland.subtitle.item.bomb.primed"
   },
+  "item.charcoal_filter.click": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.lever.click",
+        "pitch": 1.6,
+        "volume": 0.6
+      }
+    ],
+    "subtitle": "nomansland.subtitle.item.charcoal_filter.click"
+  },
+  "item.charcoal_filter.hiss": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.fire.extinguish",
+        "pitch": 1.5,
+        "volume": 0.35
+      }
+    ],
+    "subtitle": "nomansland.subtitle.item.charcoal_filter.hiss"
+  },
   "item.honeycomb.consumed": {
     "sounds": [
       "item/honeycomb/wax_on1",

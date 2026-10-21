@@ -454,10 +454,10 @@ public class NMLBlocks {
             () -> new Block(ofFullCopy(NMLBlocks.IVORY_LIMESTONE.get())), BlockProperties.stoneLike());
 
     public static final BlockDefinition<SulfurOreBlock> SULFUR_ORE = register("sulfur_ore",
-            () -> new SulfurOreBlock(ofFullCopy(Blocks.STONE).strength(3.0F, 3.0F).requiresCorrectToolForDrops()),
+            () -> new SulfurOreBlock(ofFullCopy(Blocks.COAL_ORE).strength(3.0F, 3.0F).requiresCorrectToolForDrops()),
             new BlockProperties(new OreBlockLootType(NMLItems.SULFUR::get, 2.0F, 4.0F, NMLItems.ORPIMENT, 0.04F), false));
     public static final BlockDefinition<SulfurOreBlock> DEEPSLATE_SULFUR_ORE = register("deepslate_sulfur_ore",
-            () -> new SulfurOreBlock(ofFullCopy(Blocks.DEEPSLATE).strength(4.5F, 3.0F).requiresCorrectToolForDrops()),
+            () -> new SulfurOreBlock(ofFullCopy(Blocks.DEEPSLATE_COAL_ORE).strength(4.5F, 3.0F).requiresCorrectToolForDrops()),
             new BlockProperties(new OreBlockLootType(NMLItems.SULFUR::get, 2.0F, 4.0F, NMLItems.ORPIMENT, 0.05F), false));
     public static final BlockDefinition<Block> SULFUR_BLOCK = register("sulfur_block",
             () -> new Block(ofFullCopy(Blocks.STONE).mapColor(MapColor.COLOR_YELLOW).strength(3.0F, 3.0F).requiresCorrectToolForDrops().sound(SoundType.STONE)),

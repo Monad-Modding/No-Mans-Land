@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.event;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.extension.TranslucentSign;
 import com.farcr.nomansland.common.registry.items.NMLItems;
@@ -43,6 +44,7 @@ public class TranslucentSignEvents {
             level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
             stack.consume(1, player);
             level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 0.6F, 1.4F);
+            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state));
         }
 
         event.cancelWithResult(ItemInteractionResult.sidedSuccess(level.isClientSide));

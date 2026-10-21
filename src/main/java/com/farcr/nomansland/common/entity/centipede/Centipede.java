@@ -1,5 +1,6 @@
 package com.farcr.nomansland.common.entity.centipede;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import com.farcr.nomansland.common.registry.NMLSounds;
 import com.farcr.nomansland.common.registry.NMLTags;
 import net.minecraft.core.BlockPos;
@@ -1418,6 +1419,7 @@ public class Centipede extends Monster {
         }
         setHealth(getMaxHealth());
         this.playSound(NMLSounds.CENTIPEDE_HISS.get(), 1.0F, 0.9F + this.random.nextFloat() * 0.2F);
+        this.gameEvent(GameEvent.EAT);
     }
 
     @Override

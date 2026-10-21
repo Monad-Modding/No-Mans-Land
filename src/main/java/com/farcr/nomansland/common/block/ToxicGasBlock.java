@@ -1,9 +1,11 @@
 package com.farcr.nomansland.common.block;
 
+import com.farcr.nomansland.common.extension.LevelChunkExtension;
 import com.farcr.nomansland.common.registry.NMLParticleTypes;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.SectionPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -14,6 +16,9 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.LevelChunkSection;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -27,11 +32,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ToxicGasBlock extends Block {
-    public static final double HITBOX_HALF = 0.875;
+    public static final double HITBOX_HALF = 1.25;
+    private static final int HITBOX_REACH = 2;
     private static final int PARTICLE_DELAY = 5;
     private static final int MAX_FLOW_CLUMP = 1024;
-    private static final int AIR_NEIGHBORS_TO_DISSIPATE = 3;
-    private static final float DISSIPATE_CHANCE = 0.0025F;
+    private static final float OPEN_DISSIPATE_CHANCE = 0.01F;
+    private static final float DISSIPATE_CHANCE = 0.005F;
+    private static final float THIN_DISSIPATE_CHANCE = 0.0025F;
+    private static final float SLIP_CHANCE = 0.5F;
+    private static final float DISPLACED_VANISH_CHANCE = 0.5F;
     private static final int GILL_FEED_RANGE = 5;
 
     public ToxicGasBlock(Properties properties) {
@@ -55,12 +64,36 @@ public class ToxicGasBlock extends Block {
 
     @Override
     public void onPlace(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState oldState, boolean isMoving) {
+        markChunk(level, pos);
         if (!oldState.is(this)) level.scheduleTick(pos, this, PARTICLE_DELAY);
+    }
+
+    private static void markChunk(final Level level, final BlockPos pos) {
+        final ChunkAccess chunk = level.getChunk(SectionPos.blockToSectionCoord(pos.getX()),
+                SectionPos.blockToSectionCoord(pos.getZ()), ChunkStatus.FULL, false);
+        if (chunk instanceof LevelChunkExtension extension) {
+            extension.nml$setMayHaveToxicGas(true);
+        }
+    }
+
+    private static boolean chunkMayHaveGas(final ChunkAccess chunk) {
+        if (!(chunk instanceof LevelChunkExtension extension)) return true;
+        if (!extension.nml$toxicGasScanned()) {
+            boolean present = false;
+            for (final LevelChunkSection section : chunk.getSections()) {
+                if (!section.hasOnlyAir() && section.maybeHas(ToxicGasBlock::isToxicGas)) {
+                    present = true;
+                    break;
+                }
+            }
+            extension.nml$setMayHaveToxicGas(present);
+        }
+        return extension.nml$mayHaveToxicGas();
     }
 
     @Override
     public void onRemove(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState newState, boolean movedByPiston) {
-        if (!level.isClientSide() && !newState.is(this) && !newState.isAir() && newState.getFluidState().isEmpty() && level instanceof ServerLevel serverLevel) {
+        if (!level.isClientSide() && !newState.is(this) && !newState.isAir() && newState.getFluidState().isEmpty() && level instanceof ServerLevel serverLevel && serverLevel.getRandom().nextFloat() >= DISPLACED_VANISH_CHANCE) {
             place(serverLevel, pos);
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
@@ -74,14 +107,15 @@ public class ToxicGasBlock extends Block {
             return;
         }
 
-        BlockPos slip = findSlip(level, pos, random);
+        BlockPos slip = random.nextFloat() < SLIP_CHANCE ? findSlip(level, pos, random) : null;
         if (slip != null) {
             level.removeBlock(pos, false);
             place(level, slip);
             return;
         }
 
-        if (countAirNeighbors(level, pos) >= AIR_NEIGHBORS_TO_DISSIPATE && random.nextFloat() < DISSIPATE_CHANCE) {
+        int air = countOpenNeighbors(level, pos);
+        if (air >= 2 && random.nextFloat() < (air >= 4 ? OPEN_DISSIPATE_CHANCE : air == 3 ? DISSIPATE_CHANCE : THIN_DISSIPATE_CHANCE)) {
             level.removeBlock(pos, false);
             return;
         }
@@ -91,24 +125,27 @@ public class ToxicGasBlock extends Block {
     }
 
     private static BlockPos findSlip(ServerLevel level, BlockPos pos, RandomSource random) {
+        boolean onGas = isToxicGas(level.getBlockState(pos.below()));
         int start = random.nextInt(4);
+        BlockPos sideways = null;
         for (int i = 0; i < 4; i++) {
             Direction direction = Direction.from2DDataValue(start + i);
             BlockPos side = pos.relative(direction);
-            BlockPos sideDown = side.below();
-            if (canFlowInto(level.getBlockState(side))
-                    && canFlowInto(level.getBlockState(sideDown))
-                    && canFlowInto(level.getBlockState(sideDown.below()))) {
-                return sideDown;
+            if (!canFlowInto(level.getBlockState(side))) continue;
+            if (canFlowInto(level.getBlockState(side.below()))) return side.below();
+            if (onGas && sideways == null) {
+                sideways = side;
             }
         }
-        return null;
+        return sideways;
     }
 
-    private static int countAirNeighbors(ServerLevel level, BlockPos pos) {
+    private static int countOpenNeighbors(ServerLevel level, BlockPos pos) {
         int count = 0;
         for (Direction direction : Direction.values()) {
-            if (level.getBlockState(pos.relative(direction)).isAir()) count++;
+            BlockPos neighbor = pos.relative(direction);
+            BlockState state = level.getBlockState(neighbor);
+            if (!isToxicGas(state) && !state.isCollisionShapeFullBlock(level, neighbor)) count++;
         }
         return count;
     }
@@ -196,6 +233,19 @@ public class ToxicGasBlock extends Block {
         place(level, containerPos.relative(facing));
     }
 
+    public static int clearTouching(ServerLevel level, LivingEntity entity) {
+        AABB box = entity.getBoundingBox();
+        if (!mightHaveGasNear(level, box)) return 0;
+        int cleared = 0;
+        for (BlockPos pos : BlockPos.betweenClosed(BlockPos.containing(box.minX - HITBOX_REACH, box.minY - HITBOX_REACH, box.minZ - HITBOX_REACH), BlockPos.containing(box.maxX + HITBOX_REACH, box.maxY + HITBOX_REACH, box.maxZ + HITBOX_REACH))) {
+            if (isToxicGas(level.getBlockState(pos)) && gasBox(pos).intersects(box)) {
+                level.removeBlock(pos, false);
+                cleared++;
+            }
+        }
+        return cleared;
+    }
+
     public static void clearArea(ServerLevel level, Vec3 center, double radius) {
         int r = Mth.ceil(radius);
         double radiusSq = radius * radius;
@@ -214,24 +264,59 @@ public class ToxicGasBlock extends Block {
         return new AABB(cx - HITBOX_HALF, cy - HITBOX_HALF, cz - HITBOX_HALF, cx + HITBOX_HALF, cy + HITBOX_HALF, cz + HITBOX_HALF);
     }
 
-    public static boolean isBodyInGas(LivingEntity entity) {
-        Level level = entity.level();
-        AABB box = entity.getBoundingBox();
-        for (BlockPos pos : BlockPos.betweenClosed(
-                BlockPos.containing(box.minX - 1, box.minY - 1, box.minZ - 1),
-                BlockPos.containing(box.maxX + 1, box.maxY + 1, box.maxZ + 1))) {
+    private static boolean mightHaveGasNear(final Level level, final AABB box) {
+        final int minSectionX = SectionPos.blockToSectionCoord(Mth.floor(box.minX - HITBOX_REACH));
+        final int maxSectionX = SectionPos.blockToSectionCoord(Mth.floor(box.maxX + HITBOX_REACH));
+        final int minSectionY = SectionPos.blockToSectionCoord(Mth.floor(box.minY - HITBOX_REACH));
+        final int maxSectionY = SectionPos.blockToSectionCoord(Mth.floor(box.maxY + HITBOX_REACH));
+        final int minSectionZ = SectionPos.blockToSectionCoord(Mth.floor(box.minZ - HITBOX_REACH));
+        final int maxSectionZ = SectionPos.blockToSectionCoord(Mth.floor(box.maxZ + HITBOX_REACH));
+
+        for (int sectionX = minSectionX; sectionX <= maxSectionX; sectionX++) {
+            for (int sectionZ = minSectionZ; sectionZ <= maxSectionZ; sectionZ++) {
+                final ChunkAccess chunk = level.getChunk(sectionX, sectionZ, ChunkStatus.FULL, false);
+                if (chunk == null) return false;
+                if (!chunkMayHaveGas(chunk)) continue;
+
+                final LevelChunkSection[] sections = chunk.getSections();
+                for (int sectionY = minSectionY; sectionY <= maxSectionY; sectionY++) {
+                    final int index = chunk.getSectionIndexFromSectionY(sectionY);
+                    if (index < 0 || index >= sections.length) continue;
+
+                    final LevelChunkSection section = sections[index];
+                    if (section.hasOnlyAir()) continue;
+                    if (section.maybeHas(ToxicGasBlock::isToxicGas)) return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean isBodyInGas(final LivingEntity entity) {
+        final Level level = entity.level();
+        final AABB box = entity.getBoundingBox();
+
+        if (!mightHaveGasNear(level, box)) return false;
+
+        for (final BlockPos pos : BlockPos.betweenClosed(
+                BlockPos.containing(box.minX - HITBOX_REACH, box.minY - HITBOX_REACH, box.minZ - HITBOX_REACH),
+                BlockPos.containing(box.maxX + HITBOX_REACH, box.maxY + HITBOX_REACH, box.maxZ + HITBOX_REACH))) {
             if (isToxicGas(level.getBlockState(pos)) && gasBox(pos).intersects(box)) return true;
         }
+
         return false;
     }
 
     public static boolean isHeadInGas(LivingEntity entity) {
         Level level = entity.level();
         Vec3 eye = entity.getEyePosition();
+        if (!mightHaveGasNear(level, new AABB(eye, eye))) return false;
+
         BlockPos origin = BlockPos.containing(eye);
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                for (int z = -1; z <= 1; z++) {
+        for (int x = -HITBOX_REACH; x <= HITBOX_REACH; x++) {
+            for (int y = -HITBOX_REACH; y <= HITBOX_REACH; y++) {
+                for (int z = -HITBOX_REACH; z <= HITBOX_REACH; z++) {
                     BlockPos pos = origin.offset(x, y, z);
                     if (isToxicGas(level.getBlockState(pos)) && gasBox(pos).contains(eye)) return true;
                 }

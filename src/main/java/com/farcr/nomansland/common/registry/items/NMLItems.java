@@ -97,8 +97,8 @@ public class NMLItems {
             () -> new Item(new Properties()));
     public static final ItemDefinition<Item> BILE_SAC = register("bile_sac",
             () -> new Item(new Properties()));
-    public static final ItemDefinition<Item> CHARCOAL_FILTER = register("charcoal_filter",
-            () -> new Item(new Properties()));
+    public static final ItemDefinition<CharcoalFilterItem> CHARCOAL_FILTER = register("charcoal_filter",
+            () -> new CharcoalFilterItem(new Properties().durability(CharcoalFilterItem.MAX_USES)));
     public static final ItemDefinition<GasMaskItem> GAS_MASK = register("gas_mask",
             () -> new GasMaskItem(NMLArmorMaterials.GAS_MASK, new Properties().stacksTo(1)
                     .component(NMLDataComponents.GAS_MASK_DURATION, GasMaskItem.CRAFT_DURATION)));

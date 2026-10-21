@@ -19,10 +19,14 @@ public class CorrosionHeartMixin {
     )
     private ResourceLocation nml$corrodedHeart(Gui.HeartType heartType, boolean hardcore, boolean halfHeart, boolean blinking, Operation<ResourceLocation> original) {
         LocalPlayer player = Minecraft.getInstance().player;
-        if (heartType == Gui.HeartType.NORMAL && player != null && player.hasEffect(NMLEffects.CORROSION)) {
+        if (nml$corrodableHeart(heartType) && player != null && player.hasEffect(NMLEffects.CORROSION)) {
             String name = "corroded" + (hardcore ? "_hardcore" : "") + (halfHeart ? "_half" : "_full") + (blinking ? "_blinking" : "");
             return NoMansLand.location("hud/heart/" + name);
         }
         return original.call(heartType, hardcore, halfHeart, blinking);
+    }
+
+    private static boolean nml$corrodableHeart(Gui.HeartType heartType) {
+        return heartType != Gui.HeartType.CONTAINER && heartType != Gui.HeartType.ABSORBING;
     }
 }

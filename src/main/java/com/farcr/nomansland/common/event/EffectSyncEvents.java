@@ -1,6 +1,8 @@
 package com.farcr.nomansland.common.event;
 
 import com.farcr.nomansland.NoMansLand;
+import com.farcr.nomansland.common.integration.Mods;
+import com.farcr.nomansland.common.integration.nirvana.NirvanaGasMaskHandler;
 import com.farcr.nomansland.common.registry.entities.NMLEffects;
 import java.util.List;
 import net.minecraft.core.Holder;
@@ -61,5 +63,10 @@ public class EffectSyncEvents {
             serverLevel.getChunkSource().broadcast(livingEntity,
                 new ClientboundRemoveMobEffectPacket(livingEntity.getId(), event.getEffect()));
         }
+    }
+
+    @SubscribeEvent
+    private static void gasMaskFiltersClouds(MobEffectEvent.Applicable event) {
+        if (Mods.NIRVANA.isLoaded()) NirvanaGasMaskHandler.onEffectApplicable(event);
     }
 }

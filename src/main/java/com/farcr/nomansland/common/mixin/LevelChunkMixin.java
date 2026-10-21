@@ -20,4 +20,20 @@ public class LevelChunkMixin implements LevelChunkExtension {
     public void nml$clearIgnoreBuddyAnchor() {
         this.nml$ignoreBuddyAnchor = false;
     }
+
+    @Unique public boolean nml$toxicGasScanned = false;
+    @Unique public boolean nml$mayHaveToxicGas = false;
+
+    public boolean nml$toxicGasScanned() {
+        return nml$toxicGasScanned;
+    }
+
+    public boolean nml$mayHaveToxicGas() {
+        return nml$mayHaveToxicGas;
+    }
+
+    public void nml$setMayHaveToxicGas(boolean value) {
+        this.nml$toxicGasScanned = true;
+        this.nml$mayHaveToxicGas = value;
+    }
 }

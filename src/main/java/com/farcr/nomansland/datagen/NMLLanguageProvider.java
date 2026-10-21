@@ -103,6 +103,8 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("nomansland.subtitle.entity.centipede.hurt", "Centipede hurts");
         add("nomansland.subtitle.entity.centipede.death", "Centipede dies");
         add("nomansland.subtitle.entity.centipede.hiss", "Centipede hisses");
+        add("nomansland.subtitle.item.charcoal_filter.click", "Charcoal Filter clicks");
+        add("nomansland.subtitle.item.charcoal_filter.hiss", "Charcoal Filter hisses");
         add("nomansland.subtitle.entity.remnant.ambient", "Remnant hums");
         add("nomansland.subtitle.entity.remnant.hurt", "Remnant cracks");
         add("nomansland.subtitle.entity.remnant.death", "Remnant crumbles");
@@ -214,6 +216,7 @@ public class NMLLanguageProvider extends LanguageProvider {
         add("effect.nomansland.flammable", "Flammable");
         add("effect.nomansland.friendship", "Friendship");
         add("effect.nomansland.happiness", "Happiness");
+        add("effect.nomansland.corrosion", "Corrosion");
         add("effect.nomansland.stasis", "Stasis");
         add("block.nomansland.miners_gill", "Miner's Gill");
         add("item.nomansland.bandage.with_effect", "%s Bandage");

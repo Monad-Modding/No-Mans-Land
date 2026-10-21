@@ -137,6 +137,8 @@ public class NMLSoundProvider extends LodestoneBlockSoundEventSystem {
         add(NMLSounds.CENTIPEDE_HURT, s -> s.with(sound("minecraft:entity.spider.hurt", EVENT).pitch(1.4f)).subtitle("nomansland.subtitle.entity.centipede.hurt"));
         add(NMLSounds.CENTIPEDE_DEATH, s -> s.with(sound("minecraft:entity.spider.death", EVENT).pitch(1.4f)).subtitle("nomansland.subtitle.entity.centipede.death"));
         add(NMLSounds.CENTIPEDE_STEP, s -> s.with(sound("minecraft:entity.spider.step", EVENT).pitch(1.3f).volume(0.5f)).subtitle("subtitles.block.generic.footsteps"));
+        add(NMLSounds.CHARCOAL_FILTER_CLICK, s -> s.with(sound("minecraft:block.lever.click", EVENT).pitch(1.6f).volume(0.6f)).subtitle("nomansland.subtitle.item.charcoal_filter.click"));
+        add(NMLSounds.CHARCOAL_FILTER_HISS, s -> s.with(sound("minecraft:block.fire.extinguish", EVENT).pitch(1.5f).volume(0.35f)).subtitle("nomansland.subtitle.item.charcoal_filter.hiss"));
         add(NMLSounds.CENTIPEDE_HISS, s -> s.with(sound("minecraft:entity.silverfish.hurt", EVENT).pitch(0.8f).volume(0.9f)).subtitle("nomansland.subtitle.entity.centipede.hiss"));
 
         add(NMLSounds.REMNANT_AMBIENT, s -> s.with(sound("minecraft:entity.warden.ambient", EVENT).pitch(0.55f).volume(0.45f)).subtitle("nomansland.subtitle.entity.remnant.ambient"));

@@ -67,6 +67,8 @@ public class NMLSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> OATH_PARRY = registerSound("item.ancestral_oath_sword.parry");
     public static final DeferredHolder<SoundEvent, SoundEvent> RITUAL_PICK_LOCATE = registerSound("item.ritual_pick.locate");
     public static final DeferredHolder<SoundEvent, SoundEvent> RITUAL_PICK_GLINT = registerSound("item.ritual_pick.glint");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CHARCOAL_FILTER_CLICK = registerSound("item.charcoal_filter.click");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CHARCOAL_FILTER_HISS = registerSound("item.charcoal_filter.hiss");
 
     //Cauldron Interactions
     public static final DeferredHolder<SoundEvent, SoundEvent> HONEYCOMB_CONSUMED = registerSound("item.honeycomb.consumed");

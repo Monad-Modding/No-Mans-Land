@@ -12,4 +12,13 @@ public interface LevelChunkExtension {
     default void nml$clearIgnoreBuddyAnchor() throws NotImplementedException {
         throw new NotImplementedException();
     }
+    default boolean nml$toxicGasScanned() throws NotImplementedException {
+        throw new NotImplementedException();
+    }
+    default boolean nml$mayHaveToxicGas() throws NotImplementedException {
+        throw new NotImplementedException();
+    }
+    default void nml$setMayHaveToxicGas(boolean value) throws NotImplementedException {
+        throw new NotImplementedException();
+    }
 }

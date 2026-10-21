@@ -106,6 +106,7 @@ public class NMLBlockTagsProvider extends BlockTagsProvider {
                 NMLBlocks.POTTED_BLUE_LUPINE.block(),
                 NMLBlocks.POTTED_FIELD_MUSHROOM.block(),
                 NMLBlocks.POTTED_MAPLE_SAPLING.block(),
+                NMLBlocks.POTTED_MINERS_GILL.block(),
                 NMLBlocks.POTTED_PALE_CHERRY_SAPLING.block(),
                 NMLBlocks.POTTED_PICKLEWEED.block(),
                 NMLBlocks.POTTED_PINE_SAPLING.block(),
