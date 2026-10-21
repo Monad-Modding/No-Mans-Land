@@ -8,6 +8,8 @@ import com.farcr.nomansland.common.networking.dream.ClientboundDimensionSyncPack
 import com.farcr.nomansland.common.registry.NMLDreamTypes;
 import com.farcr.nomansland.common.registry.worldgen.NMLBiomes;
 import com.mojang.serialization.Lifecycle;
+import dev.ryanhcode.sable.companion.SableCompanion;
+import dev.ryanhcode.sable.companion.SubLevelAccess;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -28,6 +30,7 @@ import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.level.storage.DerivedLevelData;
 import net.minecraft.world.level.storage.LevelStorageSource.LevelStorageAccess;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.storage.WorldData;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -84,13 +87,18 @@ public class DreamLevelHandler implements AutoCloseable {
         );
     }
 
-    public static BlockPos fallbackPosition(ServerPlayer serverPlayer) {
+    public static Vec3 fallbackPosition(ServerPlayer serverPlayer) {
         MinecraftServer server = serverPlayer.getServer();
         PlayerExtension playerExtension = (PlayerExtension) serverPlayer;
         BlockPos respawnPosition = playerExtension.nml$getLastSleepPosition();
         if (respawnPosition == null) respawnPosition = serverPlayer.getRespawnPosition();
         if (respawnPosition == null) respawnPosition = server.overworld().getSharedSpawnPos();
-        return respawnPosition;
+        return outOfPlot(fallbackDimension(serverPlayer), respawnPosition.getCenter());
+    }
+
+    public static Vec3 outOfPlot(Level level, Vec3 position) {
+        SubLevelAccess subLevel = SableCompanion.INSTANCE.getContaining(level, position);
+        return subLevel == null ? position : subLevel.logicalPose().transformPosition(position);
     }
 
     public static ServerLevel fallbackDimension(ServerPlayer serverPlayer) {
@@ -109,17 +117,17 @@ public class DreamLevelHandler implements AutoCloseable {
 
     public static ServerLevel playerLoadFallback(ServerPlayer serverPlayer) {
         logFallback(serverPlayer);
-        serverPlayer.setPos(fallbackPosition(serverPlayer).getCenter());
+        serverPlayer.setPos(fallbackPosition(serverPlayer));
         return fallbackDimension(serverPlayer);
     }
 
     public static void playerTeleportFallback(ServerPlayer serverPlayer) {
         logFallback(serverPlayer);
-        BlockPos respawnPosition = fallbackPosition(serverPlayer);
+        Vec3 respawnPosition = fallbackPosition(serverPlayer);
         serverPlayer.changeDimension(new DimensionTransition(
             fallbackDimension(serverPlayer),
-            respawnPosition.getCenter(),
-            respawnPosition.getCenter(),
+            respawnPosition,
+            Vec3.ZERO,
             0, 0,
             DimensionTransition.DO_NOTHING
         ));

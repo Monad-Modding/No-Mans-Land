@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "nomansland:block/building/stellar_tiles",
+    "side": "nomansland:block/building/stellar_tiles",
+    "top": "nomansland:block/building/stellar_tiles"
+  }
+}

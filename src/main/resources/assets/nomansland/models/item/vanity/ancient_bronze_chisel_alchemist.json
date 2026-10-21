@@ -2,5 +2,19 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "nomansland:item/ancient_bronze_chisel_alchemist"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "nomansland:item/vanity/ancient_bronze_chisel_offhand_alchemist"
+    },
+    {
+      "predicate": {
+        "nomansland:using_chisel": 1
+      },
+      "model": "nomansland:item/vanity/ancient_bronze_chisel_handheld_alchemist"
+    }
+  ]
 }

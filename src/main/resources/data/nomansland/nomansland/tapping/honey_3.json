@@ -1,0 +1,15 @@
+{
+  "source": {
+    "block": [
+      "minecraft:bee_nest",
+      "minecraft:beehive"
+    ],
+    "properties": {
+      "honey_level": "3"
+    }
+  },
+  "particle": {
+    "type": "minecraft:dripping_honey"
+  },
+  "drip_chance": 0.01
+}

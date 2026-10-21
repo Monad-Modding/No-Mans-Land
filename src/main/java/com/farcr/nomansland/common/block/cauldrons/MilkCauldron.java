@@ -62,6 +62,7 @@ public class MilkCauldron extends FourLayeredCauldronBlock {
             }
 
             level.playSound(player, pos, NMLSounds.PLAYER_DRINK_MILK.get(), SoundSource.PLAYERS, 0.5F, 1);
+            player.gameEvent(GameEvent.DRINK);
             lowerFillLevel(state, level, pos);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
@@ -79,6 +80,7 @@ public class MilkCauldron extends FourLayeredCauldronBlock {
                 level.setBlockAndUpdate(pos, newState);
                 level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
                 level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS);
+                level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
             }
         } else if (player.isHolding(Items.MILK_BUCKET) && !isFull(state)) {
             interacted = true;
@@ -88,6 +90,7 @@ public class MilkCauldron extends FourLayeredCauldronBlock {
                 level.setBlockAndUpdate(pos, newState);
                 level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(newState));
                 level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS);
+                level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
             }
         } else if (Mods.FARMERSDELIGHT.isLoaded()) {
             if (stack.is(Items.GLASS_BOTTLE)) {
@@ -96,6 +99,7 @@ public class MilkCauldron extends FourLayeredCauldronBlock {
                     player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Mods.FARMERSDELIGHT.getItem("milk_bottle").getDefaultInstance()));
                     lowerFillLevel(state, level, pos);
                     level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+                    level.gameEvent(null, GameEvent.FLUID_PICKUP, pos);
                 }
             } else if (stack.is(Mods.FARMERSDELIGHT.getItem("milk_bottle")) && !isFull(state)) {
                 interacted = true;
@@ -103,6 +107,7 @@ public class MilkCauldron extends FourLayeredCauldronBlock {
                     player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, Items.GLASS_BOTTLE.getDefaultInstance()));
                     raiseFillLevel(state, level, pos);
                     level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+                    level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
                 }
             }
         }
