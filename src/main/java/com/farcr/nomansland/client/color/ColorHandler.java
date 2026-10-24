@@ -3,12 +3,14 @@ package com.farcr.nomansland.client.color;
 import com.farcr.nomansland.NoMansLand;
 import com.farcr.nomansland.common.registry.blocks.NMLBlocks;
 import com.farcr.nomansland.common.registry.items.NMLItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.GrassColor;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -55,7 +57,7 @@ public class ColorHandler {
 
     @SubscribeEvent
     public static void registerBlockColorHandlers(RegisterColorHandlersEvent.Block event) {
-        event.register((state, level, pos, tintIndex) -> level != null && pos != null ? BiomeColors.getAverageGrassColor(level, pos) : GrassColor.get(0.5D, 1),
+        event.register((state, level, pos, tintIndex) -> Minecraft.getInstance().getBlockColors().getColor(Blocks.SHORT_GRASS.defaultBlockState(), level, pos, tintIndex),
                 NMLBlocks.GRASS_SPROUTS.get(),
                 NMLBlocks.FIDDLEHEAD.get(),
                 NMLBlocks.CUT_SUGAR_CANE.get(),
