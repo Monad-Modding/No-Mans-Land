@@ -54,7 +54,7 @@ public abstract class ItemRendererMixin {
     }
 
     @Unique private static Map<BakedModel, BakedModelOpacityWrapper> MAP_WRAPPER = new HashMap<>();
-    @Unique private BakedModelOpacityWrapper nml$BAKED_MODEL_OPACITY_CONTEXT;
+    @Unique private float nml$glintOpacity = Float.NaN;
 
     @Inject(
         method = "renderStatic(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/level/Level;III)V",
@@ -66,16 +66,13 @@ public abstract class ItemRendererMixin {
     private void nml$renderOathGlint(
         LivingEntity entity, ItemStack itemStack, ItemDisplayContext displayContext,
         boolean leftHand, PoseStack poseStack, MultiBufferSource bufferSource,
-        Level level, int combinedLight, int combinedOverlay, int seed, CallbackInfo ci,
-        @Local BakedModel bakedModel
+        Level level, int combinedLight, int combinedOverlay, int seed, CallbackInfo ci
     ) {
         VertexConsumer consumer = AncestralGlintRenderType.getConsumer(bufferSource, itemStack);
         if (consumer == null || entity == null) return;
         if (!(IClientItemExtensions.of(itemStack) instanceof AncestralOathSwordClientExtensions extensions)) return;
 
-        MAP_WRAPPER.putIfAbsent(bakedModel, new BakedModelOpacityWrapper(bakedModel));
-        nml$BAKED_MODEL_OPACITY_CONTEXT = MAP_WRAPPER.get(bakedModel);
-        nml$BAKED_MODEL_OPACITY_CONTEXT.setAlphaValue(extensions.getGlintOpacity(itemStack, entity));
+        this.nml$glintOpacity = extensions.getGlintOpacity(itemStack, entity);
     }
 
     @WrapOperation(
@@ -93,11 +90,13 @@ public abstract class ItemRendererMixin {
     ) {
         original.call(instance, model, stack, combinedLight, combinedOverlay, poseStack, buffer);
 
-        if (nml$BAKED_MODEL_OPACITY_CONTEXT == null) return;
+        if (Float.isNaN(this.nml$glintOpacity)) return;
         VertexConsumer consumer = AncestralGlintRenderType.getConsumer(bufferSource, stack);
         if (consumer == null) return;
 
-        original.call(instance, MAP_WRAPPER.get(model), stack, combinedLight, combinedOverlay, poseStack, consumer);
+        BakedModelOpacityWrapper wrapper = MAP_WRAPPER.computeIfAbsent(model, BakedModelOpacityWrapper::new);
+        wrapper.setAlphaValue(this.nml$glintOpacity);
+        original.call(instance, wrapper, stack, combinedLight, combinedOverlay, poseStack, consumer);
     }
 
     @Inject(
@@ -109,7 +108,7 @@ public abstract class ItemRendererMixin {
         boolean leftHand, PoseStack poseStack, MultiBufferSource bufferSource,
         int combinedLight, int combinedOverlay, BakedModel model, CallbackInfo ci
     ) {
-        nml$BAKED_MODEL_OPACITY_CONTEXT = null;
+        this.nml$glintOpacity = Float.NaN;
     }
 
     @Inject(method = "getFoilBuffer", at = @At("RETURN"), cancellable = true)

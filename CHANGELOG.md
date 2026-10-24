@@ -2,3 +2,4 @@
 - Siltstone bricks can now be stonecut from Siltstone
 - Further improved tree tap handling
 - Fixed grass sprouts and other plant tinting not following short grass tinting
+- Fixed a crash with the Ancestral Oath Sword glint
