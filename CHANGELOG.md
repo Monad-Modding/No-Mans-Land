@@ -1,2 +1,3 @@
 - Slightly nerfed Ancestral Oath Sword blocking
 - Siltstone bricks can now be stonecut from Siltstone
+- Further improved tree tap handling

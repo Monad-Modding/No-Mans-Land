@@ -51,7 +51,10 @@ public class TapBlockEntity extends BlockEntity {
     private static final int TARGET_REACH = 3;
     private static final int GENERIC_UNIT = 250;
     private static final int GENERIC_INTERVAL = 80;
+    private static final double SHARING_EXPONENT = Math.log(1.0 / 0.7) / Math.log(2.0);
+    private static final double MAX_TREE_YIELD = 1.7;
     private static final String TIMER_KEY = "timer";
+    private static final String SHARING_KEY = "sharing";
     private static final String PARTICLE_KEY = "particle";
     private static final String DRIP_CHANCE_KEY = "drip_chance";
 
@@ -67,6 +70,7 @@ public class TapBlockEntity extends BlockEntity {
     private long nextRefresh;
     private boolean dirty = true;
     private int timer = -1;
+    private int sharing = 1;
 
     public TapBlockEntity(BlockPos pos, BlockState state) {
         super(NMLBlockEntities.TAP.get(), pos, state);
@@ -125,7 +129,25 @@ public class TapBlockEntity extends BlockEntity {
             this.timer = -1;
         }
         this.flow = next;
+        this.share(level, sourcePos, source, next);
         this.setParticle(level, pos, state, next == null ? null : next.particle(), next == null ? TapInteraction.DEFAULT_DRIP_CHANCE : next.dripChance());
+    }
+
+    private void share(ServerLevel level, BlockPos sourcePos, BlockState source, @Nullable Flow flow) {
+        int sharing = 1;
+        if (flow != null && flow.kind() == Kind.TAPPED && flow.interaction() != null && flow.interaction().value().source().tree().isPresent()) {
+            sharing = TapTrees.countTaps(level, sourcePos, source, flow.interaction().value().source().tree().get());
+        }
+        if (sharing == this.sharing) return;
+        if (this.timer > 0) {
+            this.timer = (int) Math.max(1, Math.round(this.timer * slowdown(sharing) / slowdown(this.sharing)));
+        }
+        this.sharing = sharing;
+        this.setChanged();
+    }
+
+    private static double slowdown(int sharing) {
+        return sharing / Math.min(Math.pow(sharing, 1.0 - SHARING_EXPONENT), MAX_TREE_YIELD);
     }
 
     @Nullable
@@ -168,7 +190,7 @@ public class TapBlockEntity extends BlockEntity {
         if (this.flow != null && this.flow.kind() == Kind.TAPPED && this.flow.interaction() != null) {
             double speed = NMLConfig.FILLING_SPEED_MULTIPLIER.get();
             if (speed <= 0.0) return Integer.MAX_VALUE;
-            return Math.max(1, (int) (this.flow.interaction().value().interval().sample(level.random) / speed));
+            return Math.max(1, (int) (this.flow.interaction().value().interval().sample(level.random) / speed * slowdown(this.sharing)));
         }
         return GENERIC_INTERVAL;
     }
@@ -325,6 +347,7 @@ public class TapBlockEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putInt(TIMER_KEY, this.timer);
+        tag.putInt(SHARING_KEY, this.sharing);
     }
 
     @Override
@@ -333,6 +356,7 @@ public class TapBlockEntity extends BlockEntity {
         if (tag.contains(TIMER_KEY)) {
             this.timer = tag.getInt(TIMER_KEY);
         }
+        this.sharing = tag.contains(SHARING_KEY) ? Math.max(1, tag.getInt(SHARING_KEY)) : 1;
         this.dripChance = tag.contains(DRIP_CHANCE_KEY) ? tag.getFloat(DRIP_CHANCE_KEY) : TapInteraction.DEFAULT_DRIP_CHANCE;
         this.particle = tag.contains(PARTICLE_KEY) ? ParticleTypes.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), tag.get(PARTICLE_KEY)).result().orElse(null) : null;
     }

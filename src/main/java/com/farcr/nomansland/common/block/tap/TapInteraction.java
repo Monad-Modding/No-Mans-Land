@@ -96,15 +96,16 @@ public record TapInteraction(Source source, Optional<Output> output, IntProvider
         }
     }
 
-    public record TreeRequirement(Optional<HolderSet<Block>> trunk, Optional<HolderSet<Block>> leaves, Optional<HolderSet<Block>> ground, int minHeight) {
+    public record TreeRequirement(Optional<HolderSet<Block>> trunk, Optional<HolderSet<Block>> leaves, Optional<HolderSet<Block>> ground, int minHeight, int minLeaves) {
 
-        public static final TreeRequirement DEFAULT = new TreeRequirement(Optional.empty(), Optional.empty(), Optional.empty(), 3);
+        public static final TreeRequirement DEFAULT = new TreeRequirement(Optional.empty(), Optional.empty(), Optional.empty(), 3, TapTrees.MIN_LEAVES);
 
         public static final Codec<TreeRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 RegistryCodecs.homogeneousList(Registries.BLOCK).optionalFieldOf("trunk").forGetter(TreeRequirement::trunk),
                 RegistryCodecs.homogeneousList(Registries.BLOCK).optionalFieldOf("leaves").forGetter(TreeRequirement::leaves),
                 RegistryCodecs.homogeneousList(Registries.BLOCK).optionalFieldOf("ground").forGetter(TreeRequirement::ground),
-                Codec.intRange(1, TapTrees.MAX_TRUNK).optionalFieldOf("min_height", 3).forGetter(TreeRequirement::minHeight)
+                Codec.intRange(1, TapTrees.MAX_TRUNK).optionalFieldOf("min_height", 3).forGetter(TreeRequirement::minHeight),
+                Codec.intRange(0, TapTrees.MAX_LEAVES).optionalFieldOf("min_leaves", TapTrees.MIN_LEAVES).forGetter(TreeRequirement::minLeaves)
         ).apply(instance, TreeRequirement::new));
     }
 
