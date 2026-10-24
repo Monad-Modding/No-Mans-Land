@@ -81,19 +81,17 @@
       "minecraft:spring_lava"
     ],
     [
-      "nomansland:biome_trees/trees_blackwater"
-    ],
-    [
       "minecraft:glow_lichen",
+      "nomansland:biome_trees/trees_blackwater",
       "minecraft:flower_swamp",
       "minecraft:patch_grass_normal",
       "minecraft:patch_dead_bush",
       "minecraft:patch_waterlily",
       "minecraft:brown_mushroom_swamp",
       "minecraft:red_mushroom_swamp",
-      "minecraft:seagrass_swamp",
       "minecraft:patch_sugar_cane_swamp",
       "minecraft:patch_pumpkin",
+      "minecraft:seagrass_swamp",
       "minecraft:seagrass_river"
     ],
     [

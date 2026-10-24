@@ -73,7 +73,13 @@
       "minecraft:underwater_magma",
       "minecraft:disk_clay"
     ],
+    [],
     [
+      "minecraft:spring_water",
+      "minecraft:spring_lava"
+    ],
+    [
+      "minecraft:glow_lichen",
       "nomansland:biome_trees/trees_dark_swamp",
       "nomansland:flower_patches/flowers_maple",
       "nomansland:flower_patches/flowerbed_red",
@@ -87,14 +93,7 @@
       "minecraft:red_mushroom_normal",
       "nomansland:shelf_mushroom_dark_forest",
       "minecraft:patch_sugar_cane_swamp",
-      "minecraft:patch_pumpkin"
-    ],
-    [
-      "minecraft:spring_water",
-      "minecraft:spring_lava"
-    ],
-    [
-      "minecraft:glow_lichen",
+      "minecraft:patch_pumpkin",
       "minecraft:seagrass_swamp"
     ],
     [

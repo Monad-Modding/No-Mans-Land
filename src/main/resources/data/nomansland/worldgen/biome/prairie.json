@@ -73,16 +73,15 @@
       "minecraft:spring_water",
       "minecraft:spring_lava"
     ],
-    [],
     [
+      "minecraft:glow_lichen",
       "nomansland:biome_trees/trees_prairie",
       "nomansland:biome_trees/trees_prairie_noise",
-      "minecraft:glow_lichen",
       "nomansland:flower_patches/flowers_prairie",
       "nomansland:flower_patches/flowerbed_white_and_yellow",
       "nomansland:biome_trees/bushes_prairie",
-      "minecraft:patch_grass_plain",
       "minecraft:patch_tall_grass_2",
+      "minecraft:patch_grass_plain",
       "nomansland:oat_grass_patch_prairie",
       "minecraft:brown_mushroom_normal",
       "minecraft:red_mushroom_normal",

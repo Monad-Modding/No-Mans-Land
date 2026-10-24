@@ -73,24 +73,23 @@
       "minecraft:disk_clay",
       "minecraft:disk_gravel"
     ],
+    [],
     [
+      "minecraft:spring_water",
+      "minecraft:spring_lava"
+    ],
+    [
+      "minecraft:glow_lichen",
       "nomansland:biome_trees/trees_old_growth_forest_clearing",
-      "nomansland:patch_grass_old_growth",
       "nomansland:flower_patches/flowers_maple",
       "nomansland:flower_patches/flowerbed_red",
+      "nomansland:patch_grass_old_growth",
       "nomansland:patch_rose_bush",
       "minecraft:patch_dead_bush",
       "minecraft:brown_mushroom_old_growth",
       "minecraft:red_mushroom_old_growth",
       "minecraft:patch_sugar_cane",
       "minecraft:patch_pumpkin"
-    ],
-    [
-      "minecraft:spring_water",
-      "minecraft:spring_lava"
-    ],
-    [
-      "minecraft:glow_lichen"
     ],
     [
       "minecraft:freeze_top_layer"

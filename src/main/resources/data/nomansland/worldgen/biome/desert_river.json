@@ -83,8 +83,8 @@
       "minecraft:spring_lava"
     ],
     [
-      "nomansland:biome_trees/trees_desert_river",
       "minecraft:glow_lichen",
+      "nomansland:biome_trees/trees_desert_river",
       "nomansland:flower_patches/flowers_all_tulips",
       "nomansland:patch_succulent_desert",
       "minecraft:patch_grass_badlands",

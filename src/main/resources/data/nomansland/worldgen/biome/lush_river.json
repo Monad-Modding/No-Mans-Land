@@ -79,10 +79,8 @@
       "minecraft:spring_lava"
     ],
     [
-      "nomansland:biome_trees/trees_lush_river"
-    ],
-    [
       "minecraft:glow_lichen",
+      "nomansland:biome_trees/trees_lush_river",
       "minecraft:flower_warm",
       "nomansland:flower_patches/flowerbed_jungle",
       "nomansland:patch_cattail",
@@ -93,8 +91,8 @@
       "minecraft:patch_sugar_cane",
       "minecraft:vines",
       "minecraft:patch_melon",
-      "minecraft:seagrass_river",
-      "nomansland:patch_hearty_succulent"
+      "nomansland:patch_hearty_succulent",
+      "minecraft:seagrass_river"
     ],
     [
       "minecraft:freeze_top_layer"

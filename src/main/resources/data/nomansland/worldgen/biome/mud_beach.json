@@ -78,9 +78,9 @@
       "minecraft:spring_water",
       "minecraft:spring_lava"
     ],
-    ["nomansland:biome_trees/trees_mud_beach"],
     [
       "minecraft:glow_lichen",
+      "nomansland:biome_trees/trees_mud_beach",
       "minecraft:flower_swamp",
       "nomansland:patch_grass_sparse",
       "minecraft:patch_dead_bush",

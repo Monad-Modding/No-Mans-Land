@@ -71,7 +71,13 @@
       "minecraft:underwater_magma",
       "minecraft:disk_clay"
     ],
+    [],
     [
+      "minecraft:spring_water",
+      "minecraft:spring_lava"
+    ],
+    [
+      "minecraft:glow_lichen",
       "nomansland:biome_trees/trees_bayou",
       "minecraft:bamboo_light",
       "minecraft:flower_warm",
@@ -86,14 +92,7 @@
       "minecraft:patch_sugar_cane_swamp",
       "minecraft:vines",
       "minecraft:patch_melon_sparse",
-      "nomansland:patch_hearty_succulent"
-    ],
-    [
-      "minecraft:spring_water",
-      "minecraft:spring_lava"
-    ],
-    [
-      "minecraft:glow_lichen",
+      "nomansland:patch_hearty_succulent",
       "minecraft:seagrass_swamp"
     ],
     [

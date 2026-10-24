@@ -73,7 +73,13 @@
       "minecraft:disk_clay",
       "minecraft:disk_gravel"
     ],
+    [],
     [
+      "minecraft:spring_water",
+      "minecraft:spring_lava"
+    ],
+    [
+      "minecraft:glow_lichen",
       "nomansland:biome_trees/trees_dark_taiga",
       "nomansland:flower_patches/flowers_dark_taiga",
       "nomansland:flower_patches/flowerbed_violet",
@@ -84,13 +90,6 @@
       "minecraft:red_mushroom_taiga",
       "minecraft:patch_sugar_cane",
       "minecraft:patch_pumpkin"
-    ],
-    [
-      "minecraft:spring_water",
-      "minecraft:spring_lava"
-    ],
-    [
-      "minecraft:glow_lichen"
     ],
     [
       "minecraft:freeze_top_layer"

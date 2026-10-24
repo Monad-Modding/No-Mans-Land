@@ -73,7 +73,13 @@
       "minecraft:disk_clay",
       "minecraft:disk_gravel"
     ],
+    [],
     [
+      "minecraft:spring_water",
+      "minecraft:spring_lava"
+    ],
+    [
+      "minecraft:glow_lichen",
       "nomansland:biome_trees/trees_autumnal_forest",
       "nomansland:flower_patches/flowers_autumnal_forest",
       "nomansland:flower_patches/flowerbed_autumnal",
@@ -83,13 +89,6 @@
       "minecraft:patch_sugar_cane",
       "minecraft:patch_pumpkin",
       "nomansland:patch_pumpkin_autumnal"
-    ],
-    [
-      "minecraft:spring_water",
-      "minecraft:spring_lava"
-    ],
-    [
-      "minecraft:glow_lichen"
     ],
     [
       "minecraft:freeze_top_layer"

@@ -74,20 +74,19 @@
       "minecraft:disk_clay",
       "minecraft:disk_gravel"
     ],
+    [],
     [
+      "minecraft:spring_water",
+      "minecraft:spring_lava"
+    ],
+    [
+      "minecraft:glow_lichen",
       "nomansland:biome_trees/trees_frozen",
       "nomansland:flower_patches/flowers_frosted",
       "nomansland:flower_patches/flowerbed_frosted",
       "nomansland:patch_grass_snowy",
       "minecraft:patch_large_fern",
       "minecraft:patch_dead_bush"
-    ],
-    [
-      "minecraft:spring_water",
-      "minecraft:spring_lava"
-    ],
-    [
-      "minecraft:glow_lichen"
     ],
     [
       "minecraft:freeze_top_layer"

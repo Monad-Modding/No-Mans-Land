@@ -83,18 +83,16 @@
       "minecraft:spring_lava"
     ],
     [
-      "minecraft:trees_meadow"
-    ],
-    [
+      "minecraft:glow_lichen",
+      "minecraft:patch_tall_grass_2",
+      "minecraft:patch_grass_plain",
+      "minecraft:trees_meadow",
       "nomansland:biome_trees/trees_lavender_field",
       "nomansland:biome_trees/trees_lavender_field_noise",
-      "minecraft:glow_lichen",
       "nomansland:flower_patches/flowers_lavender_field",
       "nomansland:flower_patches/flowerbed_violet",
       "nomansland:patch_lavender_bush",
       "nomansland:patch_lavender_bush_sparse",
-      "minecraft:patch_grass_plain",
-      "minecraft:patch_tall_grass_2",
       "minecraft:brown_mushroom_normal",
       "minecraft:red_mushroom_normal",
       "nomansland:patch_field_mushroom_extra",
