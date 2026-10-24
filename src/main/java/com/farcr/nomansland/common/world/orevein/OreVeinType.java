@@ -7,18 +7,21 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.FloatProvider;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
+import net.minecraft.world.level.levelgen.blockpredicates.StateTestingPredicate;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
 
@@ -186,6 +189,11 @@ public record OreVeinType(boolean sampleBiomeAtSurface,
                     OreBlockState.CODEC.optionalFieldOf("core", OreBlockState.EMPTY).forGetter(OreVeinType::core)
             ).apply(codec, OreVeinType::new)
     );
+
+    public boolean targets(WorldGenLevel level, BlockPos pos, BlockState state) {
+        if (this.targetCondition instanceof StateTestingPredicate predicate && predicate.offset.equals(Vec3i.ZERO)) return predicate.test(state);
+        return this.targetCondition.test(level, pos);
+    }
 
     private static DataResult<Integer> validateSpacing(Integer spacing) {
         return (spacing % 16 != 0) || (spacing <= 0) ? DataResult.error(() -> "Spacing must be positive and multiple of 16! Currently " + spacing) : DataResult.success(spacing);

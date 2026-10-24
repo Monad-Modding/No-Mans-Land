@@ -250,7 +250,7 @@ public class OreVeinSystem {
                    veinGapNoise = oreGapField.retrieve(localX, localY, localZ);
             double veinRidgeNoise = Math.max(Math.abs(veinANoise), Math.abs(veinBNoise));
 
-            if (veinType.targetCondition().test(level, pos)) {
+            if (veinType.targets(level, pos, currentState)) {
                 int yDist = Math.min(maxY - y, y - minY);
                 int yDiff = maxY - minY;
 
