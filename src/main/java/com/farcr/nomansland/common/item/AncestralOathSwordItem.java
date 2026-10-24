@@ -31,6 +31,7 @@ import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -52,6 +53,7 @@ public class AncestralOathSwordItem extends SwordItem {
     public static final int MAX_PARRY_ANIMATE_TIME = 10;
 
     public static final int PARTICLE_AMOUNT = 5;
+    private static final int RELEASE_COOLDOWN = 30;
 
     public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
         return 72000;
@@ -116,6 +118,7 @@ public class AncestralOathSwordItem extends SwordItem {
         Entity directEntity = event.getSource().getDirectEntity();
 
         if (event.getSource().is(DamageTypeTags.BYPASSES_SHIELD)) return;
+        if (isFromBehind(damagedEntity, event.getSource().getSourcePosition())) return;
 
         Level level = damagedEntity.level();
         if (withinParryTiming(itemStack, damagedEntity)) {
@@ -157,6 +160,20 @@ public class AncestralOathSwordItem extends SwordItem {
             applyStasisTicks(livingEntity, damagedEntity, 40 + (int) (20 * event.getOriginalAmount()));
             createParticles(livingEntity, NMLParticleTypes.STASIS_HIT, PARTICLE_AMOUNT);
             event.setAmount(event.getAmount() * .25f);
+        }
+    }
+
+    private static boolean isFromBehind(LivingEntity defender, @Nullable Vec3 source) {
+        if (source == null) return false;
+        Vec3 toward = source.vectorTo(defender.position());
+        Vec3 flat = new Vec3(toward.x, 0.0, toward.z).normalize();
+        return flat.dot(defender.calculateViewVector(0.0F, defender.getYHeadRot())) >= 0.0;
+    }
+
+    @Override
+    public void onStopUsing(ItemStack stack, LivingEntity entity, int count) {
+        if (entity instanceof Player player) {
+            player.getCooldowns().addCooldown(this, RELEASE_COOLDOWN);
         }
     }
 
