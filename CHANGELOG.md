@@ -4,3 +4,4 @@
 - Fixed grass sprouts and other plant tinting not following short grass tinting
 - Fixed a crash with the Ancestral Oath Sword glint
 - Frosted Grass now has snow step sounds when snowlogged
+- Fixed dialogue advancing by frames, slowing down with mods like Gnetum

@@ -4,6 +4,7 @@ import com.farcr.nomansland.common.friend.dialogue.DialogueState;
 import com.farcr.nomansland.common.friend.dialogue.DialogueUtil;
 import com.farcr.nomansland.common.registry.NMLSounds;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.Util;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -27,6 +28,7 @@ public class DialogueRenderer {
     private static List<String> lastWrapSource;
     private static float lastWrapWidth = -1;
     private static List<String> cachedWrappedLines;
+    private static long lastRenderMillis = -1L;
     public static DialogueState getCurrentState() {
         return currentState;
     }
@@ -34,6 +36,7 @@ public class DialogueRenderer {
     public static void setCurrentState(DialogueState newState) {
         lastWrapSource = null;
         cachedWrappedLines = null;
+        lastRenderMillis = -1L;
         currentState = newState;
     }
     public static boolean isStateActive(DialogueState state) {
@@ -89,7 +92,7 @@ public class DialogueRenderer {
             float gameWidth = guiGraphics.guiWidth();
             float[] shaderColor = RenderSystem.getShaderColor();
 
-            float deltaTime = deltaTracker.getGameTimeDeltaTicks();
+            float deltaTime = getElapsedTicks();
             float initialFade = Math.min(currentState.elapsedTicks / DialogueState.GRADIENT_FADE_TICKS, 1);
             float totalOpacity = Math.min(initialFade, (DialogueState.FADE_TICKS + currentState.ticks) / DialogueState.FADE_TICKS);
             deltaTime = currentState.handleTime(deltaTime);
@@ -150,6 +153,13 @@ public class DialogueRenderer {
             guiGraphics.pose().popPose();
             RenderSystem.setShaderColor(shaderColor[0], shaderColor[1], shaderColor[2], lastOpacity);
         }
+    }
+
+    private static float getElapsedTicks() {
+        long now = Util.getMillis();
+        float elapsed = lastRenderMillis < 0L ? 0.0F : (now - lastRenderMillis) / 50.0F;
+        lastRenderMillis = now;
+        return elapsed;
     }
 
     private static List<String> wrapLines(List<String> constructedText, Font font, float gameWidth, float center, float percentageUsable) {
