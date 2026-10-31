@@ -19,7 +19,7 @@ public abstract class DirtPathBlockMixin {
     private void nml$survivesUntilTouched(BlockState state, LevelReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         BlockPos above = pos.above();
         BlockState aboveState = level.getBlockState(above);
-        if (aboveState.getBlock() instanceof FenceGateBlock) {
+        if (aboveState.getBlock() instanceof FenceGateBlock || aboveState.canBeReplaced()) {
             cir.setReturnValue(true);
             return;
         }

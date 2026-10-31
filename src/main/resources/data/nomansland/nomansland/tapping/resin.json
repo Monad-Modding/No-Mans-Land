@@ -19,5 +19,6 @@
   },
   "particle": {
     "type": "nomansland:resin_droplet"
-  }
+  },
+  "drip_chance": 0.02
 }

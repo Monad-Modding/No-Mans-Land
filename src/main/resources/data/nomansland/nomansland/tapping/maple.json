@@ -16,5 +16,6 @@
   },
   "particle": {
     "type": "nomansland:maple_syrup_droplet"
-  }
+  },
+  "drip_chance": 0.02
 }

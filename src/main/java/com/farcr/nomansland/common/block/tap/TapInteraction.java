@@ -36,6 +36,7 @@ import java.util.Optional;
 public record TapInteraction(Source source, Optional<Output> output, IntProvider interval, Optional<ParticleOptions> particle, float dripChance, Map<String, String> consume, Conditions conditions) {
 
     public static final float DEFAULT_DRIP_CHANCE = 0.25F;
+    public static final float TREE_DRIP_CHANCE = 0.02F;
 
     private static final float RANDOM_TICK_INTERVAL = 4096.0F / 3.0F;
     private static final float LEGACY_TAP_CHANCE = 0.05F;
@@ -78,7 +79,7 @@ public record TapInteraction(Source source, Optional<Output> output, IntProvider
         int average = rate > 0.0F ? Math.max(1, Math.round(RANDOM_TICK_INTERVAL / (LEGACY_TAP_CHANCE * rate))) : 1;
         IntProvider interval = average > 1 ? UniformInt.of(Math.max(1, average / 2), average * 3 / 2) : ConstantInt.of(average);
         Optional<ParticleOptions> particle = particleType.filter(SimpleParticleType.class::isInstance).map(SimpleParticleType.class::cast);
-        return new TapInteraction(source, output, interval, particle, DEFAULT_DRIP_CHANCE, Map.of(), Conditions.ANY);
+        return new TapInteraction(source, output, interval, particle, tree.isPresent() ? TREE_DRIP_CHANCE : DEFAULT_DRIP_CHANCE, Map.of(), Conditions.ANY);
     }
 
     public record Source(HolderSet<Block> blocks, Optional<StatePropertiesPredicate> properties, Optional<TreeRequirement> tree, List<BlockState> states) {

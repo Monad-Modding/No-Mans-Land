@@ -1,1 +1,2 @@
 - Further nerfed Ancestral Oath Sword blocking and Stasis
+- Fixed path blocks turning into dirt from replaceable blocks

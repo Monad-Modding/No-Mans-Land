@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "nomansland:polished_stone_slab",
+      "side": "nomansland:block/building/polished_stone_slab_vertical"
+    },
+    {
+      "id": "nomansland:polished_siltstone_slab",
+      "side": "nomansland:block/underground/polished_siltstone_slab_vertical"
+    }
+  ]
+}
