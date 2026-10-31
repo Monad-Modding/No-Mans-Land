@@ -28,7 +28,6 @@ public class BrewingSetupEvents {
         event.getBuilder().addMix(Potions.WATER, NMLItems.AWKWARD_RESIDUE.get(), Potions.AWKWARD);
 
         event.getBuilder().addStartMix(Items.NAUTILUS_SHELL, NMLPotions.STASIS);
-        event.getBuilder().addMix(NMLPotions.STASIS, Items.REDSTONE, NMLPotions.LONG_STASIS);
 
         event.getBuilder().addRecipe(new AwkwardResidueDowngradeRecipe());
         event.getBuilder().addRecipe(new BandageInfusionRecipe());

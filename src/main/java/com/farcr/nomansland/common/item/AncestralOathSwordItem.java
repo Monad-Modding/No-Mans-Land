@@ -54,9 +54,10 @@ public class AncestralOathSwordItem extends SwordItem {
 
     public static final int PARTICLE_AMOUNT = 5;
     private static final int RELEASE_COOLDOWN = 30;
+    private static final int MAX_BLOCK_TICKS = 40;
 
     public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
-        return 72000;
+        return MAX_BLOCK_TICKS;
     }
 
     public static boolean canHurtUnderOath(Entity entity) {
@@ -157,7 +158,7 @@ public class AncestralOathSwordItem extends SwordItem {
                 null, damagedEntity.blockPosition(),
                 NMLSounds.OATH_BLOCK.get(), SoundSource.PLAYERS
             );
-            applyStasisTicks(livingEntity, damagedEntity, 40 + (int) (20 * event.getOriginalAmount()));
+            applyStasisTicks(livingEntity, damagedEntity, 20 + (int) (10 * event.getOriginalAmount()));
             createParticles(livingEntity, NMLParticleTypes.STASIS_HIT, PARTICLE_AMOUNT);
             event.setAmount(event.getAmount() * .25f);
         }

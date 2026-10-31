@@ -29,7 +29,5 @@ public class NMLPotions {
     }
 
     public static final PotionDefinition STASIS = register("stasis",
-        () -> new MobEffectInstance(NMLEffects.STASIS, 300, 0));
-    public static final PotionDefinition LONG_STASIS = register("long_stasis",
-        () -> new MobEffectInstance(NMLEffects.STASIS, 600, 0));
+        () -> new MobEffectInstance(NMLEffects.STASIS, 100, 0));
 }

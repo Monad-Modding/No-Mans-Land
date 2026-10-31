@@ -125,6 +125,22 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
         this.setJumping(false);
     }
 
+    @ModifyVariable(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z", at = @At("HEAD"), argsOnly = true)
+    private MobEffectInstance nml$capStasis(MobEffectInstance instance) {
+        return nml$cappedStasis(instance);
+    }
+
+    @ModifyVariable(method = "forceAddEffect", at = @At("HEAD"), argsOnly = true)
+    private MobEffectInstance nml$capForcedStasis(MobEffectInstance instance) {
+        return nml$cappedStasis(instance);
+    }
+
+    @Unique
+    private static MobEffectInstance nml$cappedStasis(MobEffectInstance instance) {
+        if (!instance.is(NMLEffects.STASIS) || !instance.isInfiniteDuration() && instance.getDuration() <= StasisEffect.MAX_DURATION) return instance;
+        return new MobEffectInstance(instance.getEffect(), StasisEffect.MAX_DURATION, instance.getAmplifier(), instance.isAmbient(), instance.isVisible(), instance.showIcon());
+    }
+
     @Inject(method = "isBlocking", at = @At("HEAD"), cancellable = true)
     private void nml$wrapBlockingForOathSword(CallbackInfoReturnable<Boolean> cir) {
         if (this.isUsingItem() && !this.useItem.isEmpty()
