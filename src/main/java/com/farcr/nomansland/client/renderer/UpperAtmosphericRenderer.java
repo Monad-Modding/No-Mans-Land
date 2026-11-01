@@ -1,5 +1,6 @@
 package com.farcr.nomansland.client.renderer;
 
+import com.farcr.nomansland.NMLConfig;
 import com.farcr.nomansland.client.Meshes;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -39,7 +40,10 @@ public class UpperAtmosphericRenderer {
     }
 
     public float getUpperAtmosphereFactor(double y) {
-        return Mth.clampedMap((float) y, 180, 256, 0, 1) * (1 - FriendMoonRenderer.getInstance().getFriendMoonOpacity());
+        float start = NMLConfig.UPPER_ATMOSPHERE_START_HEIGHT.get();
+        float end = NMLConfig.UPPER_ATMOSPHERE_END_HEIGHT.get();
+        float factor = end > start ? Mth.clampedMap((float) y, start, end, 0, 1) : y >= start ? 1 : 0;
+        return factor * (1 - FriendMoonRenderer.getInstance().getFriendMoonOpacity());
     }
 
     private void createOzoneMesh() {

@@ -99,6 +99,10 @@ public class NMLConfig {
     public static final String INVERTED_BELL_CLIENT = "inverted_bell_client";
     public static ModConfigSpec.BooleanValue INVERTED_BELL_BLUR;
 
+    public static final String CATEGORY_UPPER_ATMOSPHERE = "upper_atmosphere";
+    public static ModConfigSpec.IntValue UPPER_ATMOSPHERE_START_HEIGHT;
+    public static ModConfigSpec.IntValue UPPER_ATMOSPHERE_END_HEIGHT;
+
     public static ModConfigSpec STARTUP_CONFIG;
     public static final String CATEGORY_TORTOISE_SHELL_ATTRIBUTES = "tortoise_shell_attributes";
     public static ModConfigSpec.IntValue ARMOR_VALUE;
@@ -352,6 +356,15 @@ public class NMLConfig {
         INVERTED_BELL_BLUR = CLIENT_BUILDER
                 .comment("Whether to apply a blur effect while teleporting via Inverted Bell")
                 .define("invertedBellBlur", true);
+        CLIENT_BUILDER.pop();
+
+        CLIENT_BUILDER.push(CATEGORY_UPPER_ATMOSPHERE);
+        UPPER_ATMOSPHERE_START_HEIGHT = CLIENT_BUILDER
+                .comment("The height at which the upper atmosphere starts to fade in.")
+                .defineInRange("upperAtmosphereStartHeight", 180, -2048, 4096);
+        UPPER_ATMOSPHERE_END_HEIGHT = CLIENT_BUILDER
+                .comment("The height at which the upper atmosphere is fully visible. Must be above the start height.")
+                .defineInRange("upperAtmosphereEndHeight", 256, -2048, 4096);
         CLIENT_BUILDER.pop();
 
         CLIENT_CONFIG = CLIENT_BUILDER.build();
