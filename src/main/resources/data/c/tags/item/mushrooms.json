@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "nomansland:field_mushroom"
+    "nomansland:field_mushroom",
+    "nomansland:shelf_mushroom"
   ]
 }
